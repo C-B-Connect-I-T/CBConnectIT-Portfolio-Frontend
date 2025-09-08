@@ -3,6 +3,7 @@ import com.varabyte.kobweb.gradle.library.util.configAsKobwebLibrary
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kobweb.library)
     alias(libs.plugins.kobwebx.markdown)
     alias(libs.plugins.detekt)
@@ -19,6 +20,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.compose.runtime)
+            implementation(libs.kotlinx.serialization.json)
             api(project(":data"))
         }
         jsMain.dependencies {

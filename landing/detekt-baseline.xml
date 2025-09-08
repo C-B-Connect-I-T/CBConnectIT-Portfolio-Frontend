@@ -70,12 +70,11 @@
     <ID>LongMethod:Index.kt$@Composable private fun ProjectsList(breakpoint: Breakpoint, projects: List&lt;Project&gt;)</ID>
     <ID>LongMethod:Index.kt$@Composable private fun ServicesPageHeader(breakpoint: Breakpoint, services: List&lt;Service&gt;)</ID>
     <ID>LongMethod:Index.kt$@Composable private fun ServicesPageList(breakpoint: Breakpoint, services: List&lt;Service&gt;)</ID>
-    <ID>LongMethod:Index.kt$@Page @Composable fun ServicePage()</ID>
+    <ID>LongMethod:Index.kt$@Page @Composable fun HomePage()</ID>
     <ID>LongMethod:MainSection.kt$@Composable fun MainText(breakpoint: Breakpoint)</ID>
     <ID>LongMethod:OverflowMenu.kt$@Composable fun OverlowMenu(onMenuClosed: () -&gt; Unit)</ID>
     <ID>LongMethod:PortfolioSection.kt$@Composable fun PortfolioContent()</ID>
     <ID>LongMethod:SectionTitle.kt$@Composable fun SectionTitle( modifier: Modifier = Modifier, section: Section, alignment: Alignment.Horizontal = Alignment.Start, showSeeAllButton: Boolean = false, href: String? = null )</ID>
-    <ID>LongMethod:TestimonialCard.kt$@Composable fun TestimonialCard( testimonial: Testimonial )</ID>
     <ID>LongParameterList:Index.kt$( breakpoint: Breakpoint, showDropDownMenu: Boolean, tags: List&lt;Tag&gt;, filterTags: List&lt;String&gt;, toggleFilterTag: (tag: Tag) -&gt; Unit, toggleDropDownMenu: (Boolean) -&gt; Unit )</ID>
     <ID>LongParameterList:ThemedButton.kt$( onClick: () -&gt; Unit, modifier: Modifier = Modifier, text: String? = null, shape: ButtonShape = ButtonShape.RECTANGLE, primary: Boolean = false, size: ButtonSize = ButtonSize.MD, content: @Composable () -&gt; Unit = {} )</ID>
     <ID>MagicNumber:AboutSection.kt$11</ID>

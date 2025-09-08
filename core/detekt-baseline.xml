@@ -63,11 +63,13 @@
     <ID>NewLineAtEndOfFile:MobileDevelopmentSvg.kt$cbconnectit.portfolio.web.svg.MobileDevelopmentSvg.kt</ID>
     <ID>NewLineAtEndOfFile:ModelExtensions.kt$cbconnectit.portfolio.web.extensions.ModelExtensions.kt</ID>
     <ID>NewLineAtEndOfFile:PhoneAndroid.kt$cbconnectit.portfolio.web.svg.PhoneAndroid.kt</ID>
+    <ID>NewLineAtEndOfFile:ProjectInit.kt$cbconnectit.portfolio.web.ProjectInit.kt</ID>
     <ID>NewLineAtEndOfFile:Screen.kt$cbconnectit.portfolio.web.navigation.Screen.kt</ID>
     <ID>NewLineAtEndOfFile:TutoringSvg.kt$cbconnectit.portfolio.web.svg.TutoringSvg.kt</ID>
     <ID>NewLineAtEndOfFile:TvAndroid.kt$cbconnectit.portfolio.web.svg.TvAndroid.kt</ID>
     <ID>NewLineAtEndOfFile:WebDevelopmentSvg.kt$cbconnectit.portfolio.web.svg.WebDevelopmentSvg.kt</ID>
     <ID>NewLineAtEndOfFile:marked.kt$cbconnectit.portfolio.web.externals.marked.kt</ID>
     <ID>WildcardImport:ModelExtensions.kt$import cbconnectit.portfolio.web.svg.*</ID>
+    <ID>WildcardImport:ProjectInit.kt$import dev.gitlive.firebase.storage.externals.*</ID>
   </CurrentIssues>
 </SmellBaseline>

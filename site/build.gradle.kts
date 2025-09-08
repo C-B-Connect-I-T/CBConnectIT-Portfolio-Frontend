@@ -4,9 +4,7 @@ import kotlinx.html.script
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-//    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-//    alias(libs.plugins.kobweb.application)
     id(libs.plugins.kobweb.application.get().pluginId)
     alias(libs.plugins.kobwebx.markdown)
     alias(libs.plugins.detekt)
@@ -22,6 +20,7 @@ kobweb {
         index {
             description.set("Powered by Kobweb")
 
+            // TODO: remove this bootstrap inclusion
             head.add {
                 script {
                     src = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -37,32 +36,28 @@ kobweb {
 }
 
 kotlin {
+    // TODO: remove the moduleName override!!
     configAsKobwebApplication("bolla", false)
 
     @Suppress("UNUSED_VARIABLE") // Suppress spurious warnings about sourceset variables not being used
     sourceSets {
         commonMain.dependencies {
-            dependencies {
-                implementation(libs.compose.runtime)
-//                implementation(libs.kotlinx.serialization.json)
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
-                api(project(":core"))
-                api(project(":landing"))
-                api(project(":backoffice"))
-            }
+            implementation(libs.compose.runtime)
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+            implementation(project(":core"))
+            implementation(project(":landing"))
+            implementation(project(":backoffice"))
         }
 
         jsMain.dependencies {
-            dependencies {
-                implementation(libs.compose.runtime)
-                implementation(libs.compose.html.core)
-                implementation(libs.kobweb.core)
-                implementation(libs.kobweb.silk)
-                implementation(libs.kobweb.silk.icons.fa)
-                implementation(libs.kobwebx.markdown)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.html.core)
+            implementation(libs.kobweb.core)
+            implementation(libs.kobweb.silk)
+            implementation(libs.kobweb.silk.icons.fa)
+            implementation(libs.kobwebx.markdown)
 
-                implementation(npm("marked", "4.3.0"))
-            }
+            implementation(npm("marked", "4.3.0"))
         }
     }
 }

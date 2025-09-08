@@ -86,9 +86,15 @@ fun ExperienceDescription(
     val colorMode by ColorMode.currentState
 
     val gradient = if (colorMode.isLight) {
-        linearGradient(LinearGradient.Direction.ToBottomRight, Color.rgb(237, 240, 242), Colors.White)
+        linearGradient(LinearGradient.Direction.ToBottomRight) {
+            add(Color.rgb(237, 240, 242))
+            add(Colors.White)
+        }
     } else {
-        linearGradient(LinearGradient.Direction.ToBottomRight, Color.rgb(20, 22, 28), Color.rgb(76, 79, 82))
+        linearGradient(LinearGradient.Direction.ToBottomRight) {
+            add(Color.rgb(20, 22, 28))
+            add(Color.rgb(76, 79, 82))
+        }
     }
 
     Box(
@@ -98,7 +104,16 @@ fun ExperienceDescription(
             }
             .padding(all = 14.px)
             .color(if (active) colorMode.toPalette().onPrimary else colorMode.toPalette().onSurface)
-            .backgroundImage(if (active) linearGradient(LinearGradient.Direction.ToBottomRight, colorMode.toPalette().primary, colorMode.toPalette().primary) else gradient)
+            .backgroundImage(
+                if (active) {
+                    linearGradient(LinearGradient.Direction.ToBottomRight) {
+                        add(colorMode.toPalette().primary)
+                        add(colorMode.toPalette().primary)
+                    }
+                } else {
+                    gradient
+                }
+            )
             .borderRadius(12.px)
             .attrsModifier {
                 style {

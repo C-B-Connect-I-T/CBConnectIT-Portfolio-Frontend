@@ -71,11 +71,10 @@ fun Header(
             .position(Position.Sticky)
             .zIndex(1)
             .backgroundImage(
-                linearGradient(
-                    LinearGradient.Direction.ToBottom,
-                    backgroundColor,
-                    backgroundColor.toRgb().copyf(alpha = 0.5f)
-                )
+                linearGradient(LinearGradient.Direction.ToBottom) {
+                    add(backgroundColor)
+                    add(backgroundColor.toRgb().copyf(alpha = 0.5f))
+                }
             )
             .backdropFilter(blur(5.px))
             .thenIf((scroll ?: 0.0) >= 50) {
