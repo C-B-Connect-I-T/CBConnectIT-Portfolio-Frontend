@@ -4,10 +4,10 @@ import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.ContactForm
 import cbconnectit.portfolio.web.components.SectionTitle
 import cbconnectit.portfolio.web.components.Spacer
-import cbconnectit.portfolio.web.models.enums.Section
-import cbconnectit.portfolio.web.styles.secondaryContainer
+import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.transform
 import cbconnectit.portfolio.web.utils.ObserveViewportEntered
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -16,7 +16,6 @@ import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.web.ExperimentalComposeWebApi
@@ -28,7 +27,7 @@ import org.jetbrains.compose.web.css.px
 fun ContactSection() {
     Box(
         modifier = Modifier
-            .id(Section.Contact.id)
+            .id(Navigation.Screen.Home.ContactSection.id)
             .scrollMargin(80.px)
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
@@ -48,7 +47,7 @@ fun ContactContent() {
     var animatedRotation by remember { mutableStateOf(0.deg) }
 
     ObserveViewportEntered(
-        sectionId = Section.Contact.id,
+        sectionId = Navigation.Screen.Home.ContactSection.id,
         distanceFromTop = 500.0
     ) {
         animatedRotation = 10.deg
@@ -60,7 +59,7 @@ fun ContactContent() {
 
     Column(
         modifier = Modifier
-            .backgroundColor(colorMode.toPalette().secondaryContainer)
+            .backgroundColor(colorMode.toColorScheme.secondaryContainer)
             .fillMaxWidth()
             .padding(topBottom = 24.px),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -70,7 +69,7 @@ fun ContactContent() {
                 .fillMaxWidth()
                 .transform { rotate(animatedRotation) }
                 .transition(Transition.of(transform, 500.ms)),
-            section = Section.Contact,
+            section = Navigation.Screen.Home.AboutSection,
             alignment = Alignment.CenterHorizontally
         )
 

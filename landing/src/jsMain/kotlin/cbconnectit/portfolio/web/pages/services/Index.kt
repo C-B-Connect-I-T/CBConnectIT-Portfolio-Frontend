@@ -10,11 +10,12 @@ import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import cbconnectit.portfolio.web.models.enums.TechnologyStacks
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.pages.PageLayout
-import cbconnectit.portfolio.web.styles.*
+import cbconnectit.portfolio.web.styles.MainButtonStyle
 import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.markdownParagraph
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.functions.url
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -34,7 +35,6 @@ import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.css.AlignItems
 import org.jetbrains.compose.web.css.JustifyContent
@@ -104,7 +104,7 @@ private fun ServicesPageHeader(breakpoint: Breakpoint, services: List<Service>) 
         Box(
             Modifier
                 .fillMaxSize()
-                .backgroundColor(ColorMode.current.toPalette().primary.toRgb().copy(alpha = 210))
+                .backgroundColor(ColorMode.current.toColorScheme.primary.toRgb().copy(alpha = 210))
         )
 
         Box(
@@ -118,7 +118,7 @@ private fun ServicesPageHeader(breakpoint: Breakpoint, services: List<Service>) 
             ) {
                 P(
                     Modifier
-                        .color(ColorMode.current.toPalette().onPrimary)
+                        .color(ColorMode.current.toColorScheme.onPrimary)
                         .maxWidth(if (breakpoint > Breakpoint.MD) 65.percent else 100.percent)
                         .margin(topBottom = 0.px)
                         .fontSize(32.px)
@@ -134,7 +134,7 @@ private fun ServicesPageHeader(breakpoint: Breakpoint, services: List<Service>) 
 
                 P(
                     Modifier
-                        .color(ColorMode.current.toPalette().onPrimary)
+                        .color(ColorMode.current.toColorScheme.onPrimary)
                         .maxWidth(if (breakpoint > Breakpoint.MD) 65.percent else 100.percent)
                         .margin(topBottom = 0.px)
                         .fontSize(22.px)
@@ -197,8 +197,8 @@ private fun ServicesPageList(breakpoint: Breakpoint, services: List<Service>) {
             Modifier
                 .fillMaxWidth()
                 .thenIf(leftAligned.not()) {
-                    Modifier.backgroundColor(ColorMode.current.toPalette().secondaryContainer)
-                        .color(ColorMode.current.toPalette().onSecondaryContainer)
+                    Modifier.backgroundColor(ColorMode.current.toColorScheme.secondaryContainer)
+                        .color(ColorMode.current.toColorScheme.onSecondaryContainer)
                 },
             contentAlignment = Alignment.TopCenter
         ) {
@@ -265,11 +265,12 @@ private fun ServicesPageList(breakpoint: Breakpoint, services: List<Service>) {
 
 
                     if (leftAligned.not() || breakpoint <= Breakpoint.MD) {
-                        Spacer(Modifier
-                            .width(100.px)
-                            .thenIf(breakpoint <= Breakpoint.MD) {
-                                Modifier.height(40.px)
-                            })
+                        Spacer(
+                            Modifier
+                                .width(100.px)
+                                .thenIf(breakpoint <= Breakpoint.MD) {
+                                    Modifier.height(40.px)
+                                })
 
                         Image(
                             service.imageUrl,
@@ -300,12 +301,12 @@ private fun ServicesPageTechnologyStacks(breakpoint: Breakpoint) {
         ) {
             P(
                 attrs =
-                Modifier
-                    .fillMaxWidth()
-                    .textAlign(TextAlign.Center)
-                    .fontWeight(FontWeight.Bold)
-                    .fontSize(if (breakpoint < Breakpoint.MD) 32.px else 45.px)
-                    .toAttrs()
+                    Modifier
+                        .fillMaxWidth()
+                        .textAlign(TextAlign.Center)
+                        .fontWeight(FontWeight.Bold)
+                        .fontSize(if (breakpoint < Breakpoint.MD) 32.px else 45.px)
+                        .toAttrs()
             ) {
                 Text(Res.String.TechnologyStacks)
             }

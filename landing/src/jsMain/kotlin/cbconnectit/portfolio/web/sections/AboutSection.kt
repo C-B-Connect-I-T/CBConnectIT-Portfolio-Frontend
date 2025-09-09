@@ -5,15 +5,13 @@ import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.components.HighLightCard
 import cbconnectit.portfolio.web.components.SectionTitle
 import cbconnectit.portfolio.web.components.Spacer
-import cbconnectit.portfolio.web.models.enums.Section
-import cbconnectit.portfolio.web.styles.onSecondaryContainer
-import cbconnectit.portfolio.web.styles.onSurface
-import cbconnectit.portfolio.web.styles.secondaryContainer
+import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.svg.completedProjectsSvg
 import cbconnectit.portfolio.web.svg.experienceSvg
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.format
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -24,7 +22,6 @@ import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.P
@@ -37,7 +34,7 @@ import kotlin.time.toDuration
 fun AboutSection() {
     Box(
         modifier = Modifier
-            .id(Section.About.id)
+            .id(Navigation.Screen.Home.AboutSection.id)
             .scrollMargin(80.px)
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
@@ -53,14 +50,14 @@ fun AboutContent() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .color(colorMode.toPalette().onSecondaryContainer)
-            .backgroundColor(colorMode.toPalette().secondaryContainer)
+            .color(colorMode.toColorScheme.onSecondaryContainer)
+            .backgroundColor(colorMode.toColorScheme.secondaryContainer)
             .padding(topBottom = 32.px),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SectionTitle(
             modifier = Modifier.fillMaxWidth(),
-            section = Section.About,
+            section = Navigation.Screen.Home.AboutSection,
             alignment = Alignment.CenterHorizontally
         )
 
@@ -88,13 +85,13 @@ fun AboutContent() {
             val yearsExperience = (current - started).inWholeDays / 365
 
             HighLightCard(colorMode, Res.String.Experience, Res.String.ExperienceInYears.format(yearsExperience)) {
-                experienceSvg(colorMode.toPalette().onSurface)
+                experienceSvg(colorMode.toColorScheme.onSurface)
             }
 
             Spacer(Modifier.width(16.px))
 
             HighLightCard(colorMode, Res.String.Completed, Res.String.CompletedProjects) {
-                completedProjectsSvg(colorMode.toPalette().onSurface)
+                completedProjectsSvg(colorMode.toColorScheme.onSurface)
             }
         }
     }

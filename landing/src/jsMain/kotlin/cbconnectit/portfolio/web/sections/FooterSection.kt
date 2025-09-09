@@ -4,11 +4,12 @@ import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.components.SocialBar
 import cbconnectit.portfolio.web.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Link
-import cbconnectit.portfolio.web.models.enums.Section
 import cbconnectit.portfolio.web.models.enums.Social
-import cbconnectit.portfolio.web.styles.NavigationItemStyle
+import cbconnectit.portfolio.web.navigation.Navigation
+import cbconnectit.portfolio.web.styles.CbNavigationItemStyle
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.logoImage
+import com.materialdesignsystem.components.sections.NavigationItem
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -18,7 +19,6 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
@@ -62,16 +62,17 @@ fun FooterContent(showMenu: Boolean) {
             if (breakpoint > Breakpoint.SM) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.spacedBy(20.px, Alignment.CenterHorizontally),
                 ) {
                     FooterMenu()
                 }
             } else {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(20.px)
                 ) {
-                    FooterMenu(row = false)
+                    FooterMenu()
                 }
             }
         }
@@ -87,23 +88,42 @@ fun FooterContent(showMenu: Boolean) {
 }
 
 @Composable
-fun FooterMenu(row: Boolean = true) {
-    Section.entries.dropLast(2).forEachIndexed { index, section ->
-        if (index != 0) {
-            Spacer(Modifier
-                .thenIf(row) { Modifier.width(20.px) }
-                .thenIf(!row) { Modifier.height(20.px) }
-            )
-        }
+fun FooterMenu() {
+    val linkStyle = Modifier.fontSize(12.px)
 
-        Link(
-            modifier = NavigationItemStyle.toModifier()
-                .fontFamily(Constants.FONT_FAMILY)
-                .fontSize(12.px)
-                .fontWeight(FontWeight.Normal)
-                .textDecorationLine(TextDecorationLine.None),
-            path = section.path,
-            text = section.title
-        )
-    }
+    NavigationItem(
+        modifier = linkStyle,
+        href = Navigation.Screen.Home.HomeSection.path,
+        title = Navigation.Screen.Home.HomeSection.title
+    )
+
+    NavigationItem(
+        modifier = linkStyle,
+        href = Navigation.Screen.Home.AboutSection.path,
+        title = Navigation.Screen.Home.AboutSection.title
+    )
+
+    NavigationItem(
+        modifier = linkStyle,
+        href = Navigation.Screen.Home.ServiceSection.path,
+        title = Navigation.Screen.Home.ServiceSection.title
+    )
+
+    NavigationItem(
+        modifier = linkStyle,
+        href = Navigation.Screen.Home.PortfolioSection.path,
+        title = Navigation.Screen.Home.PortfolioSection.title
+    )
+
+    NavigationItem(
+        modifier = linkStyle,
+        href = Navigation.Screen.Home.ExperienceSection.path,
+        title = Navigation.Screen.Home.ExperienceSection.title
+    )
+
+    NavigationItem(
+        modifier = linkStyle,
+        href = Navigation.Screen.Home.ContactSection.path,
+        title = Navigation.Screen.Home.ContactSection.title
+    )
 }

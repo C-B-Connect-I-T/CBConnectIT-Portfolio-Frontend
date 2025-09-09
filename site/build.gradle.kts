@@ -16,22 +16,6 @@ version = "0.1.0-SNAPSHOT"
 kobweb {
     app {
         globals.put("BASE_URL", System.getenv("BASE_URL") ?: "")
-
-        index {
-            description.set("Powered by Kobweb")
-
-            // TODO: remove this bootstrap inclusion
-            head.add {
-                script {
-                    src = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-                }
-
-                link {
-                    rel = "stylesheet"
-                    href = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-                }
-            }
-        }
     }
 }
 

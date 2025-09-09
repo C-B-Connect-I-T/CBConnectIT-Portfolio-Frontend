@@ -8,8 +8,9 @@ import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.pages.PageLayout
-import cbconnectit.portfolio.web.styles.*
+import cbconnectit.portfolio.web.styles.MainButtonStyle
 import cbconnectit.portfolio.web.utils.*
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.functions.url
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -28,7 +29,6 @@ import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.css.AlignItems
 import org.jetbrains.compose.web.dom.A
@@ -133,7 +133,7 @@ fun ServiceBanner(service: Service?, breakpoint: Breakpoint) {
         Box(
             Modifier
                 .fillMaxSize()
-                .backgroundColor(ColorMode.current.toPalette().primary.toRgb().copy(alpha = 210))
+                .backgroundColor(ColorMode.current.toColorScheme.primary.toRgb().copy(alpha = 210))
         )
 
         Box(
@@ -150,7 +150,7 @@ fun ServiceBanner(service: Service?, breakpoint: Breakpoint) {
             ) {
                 P(
                     Modifier
-                        .color(ColorMode.current.toPalette().onPrimary)
+                        .color(ColorMode.current.toColorScheme.onPrimary)
                         .maxWidth(if (breakpoint > Breakpoint.MD) 65.percent else 85.percent)
                         .margin(topBottom = 0.px)
                         .fontSize(32.px)
@@ -167,7 +167,7 @@ fun ServiceBanner(service: Service?, breakpoint: Breakpoint) {
                 service?.bannerDescription?.let {
                     P(
                         Modifier
-                            .color(ColorMode.current.toPalette().onPrimary)
+                            .color(ColorMode.current.toColorScheme.onPrimary)
                             .maxWidth(if (breakpoint > Breakpoint.MD) 65.percent else 85.percent)
                             .margin(topBottom = 0.px)
                             .fontSize(22.px)
@@ -195,8 +195,8 @@ fun SubServices(subServices: List<Service>, breakpoint: Breakpoint) {
             Modifier
                 .fillMaxWidth()
                 .thenIf(leftAligned.not()) {
-                    Modifier.backgroundColor(ColorMode.current.toPalette().secondaryContainer)
-                        .color(ColorMode.current.toPalette().onSecondaryContainer)
+                    Modifier.backgroundColor(ColorMode.current.toColorScheme.secondaryContainer)
+                        .color(ColorMode.current.toColorScheme.onSecondaryContainer)
                 },
             contentAlignment = Alignment.TopCenter
         ) {
@@ -265,11 +265,12 @@ fun SubServices(subServices: List<Service>, breakpoint: Breakpoint) {
 
 
                     if (leftAligned.not() || breakpoint <= Breakpoint.MD) {
-                        Spacer(Modifier
-                            .width(100.px)
-                            .thenIf(breakpoint <= Breakpoint.MD) {
-                                Modifier.height(40.px)
-                            })
+                        Spacer(
+                            Modifier
+                                .width(100.px)
+                                .thenIf(breakpoint <= Breakpoint.MD) {
+                                    Modifier.height(40.px)
+                                })
 
                         Image(
                             subService.imageUrl,

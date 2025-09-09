@@ -1,7 +1,7 @@
 package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.Composable
-import cbconnectit.portfolio.web.styles.primary
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
@@ -38,7 +38,7 @@ fun HighLightCard(
 
             P(
                 attrs = Modifier
-                    .color(colorMode.toPalette().primary)
+                    .color(colorMode.toColorScheme.primary)
                     .margin(topBottom = 0.px)
                     .fontSize(16.px)
                     .toAttrs()

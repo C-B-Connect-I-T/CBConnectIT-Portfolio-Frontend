@@ -6,13 +6,13 @@ import cbconnectit.portfolio.web.utils.Identifiers.PortfolioCard.greenOverlay
 import cbconnectit.portfolio.web.utils.Identifiers.PortfolioCard.linkIcon
 import cbconnectit.portfolio.web.utils.Identifiers.PortfolioCard.portfolioDesc
 import cbconnectit.portfolio.web.utils.Identifiers.PortfolioCard.portfolioTitle
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.css.Visibility
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.selectors.hover
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
@@ -65,11 +65,11 @@ val PortfolioSectionStyle = CssStyle {
 
 val PortfolioArrowIconStyle = CssStyle {
     base {
-        Modifier.color(colorMode.toPalette().surface)
+        Modifier.color(colorMode.toColorScheme.surface)
             .transition(Transition.of(property = "color", duration = 200.ms))
     }
 
     hover {
-        Modifier.color(colorMode.toPalette().primary)
+        Modifier.color(colorMode.toColorScheme.primary)
     }
 }

@@ -6,7 +6,6 @@ import cbconnectit.portfolio.web.components.SectionTitle
 import cbconnectit.portfolio.web.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.data.repos.ServiceRepo
-import cbconnectit.portfolio.web.models.enums.Section
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
@@ -30,7 +29,7 @@ import org.jetbrains.compose.web.css.*
 fun ServiceSection() {
     Box(
         modifier = Modifier
-            .id(Section.Service.id)
+            .id(Navigation.Screen.Home.ServiceSection.id)
             .scrollMargin(80.px)
             .fillMaxWidth()
             .maxWidth(Constants.SECTION_WIDTH.px),
@@ -88,7 +87,7 @@ fun ServiceContent() {
         ) {
             SectionTitle(
                 modifier = Modifier.fillMaxWidth(),
-                section = Section.Service,
+                section = Navigation.Screen.Home.ServiceSection,
                 alignment = Alignment.Start,
                 href = Navigation.Screen.Services.route,
                 showSeeAllButton = true

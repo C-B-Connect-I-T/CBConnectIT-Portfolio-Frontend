@@ -2,6 +2,7 @@ package cbconnectit.portfolio.web.styles
 
 import cbconnectit.portfolio.web.utils.Identifiers.SocialBar.socialIcon
 import cbconnectit.portfolio.web.utils.Identifiers.SocialBar.socialLink
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.color
@@ -17,7 +18,7 @@ import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.ExperimentalComposeWebApi
 import org.jetbrains.compose.web.css.*
 
-val NavigationItemStyle = CssStyle {
+val CbNavigationItemStyle = CssStyle {
     base {
         Modifier
             .color(colorMode.toPalette().link.default)
@@ -31,7 +32,7 @@ val NavigationItemStyle = CssStyle {
 
     hover {
         Modifier
-            .color(colorMode.toPalette().primary)
+            .color(colorMode.toColorScheme.primary)
     }
 }
 
@@ -52,19 +53,19 @@ val LogoStyle = CssStyle {
 val SocialLinkStyle = CssStyle {
     cssRule(" > #$socialLink > #$socialIcon") {
         Modifier
-            .color(colorMode.toPalette().onSurface)
+            .color(colorMode.toColorScheme.onSurface)
             .transition(Transition.of(property = "color", duration = 200.ms))
     }
 
     cssRule(":hover > #$socialLink > #$socialIcon") {
-        Modifier.color(colorMode.toPalette().primary)
+        Modifier.color(colorMode.toColorScheme.primary)
     }
 }
 
 val MainButtonStyle = CssStyle {
     base {
         Modifier.width(100.px)
-            .color(colorMode.toPalette().onPrimary)
+            .color(colorMode.toColorScheme.onPrimary)
             .transition(Transition.of(property = "width", duration = 200.ms))
     }
 

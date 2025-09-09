@@ -6,14 +6,14 @@ import cbconnectit.portfolio.web.components.Spacer
 import cbconnectit.portfolio.web.components.TextPrimaryButtonVariant
 import cbconnectit.portfolio.web.data.models.domain.Project
 import cbconnectit.portfolio.web.data.repos.ProjectRepo
-import cbconnectit.portfolio.web.models.enums.Section
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.styles.*
+import cbconnectit.portfolio.web.styles.ProjectNameStyle
 import cbconnectit.portfolio.web.svg.chevronRightSvg
 import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.maxLines
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.functions.url
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -32,7 +32,6 @@ import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.P
@@ -42,7 +41,7 @@ import org.jetbrains.compose.web.dom.Text
 fun PortfolioSection() {
     Box(
         modifier = Modifier
-            .id(Section.Portfolio.id)
+            .id(Navigation.Screen.Home.PortfolioSection.id)
             .scrollMargin(80.px)
             .fillMaxWidth()
             .maxWidth(Constants.SECTION_WIDTH.px),
@@ -73,7 +72,7 @@ fun PortfolioContent() {
     ) {
         SectionTitle(
             Modifier.fillMaxWidth().margin(bottom = 25.px),
-            Section.Portfolio,
+            Navigation.Screen.Home.PortfolioSection,
             showSeeAllButton = true,
             href = Navigation.Screen.Projects.route
         )
@@ -90,7 +89,7 @@ fun PortfolioContent() {
                 Modifier
                     .fillMaxSize()
                     .borderRadius(20.px)
-                    .backgroundColor(ColorMode.current.toPalette().primary.toRgb().copy(alpha = 210))
+                    .backgroundColor(ColorMode.current.toColorScheme.primary.toRgb().copy(alpha = 210))
             )
 
             Column(
@@ -112,11 +111,11 @@ fun PortfolioContent() {
                     works.forEach { project ->
                         P(
                             ProjectNameStyle.toModifier()
-                                .color(ColorMode.current.toPalette().onPrimary)
+                                .color(ColorMode.current.toColorScheme.onPrimary)
                                 .thenIf(project.id == selectedWork?.id) {
                                     Modifier
-                                        .backgroundColor(ColorMode.current.toPalette().surface)
-                                        .color(ColorMode.current.toPalette().onSurface)
+                                        .backgroundColor(ColorMode.current.toColorScheme.surface)
+                                        .color(ColorMode.current.toColorScheme.onSurface)
                                 }
                                 .onClick {
                                     selectedWork = project
@@ -142,7 +141,7 @@ fun PortfolioContent() {
                         .fontSize(18.px)
                         .thenIf(breakpoint > Breakpoint.MD) { Modifier.fontSize(36.px) }
                         .thenIf(breakpoint == Breakpoint.MD) { Modifier.fontSize(24.px) }
-                        .color(ColorMode.current.toPalette().onPrimary)
+                        .color(ColorMode.current.toColorScheme.onPrimary)
                         .toAttrs()
                 ) {
                     Text(selectedWork?.shortDescription ?: "")
@@ -171,8 +170,8 @@ fun PortfolioContent() {
                                 Modifier
                                     .padding(topBottom = 4.px, leftRight = 6.px)
                                     .margin(topBottom = 0.px)
-                                    .backgroundColor(ColorMode.current.toPalette().secondaryContainer)
-                                    .color(ColorMode.current.toPalette().onSecondaryContainer)
+                                    .backgroundColor(ColorMode.current.toColorScheme.secondaryContainer)
+                                    .color(ColorMode.current.toColorScheme.onSecondaryContainer)
                                     .fontSize(11.px)
                                     .borderRadius(6.px)
                                     .toAttrs()
@@ -182,10 +181,10 @@ fun PortfolioContent() {
 
                     Button(
                         modifier = Modifier
-                            .border(1.px, LineStyle.Solid, ColorMode.current.toPalette().onPrimary)
+                            .border(1.px, LineStyle.Solid, ColorMode.current.toColorScheme.onPrimary)
                             .borderRadius(6.px)
                             .visibility(Visibility.Hidden)
-                            .color(ColorMode.current.toPalette().onPrimary),
+                            .color(ColorMode.current.toColorScheme.onPrimary),
                         variant = TextPrimaryButtonVariant,
                         size = ButtonSize.SM,
                         onClick = {

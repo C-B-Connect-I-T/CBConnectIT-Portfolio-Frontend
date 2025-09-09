@@ -3,10 +3,9 @@ package cbconnectit.portfolio.web.components
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.data.models.domain.Testimonial
-import cbconnectit.portfolio.web.styles.outlineVariant
-import cbconnectit.portfolio.web.styles.primary
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.content
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.item
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.css.LineStyle
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
@@ -34,7 +32,7 @@ fun TestimonialCard(
             .classNames(item)
             .fillMaxWidth()
             .borderRadius(12.px)
-            .border(2.px, LineStyle.Solid, colorMode.toPalette().outlineVariant)
+            .border(2.px, LineStyle.Solid, colorMode.toColorScheme.outlineVariant)
     ) {
         Column(
             Modifier
@@ -58,7 +56,7 @@ fun TestimonialCard(
                         Modifier
                             .fillMaxWidth()
                             .margin(0.px, 0.px)
-                            .color(colorMode.toPalette().primary)
+                            .color(colorMode.toColorScheme.primary)
                             .fontSize(22.px)
                             .fontWeight(FontWeight.Bold)
                             .toAttrs()

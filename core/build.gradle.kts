@@ -22,6 +22,7 @@ kotlin {
             implementation(libs.compose.runtime)
             implementation(libs.kotlinx.serialization.json)
             api(project(":data"))
+            api(libs.material.kobweb)
         }
         jsMain.dependencies {
             implementation(libs.compose.html.core)

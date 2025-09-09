@@ -1,7 +1,7 @@
 package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.Composable
-import cbconnectit.portfolio.web.styles.primary
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.BackgroundColor
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Alignment
@@ -14,7 +14,6 @@ import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.addVariant
 import com.varabyte.kobweb.silk.style.selectors.active
 import com.varabyte.kobweb.silk.style.selectors.hover
-import com.varabyte.kobweb.silk.theme.colors.palette.background
 import com.varabyte.kobweb.silk.theme.colors.palette.color
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
@@ -38,7 +37,7 @@ private fun getButtonModifier(shape: ButtonShape): Modifier {
 }
 
 val PrimaryButtonVariant = ButtonStyle.addVariant {
-    val backgroundColor = colorMode.toPalette().primary
+    val backgroundColor = colorMode.toColorScheme.primary
     base {
         Modifier
             .backgroundColor(backgroundColor)
@@ -54,11 +53,11 @@ val NormalButtonVariant = ButtonStyle.addVariant {
 
     base {
         Modifier
-            .backgroundColor(colorMode.toPalette().background)
+            .backgroundColor(colorMode.toColorScheme.background)
             .color(colorMode.toPalette().color)
     }
     hover {
-        Modifier.backgroundColor(colorMode.toPalette().background.shifted(colorMode))
+        Modifier.backgroundColor(colorMode.toColorScheme.background.shifted(colorMode))
     }
 }
 
@@ -66,14 +65,14 @@ val TextPrimaryButtonVariant = ButtonStyle.addVariant {
     base {
         Modifier
             .padding(leftRight = 8.px)
-            .color(colorMode.toPalette().primary)
+            .color(colorMode.toColorScheme.primary)
             .backgroundColor(BackgroundColor.Transparent)
     }
     hover {
-        Modifier.backgroundColor(colorMode.toPalette().primary.shifted(colorMode.opposite, 0.5f))
+        Modifier.backgroundColor(colorMode.toColorScheme.primary.shifted(colorMode.opposite, 0.5f))
     }
     active {
-        Modifier.backgroundColor(colorMode.toPalette().primary.shifted(colorMode.opposite, 0.2f))
+        Modifier.backgroundColor(colorMode.toColorScheme.primary.shifted(colorMode.opposite, 0.2f))
     }
 }
 

@@ -1,30 +1,28 @@
 package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.*
-import cbconnectit.portfolio.web.models.enums.Section
-import cbconnectit.portfolio.web.styles.NavigationItemStyle
-import cbconnectit.portfolio.web.utils.Constants
+import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.logoImage
-import com.varabyte.kobweb.compose.css.*
+import com.materialdesignsystem.components.sections.NavigationItem
+import com.materialdesignsystem.toColorScheme
+import com.varabyte.kobweb.compose.css.Cursor
+import com.varabyte.kobweb.compose.css.Overflow
+import com.varabyte.kobweb.compose.css.ScrollBehavior
 import com.varabyte.kobweb.compose.css.Transition
+import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.navigation.OpenLinkStrategy
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.components.icons.fa.FaXmark
 import com.varabyte.kobweb.silk.components.icons.fa.IconSize
-import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.overlay.Overlay
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
-import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.background
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -56,13 +54,14 @@ fun OverlowMenu(onMenuClosed: () -> Unit) {
         }
     }
 
-    Overlay(modifier = Modifier
-        .zIndex(2)
-        .opacity(opacity)
-        .transition(
-            Transition.of("opacity", 500.ms)
-        )
-        .onClick { scope.closeMenu() }) {
+    Overlay(
+        modifier = Modifier
+            .zIndex(2)
+            .opacity(opacity)
+            .transition(
+                Transition.of("opacity", 500.ms)
+            )
+            .onClick { scope.closeMenu() }) {
 
         Box(
             modifier = Modifier
@@ -77,7 +76,7 @@ fun OverlowMenu(onMenuClosed: () -> Unit) {
                     .width(if (breakpoint < Breakpoint.MD) 50.percent else 25.percent)
                     .overflow(Overflow.Auto)
                     .scrollBehavior(ScrollBehavior.Smooth)
-                    .backgroundColor(ColorMode.current.toPalette().background)
+                    .backgroundColor(ColorMode.current.toColorScheme.background)
                     .translateX(tx = translateX)
                     .transition(Transition.of("translate", 500.ms))
             ) {
@@ -103,21 +102,38 @@ fun OverlowMenu(onMenuClosed: () -> Unit) {
                     )
                 }
 
-                Section.entries.dropLast(2).forEach { section ->
-                    Link(
-                        modifier = NavigationItemStyle.toModifier()
-                            .padding(bottom = 10.px)
-                            .fontFamily(Constants.FONT_FAMILY)
-                            .fontSize(16.px)
-                            .fontWeight(FontWeight.Normal)
-                            .textDecorationLine(TextDecorationLine.None)
-                            .onClick {
-                                scope.closeMenu()
-                            },
-                        path = section.path,
-                        openExternalLinksStrategy = OpenLinkStrategy.IN_PLACE,
-                        text = section.title
-                    )
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(10.px)
+                ) {
+                    NavigationItem(
+                        href = Navigation.Screen.Home.HomeSection.path,
+                        title = Navigation.Screen.Home.HomeSection.title
+                    ) { scope.closeMenu() }
+
+                    NavigationItem(
+                        href = Navigation.Screen.Home.AboutSection.path,
+                        title = Navigation.Screen.Home.AboutSection.title
+                    ) { scope.closeMenu() }
+
+                    NavigationItem(
+                        href = Navigation.Screen.Home.ServiceSection.path,
+                        title = Navigation.Screen.Home.ServiceSection.title
+                    ) { scope.closeMenu() }
+
+                    NavigationItem(
+                        href = Navigation.Screen.Home.PortfolioSection.path,
+                        title = Navigation.Screen.Home.PortfolioSection.title
+                    ) { scope.closeMenu() }
+
+                    NavigationItem(
+                        href = Navigation.Screen.Home.ExperienceSection.path,
+                        title = Navigation.Screen.Home.ExperienceSection.title
+                    ) { scope.closeMenu() }
+
+                    NavigationItem(
+                        href = Navigation.Screen.Home.ContactSection.path,
+                        title = Navigation.Screen.Home.ContactSection.title
+                    ) { scope.closeMenu() }
                 }
             }
         }

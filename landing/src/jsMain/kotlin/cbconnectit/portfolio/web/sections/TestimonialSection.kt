@@ -6,7 +6,7 @@ import cbconnectit.portfolio.web.components.Spacer
 import cbconnectit.portfolio.web.components.TestimonialCard
 import cbconnectit.portfolio.web.data.models.domain.Testimonial
 import cbconnectit.portfolio.web.data.repos.TestimonialRepo
-import cbconnectit.portfolio.web.models.enums.Section
+import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Identifiers.AttributeName.style
@@ -45,7 +45,7 @@ import kotlin.math.ceil
 fun TestimonialSection() {
     Box(
         modifier = Modifier
-            .id(Section.Testimonial.id)
+            .id(Navigation.Screen.Home.TestimonialSection.id)
             .scrollMargin(80.px)
             .fillMaxWidth()
             .maxWidth(Constants.SECTION_WIDTH.px),
@@ -90,7 +90,7 @@ fun TestimonialContent() {
         SectionTitle(
             modifier = Modifier
                 .fillMaxWidth(),
-            section = Section.Testimonial,
+            section = Navigation.Screen.Home.TestimonialSection,
             alignment = Alignment.CenterHorizontally,
             href = null // TODO: add navigation
 //            showSeeAllButton = true

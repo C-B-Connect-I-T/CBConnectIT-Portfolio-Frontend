@@ -6,7 +6,7 @@ import cbconnectit.portfolio.web.components.SectionTitle
 import cbconnectit.portfolio.web.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Experience
 import cbconnectit.portfolio.web.data.repos.ExperienceRepo
-import cbconnectit.portfolio.web.models.enums.Section
+import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -23,7 +23,7 @@ import org.jetbrains.compose.web.css.px
 fun ExperienceSection() {
     Box(
         modifier = Modifier
-            .id(Section.Experience.id)
+            .id(Navigation.Screen.Home.ExperienceSection.id)
             .scrollMargin(80.px)
             .fillMaxWidth()
             .maxWidth(Constants.SECTION_WIDTH.px),
@@ -49,7 +49,7 @@ fun ExperienceContent() {
         SectionTitle(
             modifier = Modifier
                 .fillMaxWidth(),
-            section = Section.Experience,
+            section = Navigation.Screen.Home.ExperienceSection,
             alignment = Alignment.CenterHorizontally,
             href = null // TODO: add navigation
 //            showSeeAllButton = true

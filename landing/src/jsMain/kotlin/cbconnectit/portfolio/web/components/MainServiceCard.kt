@@ -5,10 +5,10 @@ import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.extensions.getServiceTypeIcon
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.styles.primary
 import cbconnectit.portfolio.web.svg.chevronRightSvg
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -19,7 +19,6 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonSize
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.P
@@ -32,7 +31,7 @@ fun MainServiceCard(service: Service, modifier: Modifier = Modifier) {
     Box(modifier) {
         Column(Modifier.margin(right = 24.px, bottom = 24.px)) {
             Column(Modifier.margin(left = 8.px)) {
-                service.getServiceTypeIcon(colorMode.toPalette().primary, Modifier.size(34.px))
+                service.getServiceTypeIcon(colorMode.toColorScheme.primary, Modifier.size(34.px))
 
                 Spacer(Modifier.height(10.px))
 

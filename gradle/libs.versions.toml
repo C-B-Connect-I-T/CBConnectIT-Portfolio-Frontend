@@ -5,7 +5,7 @@ kotlin = "2.2.10"
 kotlinx-serialization-json = "1.4.1"
 #kotlin-bootstrap = "0.0.8"
 detekt = "1.23.8"
-#material-kobweb = "024951ec0e"
+material-kobweb = "024951ec0e"
 
 [libraries]
 compose-html-core = { module = "org.jetbrains.compose.html:html-core", version.ref = "jetbrains-compose" }
@@ -18,7 +18,7 @@ kobweb-silk-icons-mdi = { module = "com.varabyte.kobweb:kobweb-silk-icons-mdi", 
 kobwebx-markdown = { module = "com.varabyte.kobwebx:kobwebx-markdown", version.ref = "kobweb" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 #kotlin-bootstrap = { module = "com.github.stevdza-san:KotlinBootstrap", version.ref = "kotlin-bootstrap" }
-#material-kobweb = { module = "com.github.C-B-Connect-I-T:MaterialKobweb", version.ref = "material-kobweb" }
+material-kobweb = { module = "com.github.C-B-Connect-I-T:MaterialKobweb", version.ref = "material-kobweb" }
 
 [plugins]
 #jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-compose" }

@@ -2,10 +2,12 @@ package cbconnectit.portfolio.web
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import cbconnectit.portfolio.web.styles.darkColorScheme
-import cbconnectit.portfolio.web.styles.lightColorScheme
+import cbconnectit.portfolio.web.styles.CbDarkColorScheme
+import cbconnectit.portfolio.web.styles.CbLightColorScheme
 import cbconnectit.portfolio.web.utils.Config
+import com.materialdesignsystem.MaterialTheme
+import com.materialdesignsystem.extensions.ButtonSizeXL
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.lightened
@@ -33,6 +35,11 @@ private const val COLOR_MODE_KEY = "cbconnectit:app:colorMode"
 @InitSilk
 fun updateTheme(ctx: InitSilkContext) {
     ctx.config.initialColorMode = localStorage.getItem(COLOR_MODE_KEY)?.let { ColorMode.valueOf(it) } ?: ColorMode.systemPreference
+
+    ctx.theme.registerStyle("silk-button-size_xl", ButtonSizeXL)
+
+    val lightColorScheme = ColorMode.LIGHT.toColorScheme
+    val darkColorScheme = ColorMode.DARK.toColorScheme
 
     // Background
     ctx.theme.palettes.light.background = lightColorScheme.background
@@ -76,7 +83,7 @@ fun updateTheme(ctx: InitSilkContext) {
                     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"
                 )
                 .lineHeight(1.4)
-                .backgroundColor(colorMode.toPalette().background)
+                .backgroundColor(colorMode.toColorScheme.background)
         }
     }
 }
@@ -84,10 +91,11 @@ fun updateTheme(ctx: InitSilkContext) {
 @App
 @Composable
 fun AppEntry(content: @Composable () -> Unit) {
-        Config.init(AppGlobals.get("BASE_URL") ?: "")
+    MaterialTheme.setSchemes(lightScheme = CbLightColorScheme, darkScheme = CbDarkColorScheme)
+    Config.init(AppGlobals.get("BASE_URL") ?: "")
 
     SilkApp {
-        val colorMode by ColorMode.currentState
+        val colorMode = ColorMode.current
 
         LaunchedEffect(colorMode) {
             localStorage.setItem(COLOR_MODE_KEY, colorMode.name)

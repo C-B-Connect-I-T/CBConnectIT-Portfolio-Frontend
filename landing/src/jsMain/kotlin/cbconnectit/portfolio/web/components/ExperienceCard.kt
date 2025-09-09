@@ -4,10 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.data.models.domain.Experience
 import cbconnectit.portfolio.web.extensions.techStackSvg
-import cbconnectit.portfolio.web.styles.onPrimary
-import cbconnectit.portfolio.web.styles.onSurface
-import cbconnectit.portfolio.web.styles.primary
 import cbconnectit.portfolio.web.utils.Constants
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.WhiteSpace
@@ -103,12 +101,12 @@ fun ExperienceDescription(
                 Modifier.margin(topBottom = 20.px)
             }
             .padding(all = 14.px)
-            .color(if (active) colorMode.toPalette().onPrimary else colorMode.toPalette().onSurface)
+            .color(if (active) colorMode.toColorScheme.onPrimary else colorMode.toColorScheme.onSurface)
             .backgroundImage(
                 if (active) {
                     linearGradient(LinearGradient.Direction.ToBottomRight) {
-                        add(colorMode.toPalette().primary)
-                        add(colorMode.toPalette().primary)
+                        add(colorMode.toColorScheme.primary)
+                        add(colorMode.toColorScheme.primary)
                     }
                 } else {
                     gradient
@@ -162,7 +160,7 @@ fun ExperienceDetails(
                     .fontFamily(Constants.FONT_FAMILY)
                     .fontSize(20.px)
                     .fontWeight(FontWeight.Bold)
-                    .color(ColorMode.current.toPalette().primary)
+                    .color(ColorMode.current.toColorScheme.primary)
                     .thenIf(breakpoint > Breakpoint.MD) {
                         Modifier.textAlign(TextAlign.End)
                     }
@@ -216,14 +214,14 @@ fun ExperienceNumber(
         Box(
             modifier = Modifier.fillMaxHeight()
                 .width(3.px)
-                .backgroundColor(colorMode.toPalette().primary)
+                .backgroundColor(colorMode.toColorScheme.primary)
         )
 
         Box(
             modifier = Modifier
                 .padding(leftRight = 4.px, topBottom = 10.px)
-                .border(width = 3.px, style = LineStyle.Solid, colorMode.toPalette().primary)
-                .backgroundColor(if (active) colorMode.toPalette().primary else colorMode.toPalette().background)
+                .border(width = 3.px, style = LineStyle.Solid, colorMode.toColorScheme.primary)
+                .backgroundColor(if (active) colorMode.toColorScheme.primary else colorMode.toColorScheme.background)
                 .borderRadius(50.px),
             contentAlignment = Alignment.Center
         ) {
@@ -232,7 +230,7 @@ fun ExperienceNumber(
                     if (index != 0) {
                         Spacer(Modifier.height(10.px))
                     }
-                    experience.techStackSvg(tag, if (active) colorMode.toPalette().onPrimary else colorMode.toPalette().primary)
+                    experience.techStackSvg(tag, if (active) colorMode.toColorScheme.onPrimary else colorMode.toColorScheme.primary)
                 }
             }
         }

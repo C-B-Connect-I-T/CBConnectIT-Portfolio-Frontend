@@ -3,8 +3,6 @@ package cbconnectit.portfolio.web.components
 import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.styles.InputStyle
 import cbconnectit.portfolio.web.styles.MainButtonStyle
-import cbconnectit.portfolio.web.styles.onSurface
-import cbconnectit.portfolio.web.styles.surface
 import cbconnectit.portfolio.web.utils.Identifiers.AttributeName.autoComplete
 import cbconnectit.portfolio.web.utils.Identifiers.AttributeName.data1PasswordIgnore
 import cbconnectit.portfolio.web.utils.Identifiers.AttributeName.method
@@ -17,6 +15,7 @@ import cbconnectit.portfolio.web.utils.Identifiers.ContactForm.inputEmail
 import cbconnectit.portfolio.web.utils.Identifiers.ContactForm.inputMessage
 import cbconnectit.portfolio.web.utils.Identifiers.ContactForm.inputName
 import cbconnectit.portfolio.web.utils.Res
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.Cursor
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Alignment
@@ -27,7 +26,6 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.attributes.ButtonType
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.css.percent
@@ -65,8 +63,8 @@ fun ContactForm(breakpoint: Breakpoint) {
             attrs = InputStyle.toModifier()
                 .id(inputName)
                 .fillMaxWidth()
-                .backgroundColor(ColorMode.current.toPalette().surface)
-                .color(ColorMode.current.toPalette().onSurface)
+                .backgroundColor(ColorMode.current.toColorScheme.surface)
+                .color(ColorMode.current.toColorScheme.onSurface)
                 .boxShadow(0.px, 0.px, 0.px, 0.px, null) // overrides the default behaviour of the bootstrap
                 .classNames(formControl)
                 .attrsModifier {
@@ -95,8 +93,8 @@ fun ContactForm(breakpoint: Breakpoint) {
             attrs = InputStyle.toModifier()
                 .id(inputEmail)
                 .fillMaxWidth()
-                .backgroundColor(ColorMode.current.toPalette().surface)
-                .color(ColorMode.current.toPalette().onSurface)
+                .backgroundColor(ColorMode.current.toColorScheme.surface)
+                .color(ColorMode.current.toColorScheme.onSurface)
                 .boxShadow(0.px, 0.px, 0.px, 0.px, null) // overrides the default behaviour of the bootstrap
                 .classNames(formControl)
                 .attrsModifier {
@@ -124,8 +122,8 @@ fun ContactForm(breakpoint: Breakpoint) {
             attrs = InputStyle.toModifier()
                 .id(inputMessage)
                 .fillMaxWidth()
-                .backgroundColor(ColorMode.current.toPalette().surface)
-                .color(ColorMode.current.toPalette().onSurface)
+                .backgroundColor(ColorMode.current.toColorScheme.surface)
+                .color(ColorMode.current.toColorScheme.onSurface)
                 .classNames(formControl)
                 .boxShadow(0.px, 0.px, 0.px, 0.px, null) // overrides the default behaviour of the bootstrap
                 .height(150.px)

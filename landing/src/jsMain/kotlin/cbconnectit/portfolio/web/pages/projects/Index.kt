@@ -1,5 +1,7 @@
 package cbconnectit.portfolio.web.pages.projects
 
+//import com.varabyte.kobweb.silk.components.style.ComponentStyle
+//import com.varabyte.kobweb.silk.components.style.hover
 import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.*
 import cbconnectit.portfolio.web.data.models.domain.Project
@@ -7,8 +9,8 @@ import cbconnectit.portfolio.web.data.models.domain.Tag
 import cbconnectit.portfolio.web.data.repos.ProjectRepo
 import cbconnectit.portfolio.web.data.repos.TagRepo
 import cbconnectit.portfolio.web.pages.PageLayout
-import cbconnectit.portfolio.web.styles.*
 import cbconnectit.portfolio.web.utils.*
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -31,14 +33,11 @@ import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.style.CssStyle
-//import com.varabyte.kobweb.silk.components.style.ComponentStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.style.toModifier
-//import com.varabyte.kobweb.silk.components.style.hover
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.shapes.RectF
 import com.varabyte.kobweb.silk.theme.shapes.clip
 import kotlinx.browser.window
@@ -167,7 +166,7 @@ fun TitleAndDropDown(
                         .id(Identifiers.ProjectsPage.dropBtn)
                         .padding(leftRight = 16.px, topBottom = 10.px)
                         .borderRadius(50.px)
-                        .border(2.px, LineStyle.Solid, ColorMode.current.toPalette().surfaceVariant)
+                        .border(2.px, LineStyle.Solid, ColorMode.current.toColorScheme.surfaceVariant)
                         .cursor(Cursor.Pointer)
                         .onClick {
                             toggleDropDownMenu(!showDropDownMenu)
@@ -205,9 +204,9 @@ fun TitleAndDropDown(
                         .display(if (showDropDownMenu) DisplayStyle.Flex else DisplayStyle.None)
                         .margin(top = 8.px)
                         .position(Position.Absolute)
-                        .backgroundColor(ColorMode.current.toPalette().surfaceVariant)
+                        .backgroundColor(ColorMode.current.toColorScheme.surfaceVariant)
                         .borderRadius(16.px)
-                        .color(ColorMode.current.toPalette().onSurfaceVariant)
+                        .color(ColorMode.current.toColorScheme.onSurfaceVariant)
                         .boxShadow(0.px, 8.px, 16.px, 0.px, Colors.Black.copyf(alpha = 0.2f))
                         .zIndex(1)
                 ) {
@@ -253,7 +252,7 @@ val ProjectTagLinkStyle = CssStyle {
     }
 
     hover {
-        Modifier.backgroundColor(colorMode.toPalette().onSurfaceVariant.toRgb().copyf(alpha = 0.2f))
+        Modifier.backgroundColor(colorMode.toColorScheme.onSurfaceVariant.toRgb().copyf(alpha = 0.2f))
     }
 }
 
@@ -284,8 +283,8 @@ private fun ProjectsList(breakpoint: Breakpoint, projects: List<Project>) {
             Modifier
                 .fillMaxWidth()
                 .thenIf(leftAligned.not()) {
-                    Modifier.backgroundColor(ColorMode.current.toPalette().secondaryContainer)
-                        .color(ColorMode.current.toPalette().onSecondaryContainer)
+                    Modifier.backgroundColor(ColorMode.current.toColorScheme.secondaryContainer)
+                        .color(ColorMode.current.toColorScheme.onSecondaryContainer)
                 },
             contentAlignment = Alignment.TopCenter
         ) {
@@ -344,8 +343,8 @@ private fun ProjectsList(breakpoint: Breakpoint, projects: List<Project>) {
                                     Modifier
                                         .padding(topBottom = 4.px, leftRight = 6.px)
                                         .margin(topBottom = 0.px)
-                                        .backgroundColor(if (leftAligned) ColorMode.current.toPalette().secondaryContainer else ColorMode.current.toPalette().inversePrimary)
-                                        .color(ColorMode.current.toPalette().onSecondaryContainer)
+                                        .backgroundColor(if (leftAligned) ColorMode.current.toColorScheme.secondaryContainer else ColorMode.current.toColorScheme.inversePrimary)
+                                        .color(ColorMode.current.toColorScheme.onSecondaryContainer)
                                         .fontSize(11.px)
                                         .borderRadius(6.px)
                                         .toAttrs()

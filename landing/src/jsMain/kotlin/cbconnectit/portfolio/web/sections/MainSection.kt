@@ -7,14 +7,14 @@ import cbconnectit.portfolio.web.components.SocialBar
 import cbconnectit.portfolio.web.components.SocialLinkSize
 import cbconnectit.portfolio.web.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Link
-import cbconnectit.portfolio.web.models.enums.Section
 import cbconnectit.portfolio.web.models.enums.Social
+import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.styles.MainButtonStyle
 import cbconnectit.portfolio.web.styles.MainImageStyle
-import cbconnectit.portfolio.web.styles.primary
 import cbconnectit.portfolio.web.utils.Constants.FONT_FAMILY
 import cbconnectit.portfolio.web.utils.Constants.SECTION_WIDTH
 import cbconnectit.portfolio.web.utils.Res
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.Cursor
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -34,8 +34,6 @@ import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
-import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.P
@@ -45,7 +43,7 @@ import org.jetbrains.compose.web.dom.Text
 fun MainSection() {
     Box(
         modifier = Modifier
-            .id(Section.Home.id)
+            .id(Navigation.Screen.Home.HomeSection.id)
             .scrollMargin(80.px)
             .fillMaxWidth()
             .maxWidth(SECTION_WIDTH.px),
@@ -114,7 +112,7 @@ fun MainText(breakpoint: Breakpoint) {
                     .margin(top = 0.px, bottom = 0.px)
                     .fontFamily(FONT_FAMILY)
                     .fontSize(if (breakpoint >= Breakpoint.LG) 56.px else 36.px)
-                    .color(ColorMode.current.toPalette().primary)
+                    .color(ColorMode.current.toColorScheme.primary)
                     .fontWeight(FontWeight.Bolder)
                     .toAttrs()
             ) {
@@ -152,7 +150,7 @@ fun MainText(breakpoint: Breakpoint) {
                     .borderRadius(r = 5.px)
                     .cursor(Cursor.Pointer),
                 onClick = {
-                    ctx.router.tryRoutingTo(Section.Contact.path)
+                    ctx.router.tryRoutingTo(Navigation.Screen.Home.ContactSection.path)
                 }
             ) {
                 Text(Res.String.LetsChat)

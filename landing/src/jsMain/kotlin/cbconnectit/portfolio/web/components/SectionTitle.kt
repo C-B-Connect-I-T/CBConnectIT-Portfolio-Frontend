@@ -1,14 +1,14 @@
 package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.*
-import cbconnectit.portfolio.web.models.enums.Section
-import cbconnectit.portfolio.web.styles.primary
+import cbconnectit.portfolio.web.navigation.SectionItem
 import cbconnectit.portfolio.web.svg.chevronRightSvg
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.margin
 import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.padding
 import cbconnectit.portfolio.web.utils.ObserveViewportEntered
 import cbconnectit.portfolio.web.utils.Res
+import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.TextDecorationLine
@@ -22,7 +22,6 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonSize
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.px
@@ -33,7 +32,7 @@ import org.jetbrains.compose.web.dom.Text
 @Composable
 fun SectionTitle(
     modifier: Modifier = Modifier,
-    section: Section,
+    section: SectionItem,
     alignment: Alignment.Horizontal = Alignment.Start,
     showSeeAllButton: Boolean = false,
     href: String? = null
@@ -111,7 +110,7 @@ fun SectionTitle(
                 modifier = Modifier
                     .height(2.px)
                     .width(80.px)
-                    .backgroundColor(ColorMode.current.toPalette().primary)
+                    .backgroundColor(ColorMode.current.toColorScheme.primary)
                     .borderRadius(r = 50.px)
                     .margin(
                         left = if (alignment != Alignment.End) dividerMargin else 0.px,
