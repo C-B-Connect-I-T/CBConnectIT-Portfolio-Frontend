@@ -3,7 +3,7 @@ package cbconnectit.portfolio.web.sections
 import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.ContactForm
 import cbconnectit.portfolio.web.components.SectionTitle
-import cbconnectit.portfolio.web.components.Spacer
+import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.transform
 import cbconnectit.portfolio.web.utils.ObserveViewportEntered

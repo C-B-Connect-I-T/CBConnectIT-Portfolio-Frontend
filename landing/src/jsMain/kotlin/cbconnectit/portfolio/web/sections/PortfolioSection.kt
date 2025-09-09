@@ -2,7 +2,7 @@ package cbconnectit.portfolio.web.sections
 
 import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.SectionTitle
-import cbconnectit.portfolio.web.components.Spacer
+import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.components.TextPrimaryButtonVariant
 import cbconnectit.portfolio.web.data.models.domain.Project
 import cbconnectit.portfolio.web.data.repos.ProjectRepo

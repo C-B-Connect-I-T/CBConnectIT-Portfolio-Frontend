@@ -8,6 +8,7 @@ import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.margin
 import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.padding
 import cbconnectit.portfolio.web.utils.ObserveViewportEntered
 import cbconnectit.portfolio.web.utils.Res
+import com.materialdesignsystem.components.Spacer
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign

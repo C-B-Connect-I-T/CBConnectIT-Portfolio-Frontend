@@ -1,13 +1,11 @@
 package cbconnectit.portfolio.web.pages.services.service
 
 import androidx.compose.runtime.*
-import cbconnectit.portfolio.web.components.BackToTopButton
-import cbconnectit.portfolio.web.components.OverlowMenu
-import cbconnectit.portfolio.web.components.Spacer
+import com.materialdesignsystem.components.Spacer
+import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.pages.PageLayout
 import cbconnectit.portfolio.web.styles.MainButtonStyle
 import cbconnectit.portfolio.web.utils.*
 import com.materialdesignsystem.toColorScheme
@@ -38,7 +36,6 @@ import org.jetbrains.compose.web.dom.Text
 @Page
 @Composable
 fun ServicePage() {
-    var menuOpened by remember { mutableStateOf(false) }
     val breakpoint = rememberBreakpoint()
     val ctx = rememberPageContext()
     val hasServiceIdParam = remember(ctx.route) {
@@ -58,11 +55,8 @@ fun ServicePage() {
         modifier = Modifier.fillMaxSize()
     ) {
         PageLayout(
-            Res.String.SubServicesDocumentTitle.format(service?.title),
-            false,
-            {
-                menuOpened = true
-            }
+            title = Res.String.SubServicesDocumentTitle.format(service?.title),
+            showMenuItems = false,
         ) {
             Column(
                 Modifier.fillMaxSize(),
@@ -111,12 +105,6 @@ fun ServicePage() {
 //            *     }
 //            *   }
 //        * }
-
-        BackToTopButton()
-
-        if (menuOpened) {
-            OverlowMenu { menuOpened = false }
-        }
     }
 }
 

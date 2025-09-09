@@ -2,7 +2,7 @@ package cbconnectit.portfolio.web.sections
 
 import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.components.SocialBar
-import cbconnectit.portfolio.web.components.Spacer
+import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Link
 import cbconnectit.portfolio.web.models.enums.Social
 import cbconnectit.portfolio.web.navigation.Navigation

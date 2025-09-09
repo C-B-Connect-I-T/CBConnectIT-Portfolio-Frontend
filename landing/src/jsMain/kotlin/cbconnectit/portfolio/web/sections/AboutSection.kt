@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.components.HighLightCard
 import cbconnectit.portfolio.web.components.SectionTitle
-import cbconnectit.portfolio.web.components.Spacer
+import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.svg.completedProjectsSvg
 import cbconnectit.portfolio.web.svg.experienceSvg

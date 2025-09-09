@@ -5,6 +5,7 @@ import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.extensions.getServiceTypeIcon
 import cbconnectit.portfolio.web.styles.ServicesTypeCardStyle
 import cbconnectit.portfolio.web.utils.Constants
+import com.materialdesignsystem.components.Spacer
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.TextDecorationLine

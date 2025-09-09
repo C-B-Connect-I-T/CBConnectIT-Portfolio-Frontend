@@ -3,7 +3,7 @@ package cbconnectit.portfolio.web.sections
 import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.ExperienceCard
 import cbconnectit.portfolio.web.components.SectionTitle
-import cbconnectit.portfolio.web.components.Spacer
+import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Experience
 import cbconnectit.portfolio.web.data.repos.ExperienceRepo
 import cbconnectit.portfolio.web.navigation.Navigation

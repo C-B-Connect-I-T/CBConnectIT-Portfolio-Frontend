@@ -1,15 +1,13 @@
 package cbconnectit.portfolio.web.pages.services
 
 import androidx.compose.runtime.*
-import cbconnectit.portfolio.web.components.BackToTopButton
-import cbconnectit.portfolio.web.components.OverlowMenu
 import cbconnectit.portfolio.web.components.ServiceTypeCard
-import cbconnectit.portfolio.web.components.Spacer
+import com.materialdesignsystem.components.Spacer
+import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import cbconnectit.portfolio.web.models.enums.TechnologyStacks
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.pages.PageLayout
 import cbconnectit.portfolio.web.styles.MainButtonStyle
 import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
@@ -45,7 +43,6 @@ import org.jetbrains.compose.web.dom.Text
 @Page
 @Composable
 fun ServicesPage() {
-    var menuOpened by remember { mutableStateOf(false) }
     val breakpoint = rememberBreakpoint()
     var services by remember { mutableStateOf<List<Service>>(emptyList()) }
 
@@ -57,11 +54,8 @@ fun ServicesPage() {
         modifier = Modifier.fillMaxSize(),
     ) {
         PageLayout(
-            Res.String.ServiceDocumentTitle,
-            false,
-            {
-                menuOpened = true
-            }
+            title = Res.String.ServiceDocumentTitle,
+            showMenuItems = false,
         ) {
             Column(
                 Modifier.fillMaxSize(),
@@ -81,12 +75,6 @@ fun ServicesPage() {
 
                 Spacer(Modifier.height(68.px))
             }
-        }
-
-        BackToTopButton()
-
-        if (menuOpened) {
-            OverlowMenu { menuOpened = false }
         }
     }
 }

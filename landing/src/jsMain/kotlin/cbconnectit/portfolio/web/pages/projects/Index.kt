@@ -1,14 +1,14 @@
 package cbconnectit.portfolio.web.pages.projects
 
-//import com.varabyte.kobweb.silk.components.style.ComponentStyle
-//import com.varabyte.kobweb.silk.components.style.hover
 import androidx.compose.runtime.*
-import cbconnectit.portfolio.web.components.*
+import cbconnectit.portfolio.web.components.SocialBar
+import cbconnectit.portfolio.web.components.SocialLinkSize
+import com.materialdesignsystem.components.Spacer
+import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Project
 import cbconnectit.portfolio.web.data.models.domain.Tag
 import cbconnectit.portfolio.web.data.repos.ProjectRepo
 import cbconnectit.portfolio.web.data.repos.TagRepo
-import cbconnectit.portfolio.web.pages.PageLayout
 import cbconnectit.portfolio.web.utils.*
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.*
@@ -53,7 +53,6 @@ import org.w3c.dom.HTMLElement
 @Composable
 fun ProjectsPage() {
     val ctx = rememberPageContext()
-    var menuOpened by remember { mutableStateOf(false) }
     val breakpoint = rememberBreakpoint()
     var projects by remember { mutableStateOf<List<Project>>(emptyList()) }
     var tags by remember { mutableStateOf<List<Tag>>(emptyList()) }
@@ -79,11 +78,8 @@ fun ProjectsPage() {
         modifier = Modifier.fillMaxSize(),
     ) {
         PageLayout(
-            Res.String.Projects,
-            false,
-            {
-                menuOpened = true
-            }
+            title = Res.String.Projects,
+            showMenuItems = false,
         ) {
             Column(
                 Modifier.fillMaxSize(),
@@ -114,12 +110,6 @@ fun ProjectsPage() {
 //            *     }
 //            *   }
 //        * }
-
-        BackToTopButton()
-
-        if (menuOpened) {
-            OverlowMenu { menuOpened = false }
-        }
     }
 }
 

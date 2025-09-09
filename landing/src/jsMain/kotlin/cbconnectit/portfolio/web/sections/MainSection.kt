@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.components.Backdrop
 import cbconnectit.portfolio.web.components.SocialBar
 import cbconnectit.portfolio.web.components.SocialLinkSize
-import cbconnectit.portfolio.web.components.Spacer
+import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Link
 import cbconnectit.portfolio.web.models.enums.Social
 import cbconnectit.portfolio.web.navigation.Navigation
