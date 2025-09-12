@@ -2,7 +2,6 @@ package cbconnectit.portfolio.web.pages.projects
 
 import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.SocialBar
-import cbconnectit.portfolio.web.components.SocialLinkSize
 import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Project
@@ -305,7 +304,6 @@ private fun ProjectsList(breakpoint: Breakpoint, projects: List<Project>) {
                             attrs = Modifier
                                 .fontSize(32.px)
                                 .fontWeight(FontWeight.Bold)
-                                .fontFamily(Constants.FONT_FAMILY)
                                 .toAttrs()
                         ) {
                             Text(project.title)
@@ -314,7 +312,6 @@ private fun ProjectsList(breakpoint: Breakpoint, projects: List<Project>) {
                         P(
                             attrs = Modifier
                                 .fontSize(18.px)
-                                .fontFamily(Constants.FONT_FAMILY)
                                 .toAttrs {
                                     markdownParagraph(project.description)
                                 }
@@ -368,6 +365,6 @@ private fun ProjectImageWithLinks(breakpoint: Breakpoint, project: Project) {
 
         Spacer(Modifier.height(36.px))
 
-        SocialBar(true, links = project.links, itemGap = 20.px, socialLinkSize = SocialLinkSize.LG)
+        SocialBar(true, links = project.links, itemGap = 20.px)
     }
 }

@@ -8,8 +8,6 @@ object Constants {
 
     const val QUERY_PARAM = "query"
 
-    const val FONT_FAMILY = "Roboto"
-
     const val LOREM_IPSUM_SHORTEST =
         "Lorum ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     const val LOREM_IPSUM_SHORT =

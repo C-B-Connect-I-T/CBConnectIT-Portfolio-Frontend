@@ -3,12 +3,13 @@ package cbconnectit.portfolio.web.components
 import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.navigation.SectionItem
 import cbconnectit.portfolio.web.svg.chevronRightSvg
-import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.margin
 import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.padding
 import cbconnectit.portfolio.web.utils.ObserveViewportEntered
 import cbconnectit.portfolio.web.utils.Res
 import com.materialdesignsystem.components.Spacer
+import com.materialdesignsystem.components.widgets.DsBorderRadius
+import com.materialdesignsystem.components.widgets.TextButton
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
@@ -20,8 +21,8 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
-import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonSize
+import com.varabyte.kobweb.silk.components.forms.ButtonVars
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.web.css.ms
@@ -76,7 +77,6 @@ fun SectionTitle(
                         left = if (alignment != Alignment.End) titleMargin else 0.px,
                         right = if (alignment == Alignment.End) titleMargin else 0.px,
                     )
-                    .fontFamily(Constants.FONT_FAMILY)
                     .fontSize(16.px)
                     .fontWeight(FontWeight.Normal)
                     .transition(Transition.of(padding, 1000.ms))
@@ -96,7 +96,6 @@ fun SectionTitle(
                         left = if (alignment != Alignment.End) subtitleMargin else 0.px,
                         right = if (alignment == Alignment.End) subtitleMargin else 0.px,
                     )
-                    .fontFamily(Constants.FONT_FAMILY)
                     .fontSize(28.px)
                     .fontWeight(FontWeight.Bold)
                     .transition(Transition.of(padding, 1000.ms))
@@ -128,10 +127,12 @@ fun SectionTitle(
                     .textDecorationLine(TextDecorationLine.None)
                     .toAttrs()
             ) {
-                Button(
-                    variant = TextPrimaryButtonVariant,
+                TextButton(
+                    modifier = Modifier
+                        .setVariable(ButtonVars.Color, ColorMode.current.toColorScheme.primary),
+                    borderRadius = DsBorderRadius(6.px),
                     size = ButtonSize.SM,
-                    onClick = {}
+                    onClick = { }
                 ) {
                     Text(Res.String.SeeAll)
 

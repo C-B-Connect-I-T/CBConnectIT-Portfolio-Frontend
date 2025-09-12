@@ -4,14 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.components.Backdrop
 import cbconnectit.portfolio.web.components.SocialBar
-import cbconnectit.portfolio.web.components.SocialLinkSize
 import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Link
 import cbconnectit.portfolio.web.models.enums.Social
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.styles.MainButtonStyle
 import cbconnectit.portfolio.web.styles.MainImageStyle
-import cbconnectit.portfolio.web.utils.Constants.FONT_FAMILY
 import cbconnectit.portfolio.web.utils.Constants.SECTION_WIDTH
 import cbconnectit.portfolio.web.utils.Res
 import com.materialdesignsystem.toColorScheme
@@ -84,7 +82,6 @@ fun MainText(breakpoint: Breakpoint) {
         val ctx = rememberPageContext()
 
         SocialBar(
-            socialLinkSize = SocialLinkSize.LG,
             links = Social.entries.map { Link(id = it.name, type = it.type, url = it.link, createdAt = "", updatedAt = "") },
             itemGap = 20.px
         )
@@ -99,7 +96,6 @@ fun MainText(breakpoint: Breakpoint) {
             P(
                 attrs = Modifier
                     .margin(top = 0.px, bottom = 0.px)
-                    .fontFamily(FONT_FAMILY)
                     .fontSize(if (breakpoint >= Breakpoint.LG) 36.px else 24.px)
                     .fontWeight(FontWeight.Normal)
                     .toAttrs()
@@ -110,7 +106,6 @@ fun MainText(breakpoint: Breakpoint) {
             P(
                 attrs = Modifier
                     .margin(top = 0.px, bottom = 0.px)
-                    .fontFamily(FONT_FAMILY)
                     .fontSize(if (breakpoint >= Breakpoint.LG) 56.px else 36.px)
                     .color(ColorMode.current.toColorScheme.primary)
                     .fontWeight(FontWeight.Bolder)
@@ -122,7 +117,6 @@ fun MainText(breakpoint: Breakpoint) {
             P(
                 attrs = Modifier
                     .margin(top = 0.px, bottom = 5.px)
-                    .fontFamily(FONT_FAMILY)
                     .fontSize(22.px)
                     .fontWeight(FontWeight.Bold)
                     .toAttrs()
@@ -134,7 +128,6 @@ fun MainText(breakpoint: Breakpoint) {
                 attrs = Modifier
                     .fillMaxWidth()
                     .margin(top = 0.px, bottom = 0.px)
-                    .fontFamily(FONT_FAMILY)
                     .fontWeight(FontWeight.Normal)
                     .toAttrs()
             ) {

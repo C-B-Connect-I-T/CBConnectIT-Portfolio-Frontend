@@ -30,13 +30,22 @@ fun BackToTopButton() {
         })
     }
 
+    // TODO: look into rotation style on hover
+    //     base {
+    //        Modifier.rotate(a = 180.deg)
+    //            .transition(Transition.of("rotate", 300.ms))
+    //    }
+    //    hover {
+    //        Modifier.rotate(a = 0.deg)
+    //    }
+
     DsFloatingActionButton(
         modifier = Modifier
             .position(Position.Fixed)
             .visibility(if ((scroll ?: 0.0) > 400.0) Visibility.Visible else Visibility.Hidden)
             .pointerEvents(PointerEvents.Auto)
-            .right(if (breakpoint <= Breakpoint.SM) 30.px else 40.px)
-            .bottom(if (breakpoint <= Breakpoint.SM) 30.px else 40.px)
+            .right(if (breakpoint <= Breakpoint.SM) 30.px else 100.px)
+            .bottom(if (breakpoint <= Breakpoint.SM) 30.px else 100.px)
             .setVariable(ButtonVars.BorderRadius, 12.px),
         onClick = {
             document.documentElement?.scrollTo(x = 0.0, y = 0.0)

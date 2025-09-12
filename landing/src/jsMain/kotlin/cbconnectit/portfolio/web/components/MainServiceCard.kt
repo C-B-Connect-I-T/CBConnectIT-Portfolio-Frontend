@@ -6,9 +6,10 @@ import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.extensions.getServiceTypeIcon
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.svg.chevronRightSvg
-import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import com.materialdesignsystem.components.Spacer
+import com.materialdesignsystem.components.widgets.DsBorderRadius
+import com.materialdesignsystem.components.widgets.TextButton
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextDecorationLine
@@ -17,8 +18,8 @@ import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
-import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonSize
+import com.varabyte.kobweb.silk.components.forms.ButtonVars
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.A
@@ -40,7 +41,6 @@ fun MainServiceCard(service: Service, modifier: Modifier = Modifier) {
                     attrs = Modifier
                         .fillMaxWidth()
                         .margin(top = 0.px, bottom = 0.px)
-                        .fontFamily(Constants.FONT_FAMILY)
                         .fontSize(22.px)
                         .fontWeight(FontWeight.Bold)
                         .toAttrs()
@@ -54,7 +54,6 @@ fun MainServiceCard(service: Service, modifier: Modifier = Modifier) {
                     attrs = Modifier
                         .fillMaxWidth()
                         .margin(top = 0.px, bottom = 0.px)
-                        .fontFamily(Constants.FONT_FAMILY)
                         .fontSize(14.px)
                         .fontWeight(FontWeight.Normal)
                         .toAttrs()
@@ -71,8 +70,10 @@ fun MainServiceCard(service: Service, modifier: Modifier = Modifier) {
                     .textDecorationLine(TextDecorationLine.None)
                     .toAttrs()
             ) {
-                Button(
-                    variant = TextPrimaryButtonVariant,
+                TextButton(
+                    modifier = Modifier
+                        .setVariable(ButtonVars.Color, colorMode.toColorScheme.primary),
+                    borderRadius = DsBorderRadius(6.px),
                     size = ButtonSize.SM,
                     onClick = { }
                 ) {

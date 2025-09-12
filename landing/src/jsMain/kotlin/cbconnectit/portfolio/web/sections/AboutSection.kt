@@ -67,7 +67,6 @@ fun AboutContent() {
             attrs = Modifier
                 .fillMaxWidth(80.percent)
                 .maxWidth(780.px)
-                .fontFamily(Constants.FONT_FAMILY)
                 .fontSize(16.px)
                 .textAlign(TextAlign.Center)
                 .fontWeight(FontWeight.Normal)

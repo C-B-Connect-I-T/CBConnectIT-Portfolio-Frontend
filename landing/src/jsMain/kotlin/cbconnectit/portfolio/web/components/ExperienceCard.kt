@@ -125,7 +125,6 @@ fun ExperienceDescription(
         P(
             attrs = Modifier
                 .margin(topBottom = 0.px)
-                .fontFamily(Constants.FONT_FAMILY)
                 .fontSize(16.px)
                 .whiteSpace(WhiteSpace.PreLine)
                 .fontWeight(FontWeight.Normal)
@@ -158,8 +157,7 @@ fun ExperienceDetails(
             P(
                 attrs = Modifier
                     .margin(topBottom = 0.px)
-                    .fontFamily(Constants.FONT_FAMILY)
-                    .fontSize(20.px)
+                        .fontSize(20.px)
                     .fontWeight(FontWeight.Bold)
                     .color(ColorMode.current.toColorScheme.primary)
                     .thenIf(breakpoint > Breakpoint.MD) {
@@ -173,8 +171,7 @@ fun ExperienceDetails(
             P(
                 attrs = Modifier
                     .margin(topBottom = 0.px)
-                    .fontFamily(Constants.FONT_FAMILY)
-                    .fontSize(14.px)
+                        .fontSize(14.px)
                     .fontWeight(FontWeight.Normal)
                     .thenIf(breakpoint > Breakpoint.MD) {
                         Modifier.textAlign(TextAlign.End)
@@ -187,8 +184,7 @@ fun ExperienceDetails(
             P(
                 attrs = Modifier
                     .margin(topBottom = 0.px)
-                    .fontFamily(Constants.FONT_FAMILY)
-                    .fontSize(14.px)
+                        .fontSize(14.px)
                     .fontWeight(FontWeight.Normal)
                     .thenIf(breakpoint > Breakpoint.MD) {
                         Modifier.textAlign(TextAlign.End)

@@ -217,7 +217,6 @@ private fun ServicesPageList(breakpoint: Breakpoint, services: List<Service>) {
                             attrs = Modifier
                                 .fontSize(32.px)
                                 .fontWeight(FontWeight.Bold)
-                                .fontFamily(Constants.FONT_FAMILY)
                                 .toAttrs()
                         ) {
                             Text(service.title)
@@ -228,7 +227,6 @@ private fun ServicesPageList(breakpoint: Breakpoint, services: List<Service>) {
                         P(
                             attrs = Modifier
                                 .fontSize(22.px)
-                                .fontFamily(Constants.FONT_FAMILY)
                                 .toAttrs {
                                     markdownParagraph(service.description ?: "")
                                 }

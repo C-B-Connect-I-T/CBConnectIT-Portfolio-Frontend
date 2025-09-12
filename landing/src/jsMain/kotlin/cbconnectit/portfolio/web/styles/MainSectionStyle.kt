@@ -1,66 +1,19 @@
 package cbconnectit.portfolio.web.styles
 
-import cbconnectit.portfolio.web.utils.Identifiers.SocialBar.socialIcon
-import cbconnectit.portfolio.web.utils.Identifiers.SocialBar.socialLink
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.color
-import com.varabyte.kobweb.compose.ui.modifiers.transform
 import com.varabyte.kobweb.compose.ui.modifiers.transition
 import com.varabyte.kobweb.compose.ui.modifiers.width
 import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.silk.style.CssStyle
-import com.varabyte.kobweb.silk.style.selectors.anyLink
 import com.varabyte.kobweb.silk.style.selectors.hover
-import com.varabyte.kobweb.silk.theme.colors.palette.link
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.ExperimentalComposeWebApi
-import org.jetbrains.compose.web.css.*
-
-val CbNavigationItemStyle = CssStyle {
-    base {
-        Modifier
-            .color(colorMode.toPalette().link.default)
-            .transition(Transition.of(property = "color", duration = 200.ms))
-    }
-
-    anyLink {
-        Modifier
-            .color(colorMode.toPalette().link.default)
-    }
-
-    hover {
-        Modifier
-            .color(colorMode.toColorScheme.primary)
-    }
-}
-
-@OptIn(ExperimentalComposeWebApi::class)
-val LogoStyle = CssStyle {
-    base {
-        Modifier
-            .transform { rotate(0.deg) }
-            .transition(Transition.of(property = "transform", duration = 200.ms))
-    }
-
-    hover {
-        Modifier
-            .transform { rotate((-10).deg) }
-    }
-}
-
-val SocialLinkStyle = CssStyle {
-    cssRule(" > #$socialLink > #$socialIcon") {
-        Modifier
-            .color(colorMode.toColorScheme.onSurface)
-            .transition(Transition.of(property = "color", duration = 200.ms))
-    }
-
-    cssRule(":hover > #$socialLink > #$socialIcon") {
-        Modifier.color(colorMode.toColorScheme.primary)
-    }
-}
+import org.jetbrains.compose.web.css.filter
+import org.jetbrains.compose.web.css.ms
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.px
 
 val MainButtonStyle = CssStyle {
     base {

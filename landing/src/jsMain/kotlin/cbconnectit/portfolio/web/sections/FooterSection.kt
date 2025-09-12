@@ -6,7 +6,6 @@ import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Link
 import cbconnectit.portfolio.web.models.enums.Social
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.styles.CbNavigationItemStyle
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.logoImage
 import com.materialdesignsystem.components.sections.NavigationItem

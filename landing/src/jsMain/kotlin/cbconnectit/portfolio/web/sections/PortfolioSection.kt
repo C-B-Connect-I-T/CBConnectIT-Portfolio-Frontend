@@ -2,8 +2,6 @@ package cbconnectit.portfolio.web.sections
 
 import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.SectionTitle
-import com.materialdesignsystem.components.Spacer
-import cbconnectit.portfolio.web.components.TextPrimaryButtonVariant
 import cbconnectit.portfolio.web.data.models.domain.Project
 import cbconnectit.portfolio.web.data.repos.ProjectRepo
 import cbconnectit.portfolio.web.navigation.Navigation
@@ -13,6 +11,9 @@ import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.maxLines
+import com.materialdesignsystem.components.Spacer
+import com.materialdesignsystem.components.widgets.DsBorderRadius
+import com.materialdesignsystem.components.widgets.TextButton
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.functions.url
@@ -25,9 +26,8 @@ import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.toAttrs
-import com.varabyte.kobweb.core.rememberPageContext
-import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonSize
+import com.varabyte.kobweb.silk.components.forms.ButtonVars
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
@@ -56,14 +56,12 @@ fun PortfolioContent() {
 
     var works by remember { mutableStateOf(emptyList<Project>()) }
     var selectedWork by remember { mutableStateOf<Project?>(null) }
-    val pageContext = rememberPageContext()
+    val breakpoint = rememberBreakpoint()
 
     LaunchedEffect(Unit) {
         works = ProjectRepo.getProjects(Config.baseUrl)
         selectedWork = works.first()
     }
-
-    val breakpoint = rememberBreakpoint()
 
     Column(
         modifier = Modifier
@@ -81,8 +79,10 @@ fun PortfolioContent() {
             Modifier
                 .borderRadius(20.px)
                 .backgroundImage(url(selectedWork?.bannerImageUrl ?: Res.Image.portfolio1))
-                .backgroundSize(BackgroundSize.Cover)
-                .backgroundPosition(BackgroundPosition.of(CSSPosition(50.percent, 50.percent)))
+                .background {
+                    size(BackgroundSize.Cover)
+                    position(BackgroundPosition.of(CSSPosition(50.percent, 50.percent)))
+                }
                 .fillMaxWidth()
         ) {
             Box(
@@ -179,13 +179,12 @@ fun PortfolioContent() {
                         }
                     }
 
-                    Button(
+                    TextButton(
                         modifier = Modifier
+                            .setVariable(ButtonVars.Color, ColorMode.current.toColorScheme.inverseOnSurface)
                             .border(1.px, LineStyle.Solid, ColorMode.current.toColorScheme.onPrimary)
-                            .borderRadius(6.px)
-                            .visibility(Visibility.Hidden)
-                            .color(ColorMode.current.toColorScheme.onPrimary),
-                        variant = TextPrimaryButtonVariant,
+                            .visibility(Visibility.Hidden),
+                        borderRadius = DsBorderRadius(6.px),
                         size = ButtonSize.SM,
                         onClick = {
                             //TODO: add navigation!

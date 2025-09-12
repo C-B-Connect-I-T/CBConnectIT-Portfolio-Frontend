@@ -48,7 +48,6 @@ fun ServiceTypeCard(
                     .fillMaxWidth()
                     .textAlign(TextAlign.Center)
                     .margin(topBottom = 0.px)
-                    .fontFamily(Constants.FONT_FAMILY)
                     .fontSize(22.px)
                     .toAttrs()
             ) {
