@@ -2,10 +2,11 @@ package cbconnectit.portfolio.web
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import cbconnectit.portfolio.web.data.NetworkingConfig
 import cbconnectit.portfolio.web.styles.CbDarkColorScheme
 import cbconnectit.portfolio.web.styles.CbLightColorScheme
-import cbconnectit.portfolio.web.utils.Config
 import com.materialdesignsystem.MaterialTheme
+import com.materialdesignsystem.constants.Constants
 import com.materialdesignsystem.extensions.ButtonSizeXL
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -25,7 +26,10 @@ import com.varabyte.kobweb.silk.init.registerStyleBase
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.*
+import com.varabyte.kobweb.silk.theme.colors.palette.background
+import com.varabyte.kobweb.silk.theme.colors.palette.button
+import com.varabyte.kobweb.silk.theme.colors.palette.color
+import com.varabyte.kobweb.silk.theme.colors.palette.link
 import com.varabyte.kobweb.silk.theme.colors.systemPreference
 import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.vh
@@ -92,7 +96,7 @@ fun updateTheme(ctx: InitSilkContext) {
 @Composable
 fun AppEntry(content: @Composable () -> Unit) {
     MaterialTheme.setSchemes(lightScheme = CbLightColorScheme, darkScheme = CbDarkColorScheme)
-    Config.init(AppGlobals.get("BASE_URL") ?: "")
+    NetworkingConfig.init(AppGlobals[Constants.BASE_URL] ?: "")
 
     SilkApp {
         val colorMode = ColorMode.current

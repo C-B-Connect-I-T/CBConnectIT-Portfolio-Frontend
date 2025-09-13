@@ -1,4 +1,4 @@
-package cbconnectit.portfolio.web.sections
+package cbconnectit.portfolio.web.pages.sections
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -8,7 +8,6 @@ import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.svg.completedProjectsSvg
 import cbconnectit.portfolio.web.svg.experienceSvg
-import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.format
 import com.materialdesignsystem.toColorScheme

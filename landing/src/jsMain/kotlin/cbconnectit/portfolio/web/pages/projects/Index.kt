@@ -68,9 +68,9 @@ fun ProjectsPage() {
     }
 
     LaunchedEffect(Unit) {
-        projects = ProjectRepo.getProjects(Config.baseUrl)
+        projects = ProjectRepo.getProjects()
 
-        tags = TagRepo.getTags(Config.baseUrl)
+        tags = TagRepo.getTags()
     }
 
     Box(

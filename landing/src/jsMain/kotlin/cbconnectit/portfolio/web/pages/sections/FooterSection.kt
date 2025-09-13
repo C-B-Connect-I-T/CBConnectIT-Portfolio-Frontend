@@ -1,4 +1,4 @@
-package cbconnectit.portfolio.web.sections
+package cbconnectit.portfolio.web.pages.sections
 
 import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.components.SocialBar
@@ -6,11 +6,8 @@ import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Link
 import cbconnectit.portfolio.web.models.enums.Social
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.logoImage
 import com.materialdesignsystem.components.sections.NavigationItem
-import com.varabyte.kobweb.compose.css.FontWeight
-import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -19,9 +16,7 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.graphics.Image
-import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
-import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.px
@@ -31,7 +26,6 @@ fun FooterSection(showMenu: Boolean, modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .maxWidth(Constants.SECTION_WIDTH.px)
             .padding(topBottom = 32.px)
             .then(modifier),
         contentAlignment = Alignment.Center

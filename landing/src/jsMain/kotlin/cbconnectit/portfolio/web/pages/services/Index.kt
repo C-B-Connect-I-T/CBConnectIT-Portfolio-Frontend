@@ -2,17 +2,16 @@ package cbconnectit.portfolio.web.pages.services
 
 import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.ServiceTypeCard
-import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import cbconnectit.portfolio.web.models.enums.TechnologyStacks
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.styles.MainButtonStyle
-import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.markdownParagraph
+import com.materialdesignsystem.components.Spacer
+import com.materialdesignsystem.components.widgets.FilledButton
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.functions.url
@@ -27,10 +26,8 @@ import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.core.rememberPageContext
-import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
-import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.*
@@ -47,7 +44,7 @@ fun ServicesPage() {
     var services by remember { mutableStateOf<List<Service>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        services = ServiceRepo.getServices(Config.baseUrl)
+        services = ServiceRepo.getServices()
     }
 
     Box(
@@ -240,8 +237,7 @@ private fun ServicesPageList(breakpoint: Breakpoint, services: List<Service>) {
                                 .textDecorationLine(TextDecorationLine.None)
                                 .toAttrs()
                         ) {
-                            Button(
-                                modifier = MainButtonStyle.toModifier(),
+                            FilledButton(
                                 onClick = {}
                             ) {
                                 Text(Res.String.LearnMore)

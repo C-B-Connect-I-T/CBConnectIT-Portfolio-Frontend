@@ -1,17 +1,22 @@
 package cbconnectit.portfolio.web.data.repos
 
+import cbconnectit.portfolio.web.data.NetworkingConfig
+import cbconnectit.portfolio.web.data.getRequest
+import cbconnectit.portfolio.web.data.models.NetworkResponse
 import cbconnectit.portfolio.web.data.models.domain.Testimonial
 import cbconnectit.portfolio.web.data.models.domain.toTestimonial
+import cbconnectit.portfolio.web.data.models.dto.responses.ErrorResponse
 import cbconnectit.portfolio.web.data.models.dto.responses.TestimonialDto
-import com.varabyte.kobweb.browser.http.http
-import kotlinx.browser.window
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 object TestimonialRepo {
+    private val testimonialUrl = "${NetworkingConfig.baseUrl}/api/v1/testimonials"
 
-    suspend fun getTestimonials(baseUrl: String): List<Testimonial> {
-        val responseText = window.http.get("${baseUrl}/api/v1/testimonials").decodeToString()
-        return Json.decodeFromString<List<TestimonialDto>>(responseText).map { it.toTestimonial() }
+    suspend fun getTestimonials(): List<Testimonial> {
+        val response: NetworkResponse<List<TestimonialDto>, ErrorResponse> = getRequest(testimonialUrl, allowUnauthenticated = true)
+
+        return when (response) {
+            is NetworkResponse.Success -> response.body.map { it.toTestimonial() }
+            else -> emptyList()
+        }
     }
 }

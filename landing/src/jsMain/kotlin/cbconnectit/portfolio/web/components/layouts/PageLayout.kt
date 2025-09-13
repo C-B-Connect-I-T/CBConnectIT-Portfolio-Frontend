@@ -4,7 +4,7 @@ import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.BackToTopButton
 import cbconnectit.portfolio.web.components.Header
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.sections.FooterSection
+import cbconnectit.portfolio.web.pages.sections.FooterSection
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.format
 import cbconnectit.portfolio.web.utils.logoImage

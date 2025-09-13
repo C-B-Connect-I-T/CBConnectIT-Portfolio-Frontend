@@ -1,13 +1,13 @@
 package cbconnectit.portfolio.web.pages.services.service
 
 import androidx.compose.runtime.*
-import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.styles.MainButtonStyle
 import cbconnectit.portfolio.web.utils.*
+import com.materialdesignsystem.components.Spacer
+import com.materialdesignsystem.components.widgets.FilledButton
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.functions.url
@@ -21,10 +21,8 @@ import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.core.rememberPageContext
-import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
-import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.*
@@ -47,7 +45,7 @@ fun ServicePage() {
     LaunchedEffect(Unit) {
         if (hasServiceIdParam) {
             val serviceId = ctx.route.params.getValue(Identifiers.PathParams.ServiceId)
-            service = ServiceRepo.getServiceById(Config.baseUrl, serviceId)
+            service = ServiceRepo.getServiceById(serviceId)
         }
     }
 
@@ -239,8 +237,7 @@ fun SubServices(subServices: List<Service>, breakpoint: Breakpoint) {
                                 .textDecorationLine(TextDecorationLine.None)
                                 .toAttrs()
                         ) {
-                            Button(
-                                modifier = MainButtonStyle.toModifier(),
+                            FilledButton(
                                 onClick = {}
                             ) {
                                 Text(Res.String.LearnMore)

@@ -1,13 +1,11 @@
-package cbconnectit.portfolio.web.sections
+package cbconnectit.portfolio.web.pages.sections
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import cbconnectit.portfolio.web.components.SectionTitle
-import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.components.TestimonialCard
 import cbconnectit.portfolio.web.data.models.domain.Testimonial
-import cbconnectit.portfolio.web.data.repos.TestimonialRepo
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Identifiers.AttributeName.style
 import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.gridAutoRows
@@ -16,8 +14,8 @@ import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.gridRowGap
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.content
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.grid
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.item
+import com.materialdesignsystem.components.Spacer
 import com.varabyte.kobweb.compose.css.GridEntry
-import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -42,37 +40,8 @@ import org.w3c.dom.get
 import kotlin.math.ceil
 
 @Composable
-fun TestimonialSection() {
-    Box(
-        modifier = Modifier
-            .id(Navigation.Screen.Home.TestimonialSection.id)
-            .scrollMargin(80.px)
-            .fillMaxWidth()
-            .maxWidth(Constants.SECTION_WIDTH.px),
-        contentAlignment = Alignment.Center
-    ) {
-        TestimonialContent()
-    }
-}
-
-private fun recalculateGridItems() {
-    CoroutineScope(Dispatchers.Default).launch {
-        delay(100)
-        resizeAllGridItems()
-    }
-}
-
-@Composable
-fun TestimonialContent() {
+fun TestimonialSection(testimonials: List<Testimonial>) {
     val breakpoint = rememberBreakpoint()
-    var testimonials by remember { mutableStateOf(emptyList<Testimonial>()) }
-
-    LaunchedEffect(Unit) {
-        testimonials = TestimonialRepo.getTestimonials(Config.baseUrl)
-
-        delay(250)
-        resizeAllGridItems()
-    }
 
     window.addEventListener("resize", {
         recalculateGridItems()
@@ -82,9 +51,17 @@ fun TestimonialContent() {
         recalculateGridItems()
     })
 
+    LaunchedEffect(testimonials) {
+        delay(250)
+        resizeAllGridItems()
+    }
+
     Column(
         modifier = Modifier
-            .fillMaxWidth(if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent),
+            .id(Navigation.Screen.Home.TestimonialSection.id)
+            .scrollMargin(80.px)
+            .fillMaxWidth(if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent)
+            .maxWidth(Constants.SECTION_WIDTH.px),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SectionTitle(
@@ -124,6 +101,13 @@ fun TestimonialContent() {
                 TestimonialCard(testimonial = it)
             }
         }
+    }
+}
+
+private fun recalculateGridItems() {
+    CoroutineScope(Dispatchers.Default).launch {
+        delay(100)
+        resizeAllGridItems()
     }
 }
 

@@ -2,28 +2,28 @@ package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import cbconnectit.portfolio.web.backdropGradient
 import cbconnectit.portfolio.web.data.models.domain.Experience
 import cbconnectit.portfolio.web.extensions.techStackSvg
-import cbconnectit.portfolio.web.utils.Constants
+import cbconnectit.portfolio.web.primaryGradient
 import com.materialdesignsystem.components.Spacer
 import com.materialdesignsystem.toColorScheme
+import com.varabyte.kobweb.compose.css.BoxShadow
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.WhiteSpace
-import com.varabyte.kobweb.compose.css.functions.LinearGradient
-import com.varabyte.kobweb.compose.css.functions.linearGradient
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
-import com.varabyte.kobweb.compose.ui.*
-import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.thenIf
+import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.background
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.css.DisplayStyle
 import org.jetbrains.compose.web.css.LineStyle
 import org.jetbrains.compose.web.css.percent
@@ -37,12 +37,10 @@ fun ExperienceCard(
     active: Boolean = false,
     experience: Experience,
 ) {
-//    @Composable // TODO: check what this is about?
+    val baseModifier = Modifier.fillMaxWidth().display(DisplayStyle.Grid)
     if (breakpoint > Breakpoint.MD) {
         Row(
-            Modifier
-                .fillMaxWidth()
-                .display(DisplayStyle.Grid)
+            modifier = baseModifier
                 .gridTemplateColumns {
                     size(20.percent)
                     size(10.percent)
@@ -56,8 +54,7 @@ fun ExperienceCard(
         }
     } else {
         Row(
-            Modifier.fillMaxWidth()
-                .display(DisplayStyle.Grid)
+            modifier = baseModifier
                 .gridTemplateColumns {
                     size(15.percent)
                     size(85.percent)
@@ -65,37 +62,30 @@ fun ExperienceCard(
         ) {
             ExperienceNumber(active, experience)
 
-            Column {
-                Spacer(Modifier.height(20.px))
+            Column(
+                modifier = Modifier.margin(topBottom = 20.px),
+                verticalArrangement = Arrangement.spacedBy(8.px)
+            ) {
                 ExperienceDetails(breakpoint, experience)
-                Spacer(Modifier.height(8.px))
                 ExperienceDescription(breakpoint, active, experience.description)
-                Spacer(Modifier.height(20.px))
             }
         }
     }
 }
 
 @Composable
-fun ExperienceDescription(
+private fun ExperienceDescription(
     breakpoint: Breakpoint,
     active: Boolean,
     description: String
 ) {
     val colorMode by ColorMode.currentState
 
-    val gradient = if (colorMode.isLight) {
-        linearGradient(LinearGradient.Direction.ToBottomRight) {
-            add(Color.rgb(237, 240, 242))
-            add(Colors.White)
-        }
-    } else {
-        linearGradient(LinearGradient.Direction.ToBottomRight) {
-            add(Color.rgb(20, 22, 28))
-            add(Color.rgb(76, 79, 82))
-        }
-    }
+    val gradient = colorMode.backdropGradient
+    val activeGradient = colorMode.primaryGradient
 
+    // TODO: could be replaced with a DsCard in the future...
+    //      but it requires some adjustments to the DsCard to be more flexible and have more styles
     Box(
         modifier = Modifier.fillMaxWidth()
             .thenIf(breakpoint > Breakpoint.MD) {
@@ -103,24 +93,14 @@ fun ExperienceDescription(
             }
             .padding(all = 14.px)
             .color(if (active) colorMode.toColorScheme.onPrimary else colorMode.toColorScheme.onSurface)
-            .backgroundImage(
-                if (active) {
-                    linearGradient(LinearGradient.Direction.ToBottomRight) {
-                        add(colorMode.toColorScheme.primary)
-                        add(colorMode.toColorScheme.primary)
-                    }
-                } else {
-                    gradient
-                }
-            )
+            .backgroundImage(if (active) activeGradient else gradient)
             .borderRadius(12.px)
-            .attrsModifier {
-                style {
-                    // TODO: replace this when this ticket is fixed "https://github.com/varabyte/kobweb/issues/247"
-                    // "elevation Light 2 ----- Material 3
-                    property("box-shadow", "rgba(0, 0, 0, 0.3) 0px 1px 2px 0px, rgba(0, 0, 0, 0.15) 0px 2px 6px 2px")
-                }
-            }
+            .boxShadow(
+                listOf(
+                    BoxShadow.of(0.px, 1.px, 2.px, 0.px, Colors.Black.copyf(alpha = 0.3f)),
+                    BoxShadow.of(0.px, 2.px, 6.px, 2.px, Colors.Black.copyf(alpha = 0.15f))
+                )
+            )
     ) {
         P(
             attrs = Modifier
@@ -137,7 +117,7 @@ fun ExperienceDescription(
 }
 
 @Composable
-fun ExperienceDetails(
+private fun ExperienceDetails(
     breakpoint: Breakpoint,
     experience: Experience,
 ) {
@@ -157,7 +137,7 @@ fun ExperienceDetails(
             P(
                 attrs = Modifier
                     .margin(topBottom = 0.px)
-                        .fontSize(20.px)
+                    .fontSize(20.px)
                     .fontWeight(FontWeight.Bold)
                     .color(ColorMode.current.toColorScheme.primary)
                     .thenIf(breakpoint > Breakpoint.MD) {
@@ -171,7 +151,7 @@ fun ExperienceDetails(
             P(
                 attrs = Modifier
                     .margin(topBottom = 0.px)
-                        .fontSize(14.px)
+                    .fontSize(14.px)
                     .fontWeight(FontWeight.Normal)
                     .thenIf(breakpoint > Breakpoint.MD) {
                         Modifier.textAlign(TextAlign.End)
@@ -184,7 +164,7 @@ fun ExperienceDetails(
             P(
                 attrs = Modifier
                     .margin(topBottom = 0.px)
-                        .fontSize(14.px)
+                    .fontSize(14.px)
                     .fontWeight(FontWeight.Normal)
                     .thenIf(breakpoint > Breakpoint.MD) {
                         Modifier.textAlign(TextAlign.End)
@@ -198,7 +178,7 @@ fun ExperienceDetails(
 }
 
 @Composable
-fun ExperienceNumber(
+private fun ExperienceNumber(
     active: Boolean,
     experience: Experience
 ) {
@@ -222,11 +202,10 @@ fun ExperienceNumber(
                 .borderRadius(50.px),
             contentAlignment = Alignment.Center
         ) {
-            Column {
-                experience.tags.forEachIndexed { index, tag ->
-                    if (index != 0) {
-                        Spacer(Modifier.height(10.px))
-                    }
+            Column(
+                verticalArrangement = Arrangement.spacedBy(10.px)
+            ) {
+                experience.tags.forEach { tag ->
                     experience.techStackSvg(tag, if (active) colorMode.toColorScheme.onPrimary else colorMode.toColorScheme.primary)
                 }
             }

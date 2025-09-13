@@ -1,15 +1,12 @@
-package cbconnectit.portfolio.web.sections
+package cbconnectit.portfolio.web.pages.sections
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.components.ExperienceCard
 import cbconnectit.portfolio.web.components.SectionTitle
-import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Experience
-import cbconnectit.portfolio.web.data.repos.ExperienceRepo
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
-import com.varabyte.kobweb.compose.foundation.layout.Box
+import com.materialdesignsystem.components.Spacer
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -20,30 +17,15 @@ import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 
 @Composable
-fun ExperienceSection() {
-    Box(
+fun ExperienceSection(experiences: List<Experience>) {
+    val breakpoint = rememberBreakpoint()
+
+    Column(
         modifier = Modifier
             .id(Navigation.Screen.Home.ExperienceSection.id)
             .scrollMargin(80.px)
-            .fillMaxWidth()
+            .fillMaxWidth(if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent)
             .maxWidth(Constants.SECTION_WIDTH.px),
-        contentAlignment = Alignment.Center
-    ) {
-        ExperienceContent()
-    }
-}
-
-@Composable
-fun ExperienceContent() {
-    val breakpoint = rememberBreakpoint()
-    var experiences by remember { mutableStateOf(emptyList<Experience>()) }
-
-    LaunchedEffect(Unit) {
-        experiences = ExperienceRepo.getExperiences(Config.baseUrl)
-    }
-
-    Column(
-        modifier = Modifier.fillMaxWidth(if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SectionTitle(

@@ -1,13 +1,10 @@
-package cbconnectit.portfolio.web.sections
+package cbconnectit.portfolio.web.pages.sections
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.components.SectionTitle
 import cbconnectit.portfolio.web.data.models.domain.Project
-import cbconnectit.portfolio.web.data.repos.ProjectRepo
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.styles.ProjectNameStyle
 import cbconnectit.portfolio.web.svg.chevronRightSvg
-import cbconnectit.portfolio.web.utils.Config
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.maxLines
@@ -28,7 +25,11 @@ import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.forms.ButtonSize
 import com.varabyte.kobweb.silk.components.forms.ButtonVars
+import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.style.selectors.active
+import com.varabyte.kobweb.silk.style.selectors.focus
+import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
@@ -38,34 +39,19 @@ import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Text
 
 @Composable
-fun PortfolioSection() {
-    Box(
-        modifier = Modifier
-            .id(Navigation.Screen.Home.PortfolioSection.id)
-            .scrollMargin(80.px)
-            .fillMaxWidth()
-            .maxWidth(Constants.SECTION_WIDTH.px),
-        contentAlignment = Alignment.Center
-    ) {
-        PortfolioContent()
-    }
-}
-
-@Composable
-fun PortfolioContent() {
-
-    var works by remember { mutableStateOf(emptyList<Project>()) }
-    var selectedWork by remember { mutableStateOf<Project?>(null) }
+fun PortfolioSection(
+    projects: List<Project>,
+    selectedWork: Project?,
+    onWorkSelected: (Project) -> Unit
+) {
     val breakpoint = rememberBreakpoint()
-
-    LaunchedEffect(Unit) {
-        works = ProjectRepo.getProjects(Config.baseUrl)
-        selectedWork = works.first()
-    }
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent),
+            .id(Navigation.Screen.Home.PortfolioSection.id)
+            .scrollMargin(80.px)
+            .fillMaxWidth(if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent)
+            .maxWidth(Constants.SECTION_WIDTH.px),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SectionTitle(
@@ -108,7 +94,7 @@ fun PortfolioContent() {
                         .gap(12.px)
                         .margin(bottom = 8.px)
                 ) {
-                    works.forEach { project ->
+                    projects.forEach { project ->
                         P(
                             ProjectNameStyle.toModifier()
                                 .color(ColorMode.current.toColorScheme.onPrimary)
@@ -118,7 +104,7 @@ fun PortfolioContent() {
                                         .color(ColorMode.current.toColorScheme.onSurface)
                                 }
                                 .onClick {
-                                    selectedWork = project
+                                    onWorkSelected(project)
                                 }
                                 .padding(topBottom = 4.px, leftRight = 10.px)
                                 .margin(topBottom = 0.px)
@@ -200,5 +186,19 @@ fun PortfolioContent() {
                 }
             }
         }
+    }
+}
+
+val ProjectNameStyle = CssStyle {
+    hover {
+        Modifier.backgroundColor(colorMode.toColorScheme.surface.toRgb().copy(alpha = 50))
+    }
+
+    focus {
+        Modifier.backgroundColor(colorMode.toColorScheme.surface.toRgb().copy(alpha = 50))
+    }
+
+    active {
+        Modifier.backgroundColor(colorMode.toColorScheme.surface.toRgb().copy(alpha = 100))
     }
 }

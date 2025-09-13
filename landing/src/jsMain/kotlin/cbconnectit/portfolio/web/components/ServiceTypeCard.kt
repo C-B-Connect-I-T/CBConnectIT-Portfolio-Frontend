@@ -3,20 +3,22 @@ package cbconnectit.portfolio.web.components
 import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.extensions.getServiceTypeIcon
-import cbconnectit.portfolio.web.styles.ServicesTypeCardStyle
-import cbconnectit.portfolio.web.utils.Constants
 import com.materialdesignsystem.components.Spacer
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.TextDecorationLine
+import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.navigation.Link
+import com.varabyte.kobweb.silk.style.CssStyle
+import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Text
@@ -54,5 +56,16 @@ fun ServiceTypeCard(
                 Text(service.title)
             }
         }
+    }
+}
+
+val ServicesTypeCardStyle = CssStyle {
+    base {
+        Modifier.translateY(0.px)
+            .transition(Transition.of(property = "translate", duration = 200.ms))
+    }
+
+    hover {
+        Modifier.translateY((-10).px)
     }
 }
