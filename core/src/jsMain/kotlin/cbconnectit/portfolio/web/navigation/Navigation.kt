@@ -25,8 +25,6 @@ sealed class Navigation(val route: String) {
         }
     }
 
-
-
     sealed class External(route: String) : Navigation(route) {
         data object LinkedIn : Navigation("https://www.linkedin.com/in/christiano-bolla/")
         data object Github : Navigation("https://github.com/ShaHar91")

@@ -1,9 +1,11 @@
 package cbconnectit.portfolio.web.pages.services.service
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Service
-import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.*
 import com.materialdesignsystem.components.Spacer
@@ -31,23 +33,28 @@ import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Text
 
-@Page
+@Page("/services/service")
 @Composable
 fun ServicePage() {
-    val breakpoint = rememberBreakpoint()
     val ctx = rememberPageContext()
-    val hasServiceIdParam = remember(ctx.route) {
-        ctx.route.params.containsKey(Identifiers.PathParams.ServiceId)
+
+    val serviceId = remember(ctx.route) {
+        ctx.route.params["serviceId"]
     }
 
-    var service by remember { mutableStateOf<Service?>(null) }
+    val viewModel = remember(serviceId) { ServiceViewModel(serviceId) }
+    val state by viewModel.state.collectAsState()
 
-    LaunchedEffect(Unit) {
-        if (hasServiceIdParam) {
-            val serviceId = ctx.route.params.getValue(Identifiers.PathParams.ServiceId)
-            service = ServiceRepo.getServiceById(serviceId)
-        }
-    }
+    ServicePageContent(state = state, sendIntent = viewModel::sendIntent)
+}
+
+@Composable
+fun ServicePageContent(
+    state: ServiceContract.State,
+    sendIntent: (ServiceContract.Intent) -> Unit
+) {
+    val service = state.service
+    val breakpoint = rememberBreakpoint()
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -65,9 +72,7 @@ fun ServicePage() {
 
                 val subServices = service?.subServices
                 if (subServices.isNullOrEmpty().not()) {
-                    Spacer(Modifier.height(68.px))
-
-                    SubServices(subServices!!, breakpoint)
+                    SubServices(subServices, breakpoint)
                 }
 
                 val extraInfo = service?.extraInfo
@@ -85,7 +90,7 @@ fun ServicePage() {
                                 .fillMaxWidth(if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent)
                                 .fontSize(22.px)
                                 .toAttrs {
-                                    markdownParagraph(extraInfo!!)
+                                    markdownParagraph(extraInfo)
                                 }
 
                         )
@@ -110,8 +115,10 @@ fun ServiceBanner(service: Service?, breakpoint: Breakpoint) {
     Box(
         Modifier
             .backgroundImage(url(service?.bannerImageUrl ?: ""))
-            .backgroundSize(BackgroundSize.Cover)
-            .backgroundPosition(BackgroundPosition.of(CSSPosition(50.percent, 50.percent)))
+            .background {
+                size(BackgroundSize.Cover)
+                position(BackgroundPosition.of(CSSPosition(50.percent, 50.percent)))
+            }
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
@@ -172,9 +179,7 @@ fun SubServices(subServices: List<Service>, breakpoint: Breakpoint) {
     subServices.forEachIndexed { index, subService ->
         val leftAligned = index % 2 == 0
 
-        if (index != 0) {
-            Spacer(Modifier.height(68.px))
-        }
+        Spacer(Modifier.height(68.px))
 
         Box(
             Modifier

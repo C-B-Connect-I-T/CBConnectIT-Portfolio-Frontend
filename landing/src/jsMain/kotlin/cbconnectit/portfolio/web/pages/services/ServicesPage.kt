@@ -4,7 +4,6 @@ import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.ServiceTypeCard
 import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Service
-import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import cbconnectit.portfolio.web.models.enums.TechnologyStacks
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Constants
@@ -30,6 +29,7 @@ import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.css.AlignItems
 import org.jetbrains.compose.web.css.JustifyContent
@@ -37,41 +37,52 @@ import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Text
 
-@Page
+@Page("/services")
 @Composable
 fun ServicesPage() {
-    val breakpoint = rememberBreakpoint()
-    var services by remember { mutableStateOf<List<Service>>(emptyList()) }
+    val ctx = rememberPageContext()
+    val viewModel = remember { ServicesViewModel() }
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
-        services = ServiceRepo.getServices()
+        viewModel.effect.collectLatest {
+//            when (it) {
+//                ServicesContract.Effect.NavigateToContactSection -> ctx.router.navigateTo(Navigation.Screen.Home.ContactSection.path)
+//            }
+        }
     }
 
-    Box(
+    ServicesPageContent(state, viewModel::sendIntent)
+}
+
+@Composable
+fun ServicesPageContent(
+    state: ServicesContract.State,
+    sendIntent: (ServicesContract.Intent) -> Unit
+) {
+    val breakpoint = rememberBreakpoint()
+
+    PageLayout(
         modifier = Modifier.fillMaxSize(),
+        title = Res.String.ServiceDocumentTitle,
+        showMenuItems = false,
     ) {
-        PageLayout(
-            title = Res.String.ServiceDocumentTitle,
-            showMenuItems = false,
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+            ServicesPageHeader(breakpoint, state.services)
 
-                ServicesPageHeader(breakpoint, services)
+            Spacer(Modifier.height(68.px))
 
-                Spacer(Modifier.height(68.px))
+            ServicesPageList(breakpoint, state.services)
 
-                ServicesPageList(breakpoint, services)
+            Spacer(Modifier.height(68.px))
 
-                Spacer(Modifier.height(68.px))
+            ServicesPageTechnologyStacks(breakpoint)
 
-                ServicesPageTechnologyStacks(breakpoint)
-
-                Spacer(Modifier.height(68.px))
-            }
+            Spacer(Modifier.height(68.px))
         }
     }
 }
@@ -81,8 +92,10 @@ private fun ServicesPageHeader(breakpoint: Breakpoint, services: List<Service>) 
     Box(
         Modifier
             .backgroundImage(url(Res.Image.servicesBanner))
-            .backgroundSize(BackgroundSize.Cover)
-            .backgroundPosition(BackgroundPosition.of(CSSPosition(50.percent, 50.percent)))
+            .background {
+                size(BackgroundSize.Cover)
+                position(BackgroundPosition.of(CSSPosition(50.percent, 50.percent)))
+            }
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
