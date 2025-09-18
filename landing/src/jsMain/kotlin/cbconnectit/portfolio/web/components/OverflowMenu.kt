@@ -1,9 +1,8 @@
 package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.*
-import cbconnectit.portfolio.web.navigation.Navigation
+import cbconnectit.portfolio.web.pages.sections.NavigationItems
 import cbconnectit.portfolio.web.utils.logoImage
-import com.materialdesignsystem.components.sections.NavigationItem
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.Cursor
 import com.varabyte.kobweb.compose.css.Overflow
@@ -105,35 +104,7 @@ fun OverlowMenu(onMenuClosed: () -> Unit) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(10.px)
                 ) {
-                    NavigationItem(
-                        href = Navigation.Screen.Home.HomeSection.path,
-                        title = Navigation.Screen.Home.HomeSection.title
-                    ) { scope.closeMenu() }
-
-                    NavigationItem(
-                        href = Navigation.Screen.Home.AboutSection.path,
-                        title = Navigation.Screen.Home.AboutSection.title
-                    ) { scope.closeMenu() }
-
-                    NavigationItem(
-                        href = Navigation.Screen.Home.ServiceSection.path,
-                        title = Navigation.Screen.Home.ServiceSection.title
-                    ) { scope.closeMenu() }
-
-                    NavigationItem(
-                        href = Navigation.Screen.Home.PortfolioSection.path,
-                        title = Navigation.Screen.Home.PortfolioSection.title
-                    ) { scope.closeMenu() }
-
-                    NavigationItem(
-                        href = Navigation.Screen.Home.ExperienceSection.path,
-                        title = Navigation.Screen.Home.ExperienceSection.title
-                    ) { scope.closeMenu() }
-
-                    NavigationItem(
-                        href = Navigation.Screen.Home.ContactSection.path,
-                        title = Navigation.Screen.Home.ContactSection.title
-                    ) { scope.closeMenu() }
+                    NavigationItems { scope.closeMenu() }
                 }
             }
         }

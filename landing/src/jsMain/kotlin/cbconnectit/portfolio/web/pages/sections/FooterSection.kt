@@ -2,11 +2,12 @@ package cbconnectit.portfolio.web.pages.sections
 
 import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.components.SocialBar
-import com.materialdesignsystem.components.Spacer
 import cbconnectit.portfolio.web.data.models.domain.Link
 import cbconnectit.portfolio.web.models.enums.Social
 import cbconnectit.portfolio.web.navigation.Navigation
+import cbconnectit.portfolio.web.navigation.SectionItem
 import cbconnectit.portfolio.web.utils.logoImage
+import com.materialdesignsystem.components.Spacer
 import com.materialdesignsystem.components.sections.NavigationItem
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -15,6 +16,7 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
@@ -57,7 +59,7 @@ fun FooterContent(showMenu: Boolean) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(20.px, Alignment.CenterHorizontally),
                 ) {
-                    FooterMenu()
+                    NavigationItems(true)
                 }
             } else {
                 Column(
@@ -65,7 +67,7 @@ fun FooterContent(showMenu: Boolean) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(20.px)
                 ) {
-                    FooterMenu()
+                    NavigationItems(true)
                 }
             }
         }
@@ -81,42 +83,57 @@ fun FooterContent(showMenu: Boolean) {
 }
 
 @Composable
-fun FooterMenu() {
-    val linkStyle = Modifier.fontSize(12.px)
+fun NavigationItems(
+    isFooterItems: Boolean = false,
+    onNavigationItemClicked: (SectionItem) -> Unit = {}
+) {
+    val linkStyle = Modifier.thenIf(isFooterItems) { Modifier.fontSize(12.px) }
 
     NavigationItem(
         modifier = linkStyle,
         href = Navigation.Screen.Home.HomeSection.path,
         title = Navigation.Screen.Home.HomeSection.title
-    )
+    ) {
+        onNavigationItemClicked(Navigation.Screen.Home.HomeSection)
+    }
 
     NavigationItem(
         modifier = linkStyle,
         href = Navigation.Screen.Home.AboutSection.path,
         title = Navigation.Screen.Home.AboutSection.title
-    )
+    ) {
+        onNavigationItemClicked(Navigation.Screen.Home.AboutSection)
+    }
 
     NavigationItem(
         modifier = linkStyle,
         href = Navigation.Screen.Home.ServiceSection.path,
         title = Navigation.Screen.Home.ServiceSection.title
-    )
+    ) {
+        onNavigationItemClicked(Navigation.Screen.Home.ServiceSection)
+    }
 
     NavigationItem(
         modifier = linkStyle,
         href = Navigation.Screen.Home.PortfolioSection.path,
         title = Navigation.Screen.Home.PortfolioSection.title
-    )
+    ) {
+        onNavigationItemClicked(Navigation.Screen.Home.PortfolioSection)
+    }
 
     NavigationItem(
         modifier = linkStyle,
         href = Navigation.Screen.Home.ExperienceSection.path,
         title = Navigation.Screen.Home.ExperienceSection.title
-    )
+    ) {
+        onNavigationItemClicked(Navigation.Screen.Home.ExperienceSection)
+    }
 
     NavigationItem(
         modifier = linkStyle,
         href = Navigation.Screen.Home.ContactSection.path,
         title = Navigation.Screen.Home.ContactSection.title
-    )
+    ) {
+        onNavigationItemClicked(Navigation.Screen.Home.ContactSection)
+    }
 }

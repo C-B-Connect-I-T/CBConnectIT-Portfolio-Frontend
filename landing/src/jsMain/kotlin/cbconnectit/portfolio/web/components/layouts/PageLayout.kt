@@ -2,7 +2,7 @@ package cbconnectit.portfolio.web.components.layouts
 
 import androidx.compose.runtime.*
 import cbconnectit.portfolio.web.components.BackToTopButton
-import cbconnectit.portfolio.web.components.Header
+import cbconnectit.portfolio.web.components.LandingHeader
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.pages.sections.FooterSection
 import cbconnectit.portfolio.web.utils.Res
@@ -14,6 +14,8 @@ import com.materialdesignsystem.components.sections.OverflowMenu
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.px
 
@@ -24,13 +26,19 @@ fun PageLayout(
     showMenuItems: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val breakpoint = rememberBreakpoint()
     var overflowMenuOpened by remember { mutableStateOf(false) }
+
+    LaunchedEffect(breakpoint) {
+        if (breakpoint <= Breakpoint.MD) return@LaunchedEffect
+        overflowMenuOpened = false
+    }
 
     DsPageLayout(
         modifier = modifier,
         title = Res.String.DocumentTitle.format(title),
         header = {
-            Header(showMenuItems) {
+            LandingHeader(showMenuItems) {
                 overflowMenuOpened = true
             }
         },
