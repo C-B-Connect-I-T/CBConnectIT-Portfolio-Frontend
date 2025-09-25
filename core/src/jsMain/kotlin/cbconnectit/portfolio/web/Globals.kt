@@ -29,10 +29,6 @@ object Attr {
     const val Src = "src"
 }
 
-object Constants {
-    const val BASE_URL = "BASE_URL"
-}
-
 object G {
     object Ui {
         object Width {

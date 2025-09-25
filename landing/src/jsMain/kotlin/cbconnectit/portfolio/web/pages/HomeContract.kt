@@ -12,6 +12,7 @@ interface HomeContract : MVI<HomeContract.State, HomeContract.Intent, HomeContra
         val experiences: List<Experience> = emptyList(),
         val testimonials: List<Testimonial> = emptyList(),
         val selectedWork: Project? = null,
+        val yearsOfExperience: Int = 0
     )
 
     sealed class Intent {

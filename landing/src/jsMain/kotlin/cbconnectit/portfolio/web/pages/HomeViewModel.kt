@@ -7,6 +7,9 @@ import cbconnectit.portfolio.web.data.repos.TestimonialRepo
 import cbconnectit.portfolio.web.utils.MVI
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlin.js.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class HomeViewModel(
     private val serviceRepo: ServiceRepo = ServiceRepo,
@@ -15,11 +18,22 @@ class HomeViewModel(
     private val experienceRepo: ExperienceRepo = ExperienceRepo,
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 ) : MVI<HomeContract.State, HomeContract.Intent, HomeContract.Effect> {
-    private val _state = MutableStateFlow(HomeContract.State())
+    private val _state = MutableStateFlow(getInitialData())
     override val state: StateFlow<HomeContract.State> = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<HomeContract.Effect>()
     override val effect: SharedFlow<HomeContract.Effect> = _effect.asSharedFlow()
+
+    private fun getInitialData(): HomeContract.State {
+        val started = Date.UTC(2017, 11).toDuration(DurationUnit.MILLISECONDS)
+        val current = Date.now().toDuration(DurationUnit.MILLISECONDS)
+
+        val yearsExperience = (current - started).inWholeDays / 365
+
+        return HomeContract.State(
+            yearsOfExperience = yearsExperience.toInt()
+        )
+    }
 
     init {
         sendIntent(HomeContract.Intent.LoadInitialData)

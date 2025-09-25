@@ -24,11 +24,11 @@ import org.jetbrains.compose.web.css.px
 
 @Composable
 fun Backdrop(
-    colorMode: ColorMode,
     modifier: Modifier = Modifier,
     borderRadius: CSSSizeValue<CSSUnit.px> = 8.px,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
+    val colorMode by ColorMode.currentState
     val gradient = colorMode.backdropGradient
 
     Box(

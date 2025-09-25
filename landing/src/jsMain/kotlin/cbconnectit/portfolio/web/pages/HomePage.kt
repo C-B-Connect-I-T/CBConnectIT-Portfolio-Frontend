@@ -52,7 +52,6 @@ private fun HomePageContent(
         modifier = Modifier.fillMaxSize(),
         title = Res.String.Home,
     ) {
-
         Column(
             Modifier.fillMaxSize()
                 .padding(
@@ -65,7 +64,7 @@ private fun HomePageContent(
             MainSection {
                 sendIntent(HomeContract.Intent.LetsChatClicked)
             }
-            AboutSection()
+            AboutSection(state.yearsOfExperience)
             ServiceSection(state.services)
             PortfolioSection(state.projects, state.selectedWork) {
                 sendIntent(HomeContract.Intent.UpdateSelectedWork(it))
@@ -75,14 +74,5 @@ private fun HomePageContent(
             ContactSection()
         }
     }
-
-    //    var showModal by remember { mutableStateOf(true) }
-//    if (showModal) {
-//    Overlay(Modifier.onClick { showModal = false }) {
-//          Dialog {
-//             // ... your modal content here ...
-//          }
-//        }
-//    }
 }
 
