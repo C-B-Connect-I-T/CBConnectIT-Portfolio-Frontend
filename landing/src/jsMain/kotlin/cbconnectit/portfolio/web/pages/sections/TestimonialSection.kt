@@ -1,6 +1,7 @@
 package cbconnectit.portfolio.web.pages.sections
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import cbconnectit.portfolio.web.components.SectionTitle
 import cbconnectit.portfolio.web.components.TestimonialCard
@@ -36,6 +37,7 @@ import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Div
 import org.w3c.dom.Element
 import org.w3c.dom.asList
+import org.w3c.dom.events.Event
 import org.w3c.dom.get
 import kotlin.math.ceil
 
@@ -43,13 +45,18 @@ import kotlin.math.ceil
 fun TestimonialSection(testimonials: List<Testimonial>) {
     val breakpoint = rememberBreakpoint()
 
-    window.addEventListener("resize", {
-        recalculateGridItems()
-    })
-    // A custom event listener, so we can listen to this change in order to recalculate grid item size for the testimonials
-    window.addEventListener("update-color-mode", {
-        recalculateGridItems()
-    })
+    DisposableEffect(Unit) {
+        val resizeListener: (Event) -> Unit = { recalculateGridItems() }
+        val colorModeListener: (Event) -> Unit = { recalculateGridItems() }
+
+        window.addEventListener("resize", resizeListener)
+        window.addEventListener("update-color-mode", colorModeListener)
+
+        onDispose {
+            window.removeEventListener("resize", resizeListener)
+            window.removeEventListener("update-color-mode", colorModeListener)
+        }
+    }
 
     LaunchedEffect(testimonials) {
         delay(250)
@@ -59,7 +66,7 @@ fun TestimonialSection(testimonials: List<Testimonial>) {
     Column(
         modifier = Modifier
             .id(Navigation.Screen.Home.TestimonialSection.id)
-            .scrollMargin(80.px)
+            .scrollMargin(Constants.HEADER_HEIGHT.px)
             .fillMaxWidth(if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent)
             .maxWidth(Constants.SECTION_WIDTH.px),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -69,8 +76,6 @@ fun TestimonialSection(testimonials: List<Testimonial>) {
                 .fillMaxWidth(),
             section = Navigation.Screen.Home.TestimonialSection,
             alignment = Alignment.CenterHorizontally,
-            href = null // TODO: add navigation
-//            showSeeAllButton = true
         )
 
         val widthPercentage = when {

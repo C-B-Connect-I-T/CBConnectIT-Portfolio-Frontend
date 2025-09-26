@@ -24,7 +24,6 @@ fun SocialBar(
     links: List<Link> = emptyList(),
     itemGap: CSSLengthOrPercentageNumericValue
 ) {
-
     Box(
         Modifier
             .display(DisplayStyle.Flex)
@@ -33,34 +32,27 @@ fun SocialBar(
             .justifyContent(JustifyContent.Center)
             .gap(itemGap)
     ) {
-        SocialLinks(links)
-    }
-}
-
-@Composable
-private fun SocialLinks(
-    links: List<Link> = emptyList()
-) {
-    links.forEach { link ->
-        Anchor(
-            attrs = Modifier
-                .toAttrs {
-                    attr(Attributes.Target, AttributeValue.Blank)
-                    attr(Attributes.Rel, AttributeValue.NoReferrer)
-                },
-            href = link.url,
-        ) {
-            ElevatedIconButton(
-                modifier = Modifier.size(36.px),
-                size = ButtonSize.MD,
-                borderRadius = DsBorderRadius(6.px),
-                onClick = {},
-                content = {
-                    link.type.LinkIcon(
-                        modifier = Modifier.id(socialIcon)
-                    )
-                }
-            )
+        links.forEach { link ->
+            Anchor(
+                attrs = Modifier
+                    .toAttrs {
+                        attr(Attributes.Target, AttributeValue.Blank)
+                        attr(Attributes.Rel, AttributeValue.NoReferrer)
+                    },
+                href = link.url,
+            ) {
+                ElevatedIconButton(
+                    modifier = Modifier.size(36.px),
+                    size = ButtonSize.MD,
+                    borderRadius = DsBorderRadius(6.px),
+                    onClick = {},
+                    content = {
+                        link.type.LinkIcon(
+                            modifier = Modifier.id(socialIcon)
+                        )
+                    }
+                )
+            }
         }
     }
 }

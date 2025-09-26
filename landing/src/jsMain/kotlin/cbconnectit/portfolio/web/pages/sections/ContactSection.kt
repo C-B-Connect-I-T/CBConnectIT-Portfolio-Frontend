@@ -5,13 +5,13 @@ import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.components.ContactForm
 import cbconnectit.portfolio.web.components.SectionTitle
 import cbconnectit.portfolio.web.navigation.Navigation
-import com.materialdesignsystem.components.Spacer
+import cbconnectit.portfolio.web.utils.Constants
 import com.materialdesignsystem.toColorScheme
+import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.px
 
@@ -19,16 +19,15 @@ import org.jetbrains.compose.web.css.px
 fun ContactSection() {
     val colorMode by ColorMode.currentState
 
-    val breakpoint = rememberBreakpoint()
-
     Column(
         modifier = Modifier
             .id(Navigation.Screen.Home.ContactSection.id)
-            .scrollMargin(80.px)
+            .scrollMargin(Constants.HEADER_HEIGHT.px)
             .backgroundColor(colorMode.toColorScheme.secondaryContainer)
             .fillMaxWidth()
             .padding(topBottom = 24.px),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(24.px)
     ) {
         SectionTitle(
             modifier = Modifier.fillMaxWidth(),
@@ -36,8 +35,6 @@ fun ContactSection() {
             alignment = Alignment.CenterHorizontally
         )
 
-        Spacer(Modifier.height(24.px))
-
-        ContactForm(breakpoint)
+        ContactForm()
     }
 }

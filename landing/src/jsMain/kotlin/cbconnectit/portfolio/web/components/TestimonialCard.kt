@@ -13,14 +13,12 @@ import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.graphics.Image
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.LineStyle
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.dom.P
-import org.jetbrains.compose.web.dom.Text
 
 @Composable
 fun TestimonialCard(
@@ -47,50 +45,41 @@ fun TestimonialCard(
                         .weight(1)
                         .size(56.px)
                         .borderRadius(50.percent),
-                    alt = "Testimonial avatar image"
+                    alt = "Avatar of ${testimonial.fullName}"
                 )
 
                 Spacer(Modifier.width(12.px))
 
                 Column {
-                    P(
-                        Modifier
+                    SpanText(
+                        text = testimonial.fullName,
+                        modifier = Modifier
                             .fillMaxWidth()
-                            .margin(0.px, 0.px)
                             .color(colorMode.toColorScheme.primary)
                             .fontSize(22.px)
                             .fontWeight(FontWeight.Bold)
-                            .toAttrs()
-                    ) {
-                        Text(testimonial.fullName)
-                    }
+                    )
 
                     Spacer(Modifier.height(4.px))
 
-                    P(
-                        Modifier
+                    SpanText(
+                        text = testimonial.jobPosition.name,
+                        modifier = Modifier
                             .fillMaxWidth()
-                            .margin(0.px, 0.px)
                             .fontSize(14.px)
                             .fontWeight(FontWeight.Medium)
-                            .toAttrs()
-                    ) {
-                        Text(testimonial.jobPosition.name)
-                    }
+                    )
                 }
             }
 
             Spacer(Modifier.height(16.px))
 
-            P(
-                Modifier
+            SpanText(
+                text = testimonial.review,
+                modifier = Modifier
                     .fillMaxWidth()
-                    .margin(0.px, 0.px)
                     .fontSize(14.px)
-                    .toAttrs()
-            ) {
-                Text(testimonial.review)
-            }
+            )
         }
     }
 }
