@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ForbiddenComment:NetworkingConfig.kt$// TODO: add the AuthRepo and implement the refresh logic</ID>
+    <ID>TooGenericExceptionCaught:NetworkingConfig.kt$e: Exception</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -1,7 +1,6 @@
 package cbconnectit.portfolio.web.pages.sections
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.components.Backdrop
 import cbconnectit.portfolio.web.components.SocialBar
 import cbconnectit.portfolio.web.data.models.domain.Link
@@ -44,15 +43,13 @@ fun MainSection(
         modifier = Modifier
             .id(Navigation.Screen.Home.HomeSection.id)
             .scrollMargin(Constants.HEADER_HEIGHT.px)
-            .fillMaxWidth()
+            .fillMaxWidth(if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent)
             .maxWidth(SECTION_WIDTH.px),
         contentAlignment = Alignment.TopCenter
     ) {
         // SimpleGrid will automatically use a column (horizontal) for bigger devices, or a row (vertical) for smaller devices
         SimpleGrid(
-            modifier = Modifier.fillMaxWidth(
-                if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent
-            ),
+            modifier = Modifier.fillMaxWidth(),
             numColumns = numColumns(base = 1, md = 2)
         ) {
             MainText(onLetsChatClicked)

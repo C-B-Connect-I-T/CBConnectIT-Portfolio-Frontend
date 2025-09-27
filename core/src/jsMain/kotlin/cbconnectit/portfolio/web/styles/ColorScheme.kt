@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber", "ForbiddenComment", "UnusedPrivateProperty", "LongParameterList")
+
 package cbconnectit.portfolio.web.styles
 
 import com.materialdesignsystem.theme.darkColorScheme

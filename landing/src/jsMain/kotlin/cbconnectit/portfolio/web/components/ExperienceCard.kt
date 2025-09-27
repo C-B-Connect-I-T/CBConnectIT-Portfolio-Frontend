@@ -6,9 +6,11 @@ import cbconnectit.portfolio.web.backdropGradient
 import cbconnectit.portfolio.web.data.models.domain.Experience
 import cbconnectit.portfolio.web.extensions.techStackSvg
 import cbconnectit.portfolio.web.primaryGradient
-import com.materialdesignsystem.components.widgets.DsCard
 import com.materialdesignsystem.toColorScheme
-import com.varabyte.kobweb.compose.css.*
+import com.varabyte.kobweb.compose.css.BoxShadow
+import com.varabyte.kobweb.compose.css.CSSLengthOrPercentageNumericValue
+import com.varabyte.kobweb.compose.css.FontWeight
+import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column

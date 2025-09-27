@@ -46,9 +46,7 @@ fun ProjectsPage() {
 
     LaunchedEffect(Unit) {
         viewModel.effect.collectLatest {
-//            when (it) {
-//                // No effects for now
-//            }
+//            when (it) { }
         }
     }
 
@@ -88,7 +86,10 @@ private fun ProjectsPageContent(
                     )
                 }
             } else {
-                Column(verticalArrangement = Arrangement.spacedBy(68.px)) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(68.px)
+                ) {
                     state.filteredProjects.forEachIndexed { index, project ->
                         val leftAligned = index % 2 == 0
 
@@ -144,7 +145,7 @@ private fun ProjectSection(leftAligned: Boolean, project: Project) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .thenIf(leftAligned.not()) {
+            .thenIf(!leftAligned) {
                 Modifier.backgroundColor(ColorMode.current.toColorScheme.secondaryContainer)
                     .color(ColorMode.current.toColorScheme.onSecondaryContainer)
             },

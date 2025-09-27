@@ -36,8 +36,6 @@ import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Text
 
-fun Background.Companion.of(color: CSSColorValue) = ", $color".unsafeCast<Background.Listable>()
-
 @Composable
 fun PortfolioSection(
     projects: List<Project>,

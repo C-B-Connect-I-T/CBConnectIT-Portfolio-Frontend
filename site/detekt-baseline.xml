@@ -2,10 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>FunctionNaming:MyApp.kt$@App @Composable fun MyApp(content: @Composable () -&gt; Unit)</ID>
-    <ID>MagicNumber:MyApp.kt$0.08f</ID>
-    <ID>MagicNumber:MyApp.kt$0.12f</ID>
-    <ID>MagicNumber:MyApp.kt$1.4</ID>
-    <ID>WildcardImport:MyApp.kt$import com.varabyte.kobweb.silk.theme.colors.palette.*</ID>
+      <ID>MagicNumber:AppEntry.kt$0.08f</ID>
+      <ID>MagicNumber:AppEntry.kt$0.12f</ID>
+      <ID>MagicNumber:AppEntry.kt$1.4</ID>
   </CurrentIssues>
 </SmellBaseline>

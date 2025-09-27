@@ -1,6 +1,9 @@
 package cbconnectit.portfolio.web.navigation
 
+import cbconnectit.portfolio.web.data.models.domain.Tag
+import cbconnectit.portfolio.web.utils.Identifiers
 import cbconnectit.portfolio.web.utils.Res
+import cbconnectit.portfolio.web.utils.joinToStringIndexed
 
 sealed class Navigation(val route: String) {
     sealed class Screen(route: String) : Navigation(route) {
@@ -20,7 +23,7 @@ sealed class Navigation(val route: String) {
         }
 
         data object Projects : Screen("/projects") {
-            fun getByTagQuery(tagQuery: String) = "$route/?$tagQuery"
+            fun getByTagQuery(tags: List<Tag>) = "$route/?${tags.joinToStringIndexed("&") { index, tag -> "${Identifiers.PathParams.Tag}$index=${tag.id}" }}"
             fun getProject(id: String) = "$route/?projectId=$id"
         }
     }
