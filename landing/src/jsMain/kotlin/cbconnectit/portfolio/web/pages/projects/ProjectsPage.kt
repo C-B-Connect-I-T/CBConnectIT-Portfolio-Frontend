@@ -25,6 +25,7 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.graphics.Image
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
@@ -32,7 +33,6 @@ import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.P
-import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
 
 @Page("/projects")
@@ -65,7 +65,7 @@ private fun ProjectsPageContent(
         showMenuItems = false,
     ) {
         Column(
-            Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -73,18 +73,31 @@ private fun ProjectsPageContent(
                 sendIntent(ProjectsContract.Intent.UpdateFilterTags(it.id))
             })
 
-            ProjectsList(state.projects.filter { it.tags.any { tag -> if (state.filterTags.isNotEmpty()) tag.id in state.filterTags else true } })
+            if (state.filteredProjects.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(90.percent)
+                        .fillMaxHeight(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    SpanText(
+                        text = "No projects found for this filter.",
+                        modifier = Modifier
+                            .fontSize(32.px)
+                            .textAlign(TextAlign.Center)
+                    )
+                }
+            } else {
+                Column(verticalArrangement = Arrangement.spacedBy(68.px)) {
+                    state.filteredProjects.forEachIndexed { index, project ->
+                        val leftAligned = index % 2 == 0
+
+                        ProjectSection(project = project, leftAligned = leftAligned)
+                    }
+                }
+            }
         }
     }
-
-//        * var showModal by remember { mutableStateOf(true) }
-//        * if (showModal) {
-//        *   Overlay(Modifier.onClick { showModal = false }) {
-//            *     Dialog {
-//            *        // ... your modal content here ...
-//            *     }
-//            *   }
-//        * }
 }
 
 @Composable
@@ -95,148 +108,97 @@ private fun TitleAndDropDown(
 ) {
     val breakpoint = rememberBreakpoint()
 
-    Box(
-        Modifier
+    Column(
+        modifier = Modifier
             .fillMaxWidth()
-            .maxWidth(Constants.SECTION_WIDTH.px),
-        contentAlignment = Alignment.TopCenter
+            .maxWidth(Constants.SECTION_WIDTH.px)
+            .padding(topBottom = 50.px, leftRight = 10.percent),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.spacedBy(8.px)
     ) {
-        Column(
-            modifier = Modifier
+        H1(
+            attrs = Modifier
                 .fillMaxWidth()
-                .padding(topBottom = 50.px, leftRight = 10.percent),
-            horizontalAlignment = Alignment.Start
+                .toAttrs()
         ) {
-            H1(
-                attrs = Modifier
-                    .fillMaxWidth()
-                    .toAttrs()
-            ) {
-                Text(Res.String.Projects)
-            }
+            Text(Res.String.Projects)
+        }
 
-            Spacer(Modifier.height(8.px))
-
-            DsMultiSelect(
-                modifier = Modifier.fillMaxWidth(if (breakpoint >= Breakpoint.SM) 60.percent else 100.percent),
-                id = Identifiers.ProjectsPage.dropBtn,
-                label = "",
-                placeholder = "All Categories",
-                items = tags.map { it.name },
-                selectedItems = tags.filter { filterTags.contains(it.id) }.map { it.name }
-            ) { selectedTag ->
-                toggleFilterTag(tags.first { it.name == selectedTag })
-            }
+        DsMultiSelect(
+            modifier = Modifier.fillMaxWidth(if (breakpoint > Breakpoint.SM) 60.percent else 100.percent),
+            id = Identifiers.ProjectsPage.dropBtn,
+            label = "",
+            placeholder = "All Categories",
+            items = tags.map { it.name },
+            selectedItems = tags.filter { filterTags.contains(it.id) }.map { it.name }
+        ) { selectedTag ->
+            toggleFilterTag(tags.first { it.name == selectedTag })
         }
     }
 }
 
 @Composable
-private fun ProjectsList(projects: List<Project>) {
+private fun ProjectSection(leftAligned: Boolean, project: Project) {
     val breakpoint = rememberBreakpoint()
 
-    if (projects.isEmpty()) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .thenIf(leftAligned.not()) {
+                Modifier.backgroundColor(ColorMode.current.toColorScheme.secondaryContainer)
+                    .color(ColorMode.current.toColorScheme.onSecondaryContainer)
+            },
+        contentAlignment = Alignment.TopCenter
+    ) {
         Box(
-            modifier = Modifier.fillMaxSize().padding(leftRight = 10.percent),
-            contentAlignment = Alignment.Center
-        ) {
-            Span(
-                Modifier
-                    .fontSize(32.px)
-                    .textAlign(TextAlign.Center)
-                    .toAttrs()
-            ) { Text("No projects found for this filter.") }
-        }
-    }
-
-    projects.forEachIndexed { index, project ->
-        val leftAligned = index % 2 == 0
-
-        if (index != 0) {
-            Spacer(Modifier.height(68.px))
-        }
-
-        Box(
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth()
-                .thenIf(leftAligned.not()) {
-                    Modifier.backgroundColor(ColorMode.current.toColorScheme.secondaryContainer)
-                        .color(ColorMode.current.toColorScheme.onSecondaryContainer)
-                },
-            contentAlignment = Alignment.TopCenter
+                .maxWidth(Constants.SECTION_WIDTH.px)
+                .display(DisplayStyle.Flex)
+                .flexDirection(if (breakpoint > Breakpoint.MD) FlexDirection.Row else FlexDirection.Column)
+                .alignItems(AlignItems.Center)
+                .padding(topBottom = 50.px, leftRight = 10.percent)
+                .gap(100.px)
         ) {
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .maxWidth(Constants.SECTION_WIDTH.px),
-                contentAlignment = Alignment.TopCenter
-            ) {
-                Box(
+            ProjectImageWithLinks(
+                project = project,
+                modifier = Modifier.order(if (breakpoint > Breakpoint.MD && leftAligned) 0 else 1)
+            )
+
+            Column(Modifier.fillMaxWidth()) {
+                SpanText(
+                    text = project.title,
                     modifier = Modifier
+                        .fontSize(32.px)
+                        .fontWeight(FontWeight.Bold)
+                )
+
+                P(
+                    attrs = Modifier
+                        .fontSize(18.px)
+                        .toAttrs {
+                            markdownParagraph(project.description)
+                        }
+                )
+
+                Box(
+                    Modifier
                         .fillMaxWidth()
                         .display(DisplayStyle.Flex)
-                        .flexDirection(if (breakpoint > Breakpoint.MD) FlexDirection.Row else FlexDirection.Column)
-                        .alignItems(AlignItems.Center)
-                        .padding(topBottom = 50.px, leftRight = 10.percent)
+                        .flexDirection(FlexDirection.Row)
+                        .flexWrap(FlexWrap.Wrap)
+                        .gap(12.px)
                 ) {
-                    if (leftAligned && breakpoint > Breakpoint.MD) {
-                        ProjectImageWithLinks(project)
-
-                        Spacer(Modifier.width(100.px))
-                    }
-
-                    Column(
-                        Modifier.fillMaxWidth()
-                    ) {
-                        P(
-                            attrs = Modifier
-                                .fontSize(32.px)
-                                .fontWeight(FontWeight.Bold)
-                                .toAttrs()
-                        ) {
-                            Text(project.title)
-                        }
-
-                        P(
-                            attrs = Modifier
-                                .fontSize(18.px)
-                                .toAttrs {
-                                    markdownParagraph(project.description)
-                                }
+                    project.tags.forEach {
+                        SpanText(
+                            text = it.name,
+                            modifier = Modifier
+                                .padding(topBottom = 4.px, leftRight = 6.px)
+                                .backgroundColor(if (leftAligned) ColorMode.current.toColorScheme.secondaryContainer else ColorMode.current.toColorScheme.inversePrimary)
+                                .color(ColorMode.current.toColorScheme.onSecondaryContainer)
+                                .fontSize(11.px)
+                                .borderRadius(6.px)
                         )
-
-                        Box(
-                            Modifier
-                                .fillMaxWidth()
-                                .display(DisplayStyle.Flex)
-                                .flexDirection(FlexDirection.Row)
-                                .flexWrap(FlexWrap.Wrap)
-                                .gap(12.px)
-                        ) {
-                            project.tags.forEach {
-                                P(
-                                    Modifier
-                                        .padding(topBottom = 4.px, leftRight = 6.px)
-                                        .margin(topBottom = 0.px)
-                                        .backgroundColor(if (leftAligned) ColorMode.current.toColorScheme.secondaryContainer else ColorMode.current.toColorScheme.inversePrimary)
-                                        .color(ColorMode.current.toColorScheme.onSecondaryContainer)
-                                        .fontSize(11.px)
-                                        .borderRadius(6.px)
-                                        .toAttrs()
-                                ) { Text(it.name) }
-                            }
-                        }
-                    }
-
-                    if (leftAligned.not() || breakpoint <= Breakpoint.MD) {
-                        Spacer(
-                            Modifier
-                                .width(100.px)
-                                .thenIf(breakpoint <= Breakpoint.MD) {
-                                    Modifier.height(100.px)
-                                })
-
-                        ProjectImageWithLinks(project)
                     }
                 }
             }
@@ -245,8 +207,9 @@ private fun ProjectsList(projects: List<Project>) {
 }
 
 @Composable
-private fun ProjectImageWithLinks(project: Project) {
+private fun ProjectImageWithLinks(modifier: Modifier = Modifier, project: Project) {
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(modifier = Modifier.width(250.px), src = project.imageUrl, alt = "")
