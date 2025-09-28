@@ -1,17 +1,22 @@
 package cbconnectit.portfolio.web.data.repos
 
+import cbconnectit.portfolio.web.data.NetworkingConfig
+import cbconnectit.portfolio.web.data.getRequest
+import cbconnectit.portfolio.web.data.models.NetworkResponse
 import cbconnectit.portfolio.web.data.models.domain.Experience
 import cbconnectit.portfolio.web.data.models.domain.toExperience
+import cbconnectit.portfolio.web.data.models.dto.responses.ErrorResponse
 import cbconnectit.portfolio.web.data.models.dto.responses.ExperienceDto
-import com.varabyte.kobweb.browser.http.http
-import kotlinx.browser.window
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 object ExperienceRepo {
+    private val experienceUrl = "${NetworkingConfig.baseUrl}/api/v1/experiences"
 
-    suspend fun getExperiences(baseUrl: String): List<Experience> {
-        val responseText = window.http.get("${baseUrl}/api/v1/experiences").decodeToString()
-        return Json.decodeFromString<List<ExperienceDto>>(responseText).map { it.toExperience() }
+    suspend fun getExperiences(): List<Experience> {
+        val response: NetworkResponse<List<ExperienceDto>, ErrorResponse> = getRequest(experienceUrl, allowUnauthenticated = true)
+
+        return when (response) {
+            is NetworkResponse.Success -> response.body.map { it.toExperience() }
+            else -> emptyList()
+        }
     }
 }

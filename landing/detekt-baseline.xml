@@ -2,208 +2,76 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>ForbiddenComment:BackToTopButton.kt$// TODO: look into rotation style on hover</ID>
     <ID>ForbiddenComment:Backdrop.kt$// TODO: replace this when this ticket is fixed "https://github.com/varabyte/kobweb/issues/247"</ID>
-    <ID>ForbiddenComment:ExperienceCard.kt$// @Composable // TODO: check what this is about?</ID>
-    <ID>ForbiddenComment:ExperienceCard.kt$// TODO: replace this when this ticket is fixed "https://github.com/varabyte/kobweb/issues/247"</ID>
-    <ID>ForbiddenComment:ExperienceSection.kt$// TODO: add navigation</ID>
-    <ID>ForbiddenComment:Index.kt$// TODO: Makes the page wider on a smaller screen size (my phone landscape)</ID>
+    <ID>ForbiddenComment:ExperienceCard.kt$// TODO: could be replaced with a DsCard in the future...</ID>
+    <ID>ForbiddenComment:HomePage.kt$// TODO: Makes the page wider on a smaller screen size (my phone landscape)</ID>
     <ID>ForbiddenComment:PortfolioSection.kt$//TODO: add navigation!</ID>
-    <ID>ForbiddenComment:TestimonialSection.kt$// TODO: add navigation</ID>
-    <ID>FunctionNaming:AboutSection.kt$@Composable fun AboutContent()</ID>
-    <ID>FunctionNaming:AboutSection.kt$@Composable fun AboutSection()</ID>
-    <ID>FunctionNaming:BackToTopButton.kt$@Composable fun BackToTopButton()</ID>
-    <ID>FunctionNaming:Backdrop.kt$@Composable fun Backdrop( colorMode: ColorMode, modifier: Modifier = Modifier, borderRadius: CSSSizeValue&lt;CSSUnit.px&gt; = 8.px, content: @Composable BoxScope.() -&gt; Unit = {} )</ID>
-    <ID>FunctionNaming:ContactForm.kt$@Composable fun ContactForm(breakpoint: Breakpoint)</ID>
-    <ID>FunctionNaming:ContactSection.kt$@Composable fun ContactSection()</ID>
-    <ID>FunctionNaming:ContactSection.kt$@OptIn(ExperimentalComposeWebApi::class) @Composable fun ContactContent()</ID>
-    <ID>FunctionNaming:ExperienceCard.kt$@Composable fun ExperienceCard( breakpoint: Breakpoint, active: Boolean = false, experience: Experience, )</ID>
-    <ID>FunctionNaming:ExperienceCard.kt$@Composable fun ExperienceDescription( breakpoint: Breakpoint, active: Boolean, description: String )</ID>
-    <ID>FunctionNaming:ExperienceCard.kt$@Composable fun ExperienceDetails( breakpoint: Breakpoint, experience: Experience, )</ID>
-    <ID>FunctionNaming:ExperienceCard.kt$@Composable fun ExperienceNumber( active: Boolean, experience: Experience )</ID>
-    <ID>FunctionNaming:ExperienceSection.kt$@Composable fun ExperienceContent()</ID>
-    <ID>FunctionNaming:ExperienceSection.kt$@Composable fun ExperienceSection()</ID>
-    <ID>FunctionNaming:FooterSection.kt$@Composable fun FooterContent(showMenu: Boolean)</ID>
-    <ID>FunctionNaming:FooterSection.kt$@Composable fun FooterMenu(row: Boolean = true)</ID>
-    <ID>FunctionNaming:FooterSection.kt$@Composable fun FooterSection(showMenu: Boolean, modifier: Modifier = Modifier)</ID>
-    <ID>FunctionNaming:Functions.kt$@Composable fun ObserveViewportEntered( sectionId: String, distanceFromTop: Double, onViewPortEntered: () -&gt; Unit )</ID>
-    <ID>FunctionNaming:Header.kt$@Composable fun Header( showMenu: Boolean = true, onMenuClicked: () -&gt; Unit )</ID>
-    <ID>FunctionNaming:Header.kt$@Composable fun LeftSide( showMenu: Boolean, breakpoint: Breakpoint, colorMode: ColorMode, onMenuClicked: () -&gt; Unit )</ID>
-    <ID>FunctionNaming:Header.kt$@Composable fun RightSide()</ID>
-    <ID>FunctionNaming:HightlightCard.kt$@Composable fun HighLightCard( colorMode: ColorMode, title: String, subtitle: String, modifier: Modifier = Modifier, icon: @Composable () -&gt; Unit )</ID>
-    <ID>FunctionNaming:Index.kt$@Composable fun PageLayout(title: String, showMenu: Boolean = true, onMenuClicked: () -&gt; Unit, content: @Composable () -&gt; Unit)</ID>
-    <ID>FunctionNaming:Index.kt$@Composable fun ServiceBanner(service: Service?, breakpoint: Breakpoint)</ID>
-    <ID>FunctionNaming:Index.kt$@Composable fun SubServices(subServices: List&lt;Service&gt;, breakpoint: Breakpoint)</ID>
-    <ID>FunctionNaming:Index.kt$@Composable fun TitleAndDropDown( breakpoint: Breakpoint, showDropDownMenu: Boolean, tags: List&lt;Tag&gt;, filterTags: List&lt;String&gt;, toggleFilterTag: (tag: Tag) -&gt; Unit, toggleDropDownMenu: (Boolean) -&gt; Unit )</ID>
-    <ID>FunctionNaming:Index.kt$@Composable private fun ProjectImageWithLinks(breakpoint: Breakpoint, project: Project)</ID>
-    <ID>FunctionNaming:Index.kt$@Composable private fun ProjectsList(breakpoint: Breakpoint, projects: List&lt;Project&gt;)</ID>
-    <ID>FunctionNaming:Index.kt$@Composable private fun ServicesPageHeader(breakpoint: Breakpoint, services: List&lt;Service&gt;)</ID>
-    <ID>FunctionNaming:Index.kt$@Composable private fun ServicesPageList(breakpoint: Breakpoint, services: List&lt;Service&gt;)</ID>
-    <ID>FunctionNaming:Index.kt$@Composable private fun ServicesPageTechnologyStacks(breakpoint: Breakpoint)</ID>
-    <ID>FunctionNaming:Index.kt$@Page @Composable fun HomePage()</ID>
-    <ID>FunctionNaming:Index.kt$@Page @Composable fun ProjectsPage()</ID>
-    <ID>FunctionNaming:Index.kt$@Page @Composable fun ServicePage()</ID>
-    <ID>FunctionNaming:Index.kt$@Page @Composable fun ServicesPage()</ID>
-    <ID>FunctionNaming:MainSection.kt$@Composable fun MainContent()</ID>
-    <ID>FunctionNaming:MainSection.kt$@Composable fun MainImage(breakpoint: Breakpoint)</ID>
-    <ID>FunctionNaming:MainSection.kt$@Composable fun MainSection()</ID>
-    <ID>FunctionNaming:MainSection.kt$@Composable fun MainText(breakpoint: Breakpoint)</ID>
-    <ID>FunctionNaming:MainServiceCard.kt$@Composable fun MainServiceCard(service: Service, modifier: Modifier = Modifier)</ID>
-    <ID>FunctionNaming:OverflowMenu.kt$@Composable fun OverlowMenu(onMenuClosed: () -&gt; Unit)</ID>
-    <ID>FunctionNaming:PortfolioSection.kt$@Composable fun PortfolioContent()</ID>
-    <ID>FunctionNaming:PortfolioSection.kt$@Composable fun PortfolioSection()</ID>
-    <ID>FunctionNaming:SectionTitle.kt$@Composable fun SectionTitle( modifier: Modifier = Modifier, section: Section, alignment: Alignment.Horizontal = Alignment.Start, showSeeAllButton: Boolean = false, href: String? = null )</ID>
-    <ID>FunctionNaming:ServiceSection.kt$@Composable fun ContentWrapper(content: @Composable () -&gt; Unit)</ID>
-    <ID>FunctionNaming:ServiceSection.kt$@Composable fun ServiceContent()</ID>
-    <ID>FunctionNaming:ServiceSection.kt$@Composable fun ServiceImage(breakpoint: Breakpoint)</ID>
-    <ID>FunctionNaming:ServiceSection.kt$@Composable fun ServiceSection()</ID>
-    <ID>FunctionNaming:ServiceTypeCard.kt$@Composable fun ServiceTypeCard( service: Service )</ID>
-    <ID>FunctionNaming:SocialBar.kt$@Composable fun SocialBar( row: Boolean = false, socialLinkSize: SocialLinkSize = SocialLinkSize.SM, links: List&lt;Link&gt; = emptyList(), itemGap: CSSLengthOrPercentageNumericValue )</ID>
-    <ID>FunctionNaming:SocialBar.kt$@Composable private fun SocialLinks( socialLinkSize: SocialLinkSize = SocialLinkSize.SM, links: List&lt;Link&gt; = emptyList() )</ID>
-    <ID>FunctionNaming:Spacer.kt$@Composable fun Spacer(modifier: Modifier = Modifier)</ID>
-    <ID>FunctionNaming:TestimonialCard.kt$@Composable fun TestimonialCard( testimonial: Testimonial )</ID>
-    <ID>FunctionNaming:TestimonialSection.kt$@Composable fun TestimonialContent()</ID>
-    <ID>FunctionNaming:TestimonialSection.kt$@Composable fun TestimonialSection()</ID>
-    <ID>FunctionNaming:ThemedButton.kt$@Composable fun ThemedButton( onClick: () -&gt; Unit, modifier: Modifier = Modifier, text: String? = null, shape: ButtonShape = ButtonShape.RECTANGLE, primary: Boolean = false, size: ButtonSize = ButtonSize.MD, content: @Composable () -&gt; Unit = {} )</ID>
-    <ID>LongMethod:ContactForm.kt$@Composable fun ContactForm(breakpoint: Breakpoint)</ID>
-    <ID>LongMethod:Index.kt$@Composable fun SubServices(subServices: List&lt;Service&gt;, breakpoint: Breakpoint)</ID>
-    <ID>LongMethod:Index.kt$@Composable fun TitleAndDropDown( breakpoint: Breakpoint, showDropDownMenu: Boolean, tags: List&lt;Tag&gt;, filterTags: List&lt;String&gt;, toggleFilterTag: (tag: Tag) -&gt; Unit, toggleDropDownMenu: (Boolean) -&gt; Unit )</ID>
-    <ID>LongMethod:Index.kt$@Composable private fun ProjectsList(breakpoint: Breakpoint, projects: List&lt;Project&gt;)</ID>
-    <ID>LongMethod:Index.kt$@Composable private fun ServicesPageHeader(breakpoint: Breakpoint, services: List&lt;Service&gt;)</ID>
-    <ID>LongMethod:Index.kt$@Composable private fun ServicesPageList(breakpoint: Breakpoint, services: List&lt;Service&gt;)</ID>
-    <ID>LongMethod:Index.kt$@Page @Composable fun ServicePage()</ID>
-    <ID>LongMethod:MainSection.kt$@Composable fun MainText(breakpoint: Breakpoint)</ID>
-    <ID>LongMethod:OverflowMenu.kt$@Composable fun OverlowMenu(onMenuClosed: () -&gt; Unit)</ID>
-    <ID>LongMethod:PortfolioSection.kt$@Composable fun PortfolioContent()</ID>
-    <ID>LongMethod:SectionTitle.kt$@Composable fun SectionTitle( modifier: Modifier = Modifier, section: Section, alignment: Alignment.Horizontal = Alignment.Start, showSeeAllButton: Boolean = false, href: String? = null )</ID>
-    <ID>LongMethod:TestimonialCard.kt$@Composable fun TestimonialCard( testimonial: Testimonial )</ID>
-    <ID>LongParameterList:Index.kt$( breakpoint: Breakpoint, showDropDownMenu: Boolean, tags: List&lt;Tag&gt;, filterTags: List&lt;String&gt;, toggleFilterTag: (tag: Tag) -&gt; Unit, toggleDropDownMenu: (Boolean) -&gt; Unit )</ID>
-    <ID>LongParameterList:ThemedButton.kt$( onClick: () -&gt; Unit, modifier: Modifier = Modifier, text: String? = null, shape: ButtonShape = ButtonShape.RECTANGLE, primary: Boolean = false, size: ButtonSize = ButtonSize.MD, content: @Composable () -&gt; Unit = {} )</ID>
-    <ID>MagicNumber:AboutSection.kt$11</ID>
-    <ID>MagicNumber:AboutSection.kt$2017</ID>
-    <ID>MagicNumber:AboutSection.kt$365</ID>
+    <ID>ForbiddenComment:SectionTitle.kt$// TODO: Not sure about the animation on scroll, maybe a simple fade in would be better??</ID>
+    <ID>ForbiddenComment:ServiceViewModel.kt$ServiceViewModel$// TODO: show error when serviceId is null!!</ID>
     <ID>MagicNumber:BackToTopButton.kt$400.0</ID>
-    <ID>MagicNumber:Backdrop.kt$20</ID>
-    <ID>MagicNumber:Backdrop.kt$22</ID>
-    <ID>MagicNumber:Backdrop.kt$237</ID>
-    <ID>MagicNumber:Backdrop.kt$240</ID>
-    <ID>MagicNumber:Backdrop.kt$242</ID>
-    <ID>MagicNumber:Backdrop.kt$28</ID>
-    <ID>MagicNumber:Backdrop.kt$76</ID>
-    <ID>MagicNumber:Backdrop.kt$79</ID>
-    <ID>MagicNumber:Backdrop.kt$82</ID>
-    <ID>MagicNumber:ContactSection.kt$500</ID>
+    <ID>MagicNumber:ContactForm.kt$ContactFormViewModel$302</ID>
     <ID>MagicNumber:ExperienceCard.kt$1.65</ID>
-    <ID>MagicNumber:ExperienceCard.kt$20</ID>
-    <ID>MagicNumber:ExperienceCard.kt$22</ID>
-    <ID>MagicNumber:ExperienceCard.kt$237</ID>
-    <ID>MagicNumber:ExperienceCard.kt$240</ID>
-    <ID>MagicNumber:ExperienceCard.kt$242</ID>
-    <ID>MagicNumber:ExperienceCard.kt$28</ID>
-    <ID>MagicNumber:ExperienceCard.kt$76</ID>
-    <ID>MagicNumber:ExperienceCard.kt$79</ID>
-    <ID>MagicNumber:ExperienceCard.kt$82</ID>
-    <ID>MagicNumber:Header.kt$50</ID>
-    <ID>MagicNumber:Header.kt$6</ID>
-    <ID>MagicNumber:Index.kt$3</ID>
-    <ID>MagicNumber:MainSectionStyle.kt$10</ID>
-    <ID>MagicNumber:OverflowMenu.kt$100</ID>
-    <ID>MagicNumber:OverflowMenu.kt$500</ID>
+    <ID>MagicNumber:LandingHeader.kt$10</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$11</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$2017</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$365</ID>
     <ID>MagicNumber:ServiceSection.kt$18</ID>
     <ID>MagicNumber:ServiceSection.kt$27</ID>
-    <ID>MagicNumber:ServicesTypeCardStyle.kt$10</ID>
+    <ID>MagicNumber:ServiceTypeCard.kt$10</ID>
     <ID>MagicNumber:TestimonialSection.kt$100</ID>
     <ID>MagicNumber:TestimonialSection.kt$250</ID>
-    <ID>MagicNumber:ThemedButton.kt$0.2f</ID>
-    <ID>MagicNumber:ThemedButton.kt$0.5f</ID>
-    <ID>MagicNumber:ThemedButton.kt$600</ID>
-    <ID>MatchingDeclarationName:ThemedButton.kt$ButtonShape</ID>
-    <ID>NewLineAtEndOfFile:AboutSectionStyle.kt$cbconnectit.portfolio.web.styles.AboutSectionStyle.kt</ID>
     <ID>NewLineAtEndOfFile:BackToTopButton.kt$cbconnectit.portfolio.web.components.BackToTopButton.kt</ID>
-    <ID>NewLineAtEndOfFile:BackToTopStyle.kt$cbconnectit.portfolio.web.styles.BackToTopStyle.kt</ID>
     <ID>NewLineAtEndOfFile:Backdrop.kt$cbconnectit.portfolio.web.components.Backdrop.kt</ID>
-    <ID>NewLineAtEndOfFile:ContactForm.kt$cbconnectit.portfolio.web.components.ContactForm.kt</ID>
-    <ID>NewLineAtEndOfFile:ContactSection.kt$cbconnectit.portfolio.web.sections.ContactSection.kt</ID>
-    <ID>NewLineAtEndOfFile:ContactSectionStyle.kt$cbconnectit.portfolio.web.styles.ContactSectionStyle.kt</ID>
-    <ID>NewLineAtEndOfFile:ExperienceCard.kt$cbconnectit.portfolio.web.components.ExperienceCard.kt</ID>
-    <ID>NewLineAtEndOfFile:ExperienceSection.kt$cbconnectit.portfolio.web.sections.ExperienceSection.kt</ID>
-    <ID>NewLineAtEndOfFile:FooterSection.kt$cbconnectit.portfolio.web.sections.FooterSection.kt</ID>
     <ID>NewLineAtEndOfFile:Functions.kt$cbconnectit.portfolio.web.utils.Functions.kt</ID>
-    <ID>NewLineAtEndOfFile:Header.kt$cbconnectit.portfolio.web.components.Header.kt</ID>
     <ID>NewLineAtEndOfFile:HightlightCard.kt$cbconnectit.portfolio.web.components.HightlightCard.kt</ID>
-    <ID>NewLineAtEndOfFile:Index.kt$cbconnectit.portfolio.web.pages.Index.kt</ID>
-    <ID>NewLineAtEndOfFile:Index.kt$cbconnectit.portfolio.web.pages.projects.Index.kt</ID>
-    <ID>NewLineAtEndOfFile:Index.kt$cbconnectit.portfolio.web.pages.services.Index.kt</ID>
-    <ID>NewLineAtEndOfFile:Index.kt$cbconnectit.portfolio.web.pages.services.service.Index.kt</ID>
-    <ID>NewLineAtEndOfFile:MainSection.kt$cbconnectit.portfolio.web.sections.MainSection.kt</ID>
-    <ID>NewLineAtEndOfFile:MainSectionStyle.kt$cbconnectit.portfolio.web.styles.MainSectionStyle.kt</ID>
     <ID>NewLineAtEndOfFile:MainServiceCard.kt$cbconnectit.portfolio.web.components.MainServiceCard.kt</ID>
-    <ID>NewLineAtEndOfFile:OverflowMenu.kt$cbconnectit.portfolio.web.components.OverflowMenu.kt</ID>
-    <ID>NewLineAtEndOfFile:PortfolioSection.kt$cbconnectit.portfolio.web.sections.PortfolioSection.kt</ID>
-    <ID>NewLineAtEndOfFile:PortfolioSectionStyle.kt$cbconnectit.portfolio.web.styles.PortfolioSectionStyle.kt</ID>
-    <ID>NewLineAtEndOfFile:ProjectNameSyle.kt$cbconnectit.portfolio.web.styles.ProjectNameSyle.kt</ID>
-    <ID>NewLineAtEndOfFile:Section.kt$cbconnectit.portfolio.web.models.enums.Section.kt</ID>
     <ID>NewLineAtEndOfFile:SectionTitle.kt$cbconnectit.portfolio.web.components.SectionTitle.kt</ID>
-    <ID>NewLineAtEndOfFile:ServiceSection.kt$cbconnectit.portfolio.web.sections.ServiceSection.kt</ID>
-    <ID>NewLineAtEndOfFile:ServiceTypeCard.kt$cbconnectit.portfolio.web.components.ServiceTypeCard.kt</ID>
     <ID>NewLineAtEndOfFile:Social.kt$cbconnectit.portfolio.web.models.enums.Social.kt</ID>
-    <ID>NewLineAtEndOfFile:SocialBar.kt$cbconnectit.portfolio.web.components.SocialBar.kt</ID>
-    <ID>NewLineAtEndOfFile:Spacer.kt$cbconnectit.portfolio.web.components.Spacer.kt</ID>
     <ID>NewLineAtEndOfFile:TechnologyStacks.kt$cbconnectit.portfolio.web.models.enums.TechnologyStacks.kt</ID>
     <ID>NewLineAtEndOfFile:TestimonialCard.kt$cbconnectit.portfolio.web.components.TestimonialCard.kt</ID>
-    <ID>NewLineAtEndOfFile:ThemedButton.kt$cbconnectit.portfolio.web.components.ThemedButton.kt</ID>
-    <ID>UnusedParameter:Index.kt$breakpoint: Breakpoint</ID>
-    <ID>UnusedPrivateProperty:Index.kt$val pageContext = rememberPageContext()</ID>
-    <ID>UnusedPrivateProperty:PortfolioSection.kt$val pageContext = rememberPageContext()</ID>
-    <ID>UnusedPrivateProperty:ServiceSection.kt$val pageContext = rememberPageContext()</ID>
+    <ID>TooGenericExceptionCaught:ContactForm.kt$ContactFormViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ServiceViewModel.kt$ServiceViewModel$e: Exception</ID>
+    <ID>UnusedParameter:ServicePage.kt$sendIntent: (ServiceContract.Intent) -&gt; Unit</ID>
+    <ID>UnusedParameter:ServicesPage.kt$sendIntent: (ServicesContract.Intent) -&gt; Unit</ID>
     <ID>WildcardImport:AboutSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:AboutSectionStyle.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:BackToTopButton.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:BackToTopButton.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:ContactForm.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ContactForm.kt$import org.jetbrains.compose.web.dom.*</ID>
-    <ID>WildcardImport:ContactSection.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ContactForm.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:ContactSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ExperienceCard.kt$import com.varabyte.kobweb.compose.ui.*</ID>
     <ID>WildcardImport:ExperienceCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ExperienceSection.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:ExperienceSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
+    <ID>WildcardImport:ExperienceCard.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:FooterSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:Functions.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:Header.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:Header.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:HightlightCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:Index.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:Index.kt$import cbconnectit.portfolio.web.components.*</ID>
-    <ID>WildcardImport:Index.kt$import cbconnectit.portfolio.web.sections.*</ID>
-    <ID>WildcardImport:Index.kt$import cbconnectit.portfolio.web.styles.*</ID>
-    <ID>WildcardImport:Index.kt$import cbconnectit.portfolio.web.utils.*</ID>
-    <ID>WildcardImport:Index.kt$import com.varabyte.kobweb.compose.css.*</ID>
-    <ID>WildcardImport:Index.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:Index.kt$import org.jetbrains.compose.web.css.*</ID>
+    <ID>WildcardImport:LandingHeader.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
+    <ID>WildcardImport:HomeContract.kt$import cbconnectit.portfolio.web.data.models.domain.*</ID>
+    <ID>WildcardImport:HomePage.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:HomePage.kt$import cbconnectit.portfolio.web.pages.sections.*</ID>
     <ID>WildcardImport:MainSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:MainSectionStyle.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:MainServiceCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:OverflowMenu.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:OverflowMenu.kt$import com.varabyte.kobweb.compose.css.*</ID>
-    <ID>WildcardImport:OverflowMenu.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:OverflowMenu.kt$import org.jetbrains.compose.web.css.*</ID>
-    <ID>WildcardImport:PortfolioSection.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:PortfolioSection.kt$import cbconnectit.portfolio.web.styles.*</ID>
+    <ID>WildcardImport:PageLayout.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:PortfolioSection.kt$import com.varabyte.kobweb.compose.css.*</ID>
     <ID>WildcardImport:PortfolioSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:PortfolioSection.kt$import org.jetbrains.compose.web.css.*</ID>
-    <ID>WildcardImport:PortfolioSectionStyle.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
+    <ID>WildcardImport:ProjectsPage.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ProjectsPage.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
+    <ID>WildcardImport:ProjectsPage.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:SectionTitle.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:SectionTitle.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ServiceSection.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ServicePage.kt$import cbconnectit.portfolio.web.utils.*</ID>
+    <ID>WildcardImport:ServicePage.kt$import com.varabyte.kobweb.compose.css.*</ID>
+    <ID>WildcardImport:ServicePage.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
+    <ID>WildcardImport:ServicePage.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:ServiceSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ServiceSection.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:ServiceTypeCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
+    <ID>WildcardImport:ServicesPage.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ServicesPage.kt$import com.varabyte.kobweb.compose.css.*</ID>
+    <ID>WildcardImport:ServicesPage.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
+    <ID>WildcardImport:ServicesPage.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:SocialBar.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:SocialBar.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:TestimonialCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:TestimonialSection.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:TestimonialSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ThemedButton.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
   </CurrentIssues>
 </SmellBaseline>

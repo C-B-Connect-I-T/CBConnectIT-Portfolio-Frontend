@@ -1,17 +1,22 @@
 package cbconnectit.portfolio.web.data.repos
 
+import cbconnectit.portfolio.web.data.NetworkingConfig
+import cbconnectit.portfolio.web.data.getRequest
+import cbconnectit.portfolio.web.data.models.NetworkResponse
 import cbconnectit.portfolio.web.data.models.domain.Project
 import cbconnectit.portfolio.web.data.models.domain.toProject
+import cbconnectit.portfolio.web.data.models.dto.responses.ErrorResponse
 import cbconnectit.portfolio.web.data.models.dto.responses.ProjectDto
-import com.varabyte.kobweb.browser.http.http
-import kotlinx.browser.window
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 object ProjectRepo {
+    private val projectUrl = "${NetworkingConfig.baseUrl}/api/v1/projects"
 
-    suspend fun getProjects(baseUrl: String): List<Project> {
-        val responseText = window.http.get("$baseUrl/api/v1/projects").decodeToString()
-        return Json.decodeFromString<List<ProjectDto>>(responseText).map { it.toProject() }
+    suspend fun getProjects(): List<Project> {
+        val response: NetworkResponse<List<ProjectDto>, ErrorResponse> = getRequest(projectUrl, allowUnauthenticated = true)
+
+        return when (response) {
+            is NetworkResponse.Success -> response.body.map { it.toProject() }
+            else -> emptyList()
+        }
     }
 }

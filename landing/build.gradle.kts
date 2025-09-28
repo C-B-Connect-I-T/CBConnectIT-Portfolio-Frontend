@@ -19,7 +19,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.compose.runtime)
-            api(project(":core"))
+            implementation(project(":core"))
         }
         jsMain.dependencies {
             implementation(libs.compose.html.core)

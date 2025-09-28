@@ -2,224 +2,181 @@ package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import cbconnectit.portfolio.web.backdropGradient
 import cbconnectit.portfolio.web.data.models.domain.Experience
 import cbconnectit.portfolio.web.extensions.techStackSvg
-import cbconnectit.portfolio.web.styles.onPrimary
-import cbconnectit.portfolio.web.styles.onSurface
-import cbconnectit.portfolio.web.styles.primary
-import cbconnectit.portfolio.web.utils.Constants
+import cbconnectit.portfolio.web.primaryGradient
+import com.materialdesignsystem.toColorScheme
+import com.varabyte.kobweb.compose.css.BoxShadow
+import com.varabyte.kobweb.compose.css.CSSLengthOrPercentageNumericValue
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
-import com.varabyte.kobweb.compose.css.WhiteSpace
-import com.varabyte.kobweb.compose.css.functions.LinearGradient
-import com.varabyte.kobweb.compose.css.functions.linearGradient
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
-import com.varabyte.kobweb.compose.ui.*
-import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
+import com.varabyte.kobweb.silk.style.breakpoint.displayUntil
+import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.palette.background
-import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
-import org.jetbrains.compose.web.css.DisplayStyle
-import org.jetbrains.compose.web.css.LineStyle
-import org.jetbrains.compose.web.css.percent
-import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.dom.P
-import org.jetbrains.compose.web.dom.Text
+import org.jetbrains.compose.web.css.*
+
+fun Modifier.gridTemplate(vararg sizes: CSSLengthOrPercentageNumericValue) = gridTemplateColumns {
+    sizes.forEach { size(it) }
+}
 
 @Composable
 fun ExperienceCard(
-    breakpoint: Breakpoint,
     active: Boolean = false,
     experience: Experience,
 ) {
-//    @Composable // TODO: check what this is about?
-    if (breakpoint > Breakpoint.MD) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .display(DisplayStyle.Grid)
-                .gridTemplateColumns {
-                    size(20.percent)
-                    size(10.percent)
-                    size(70.percent)
-                },
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ExperienceDetails(breakpoint, experience)
-            ExperienceNumber(active, experience)
-            ExperienceDescription(breakpoint, active, experience.description)
-        }
-    } else {
-        Row(
-            Modifier.fillMaxWidth()
-                .display(DisplayStyle.Grid)
-                .gridTemplateColumns {
-                    size(15.percent)
-                    size(85.percent)
-                },
-        ) {
-            ExperienceNumber(active, experience)
+    val baseModifier = Modifier.fillMaxWidth().display(DisplayStyle.Grid)
 
-            Column {
-                Spacer(Modifier.height(20.px))
-                ExperienceDetails(breakpoint, experience)
-                Spacer(Modifier.height(8.px))
-                ExperienceDescription(breakpoint, active, experience.description)
-                Spacer(Modifier.height(20.px))
-            }
+    Row(
+        modifier = baseModifier
+            .displayIfAtLeast(Breakpoint.LG)
+            .gridTemplate(20.percent, 10.percent, 70.percent),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ExperienceDetails(experience)
+        TimelineMarker(active, experience)
+        ExperienceDescription(active, experience.description)
+    }
+
+    Row(
+        modifier = baseModifier
+            .displayUntil(Breakpoint.LG)
+            .gridTemplate(15.percent, 85.percent)
+    ) {
+        TimelineMarker(active, experience)
+
+        Column(
+            modifier = Modifier.margin(topBottom = 20.px),
+            verticalArrangement = Arrangement.spacedBy(8.px)
+        ) {
+            ExperienceDetails(experience)
+            ExperienceDescription(active, experience.description)
         }
     }
 }
 
+private val CardShadow = listOf(
+    BoxShadow.of(0.px, 1.px, 2.px, 0.px, Colors.Black.copyf(alpha = 0.3f)),
+    BoxShadow.of(0.px, 2.px, 6.px, 2.px, Colors.Black.copyf(alpha = 0.15f))
+)
+
 @Composable
-fun ExperienceDescription(
-    breakpoint: Breakpoint,
+private fun ExperienceDescription(
     active: Boolean,
     description: String
 ) {
+    val breakpoint = rememberBreakpoint()
     val colorMode by ColorMode.currentState
 
-    val gradient = if (colorMode.isLight) {
-        linearGradient(LinearGradient.Direction.ToBottomRight, Color.rgb(237, 240, 242), Colors.White)
-    } else {
-        linearGradient(LinearGradient.Direction.ToBottomRight, Color.rgb(20, 22, 28), Color.rgb(76, 79, 82))
-    }
+    val textColor = if (active) colorMode.toColorScheme.onPrimary else colorMode.toColorScheme.onSurface
+    val backgroundGradient = if (active) colorMode.primaryGradient else colorMode.backdropGradient
 
+    // TODO: could be replaced with a DsCard in the future...
+    //      but it requires some adjustments to the DsCard to be more flexible and have more styles
     Box(
         modifier = Modifier.fillMaxWidth()
-            .thenIf(breakpoint > Breakpoint.MD) {
-                Modifier.margin(topBottom = 20.px)
-            }
+            .margin(topBottom = if (breakpoint > Breakpoint.MD) 20.px else 0.px)
             .padding(all = 14.px)
-            .color(if (active) colorMode.toPalette().onPrimary else colorMode.toPalette().onSurface)
-            .backgroundImage(if (active) linearGradient(LinearGradient.Direction.ToBottomRight, colorMode.toPalette().primary, colorMode.toPalette().primary) else gradient)
+            .color(textColor)
+            .backgroundImage(backgroundGradient)
             .borderRadius(12.px)
-            .attrsModifier {
-                style {
-                    // TODO: replace this when this ticket is fixed "https://github.com/varabyte/kobweb/issues/247"
-                    // "elevation Light 2 ----- Material 3
-                    property("box-shadow", "rgba(0, 0, 0, 0.3) 0px 1px 2px 0px, rgba(0, 0, 0, 0.15) 0px 2px 6px 2px")
-                }
-            }
+            .boxShadow(CardShadow)
     ) {
-        P(
-            attrs = Modifier
-                .margin(topBottom = 0.px)
-                .fontFamily(Constants.FONT_FAMILY)
-                .fontSize(16.px)
-                .whiteSpace(WhiteSpace.PreLine)
-                .fontWeight(FontWeight.Normal)
-                .lineHeight(1.65)
-                .toAttrs()
-        ) {
-            Text(description)
-        }
+        SpanText(
+            text = description,
+            modifier = Modifier.lineHeight(1.65)
+        )
     }
 }
 
 @Composable
-fun ExperienceDetails(
-    breakpoint: Breakpoint,
-    experience: Experience,
+private fun ExperienceDetails(
+    experience: Experience
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth()
-            .fillMaxHeight(),
-        verticalAlignment = Alignment.CenterVertically
+    val breakpoint = rememberBreakpoint()
+    val textAlign = if (breakpoint > Breakpoint.MD) TextAlign.End else TextAlign.Start
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(left = 32.px),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = if (breakpoint > Breakpoint.MD) Alignment.End else Alignment.Start
     ) {
-        Spacer(Modifier.width(40.px))
-
-        Column(
+        SpanText(
+            text = experience.formattedJobPosition,
             modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = if (breakpoint > Breakpoint.MD) Alignment.End else Alignment.Start
-        ) {
-            P(
-                attrs = Modifier
-                    .margin(topBottom = 0.px)
-                    .fontFamily(Constants.FONT_FAMILY)
-                    .fontSize(20.px)
-                    .fontWeight(FontWeight.Bold)
-                    .color(ColorMode.current.toPalette().primary)
-                    .thenIf(breakpoint > Breakpoint.MD) {
-                        Modifier.textAlign(TextAlign.End)
-                    }
-                    .toAttrs()
-            ) {
-                Text(experience.formattedJobPosition)
-            }
+                .fontSize(20.px)
+                .fontWeight(FontWeight.Bold)
+                .color(ColorMode.current.toColorScheme.primary)
+                .textAlign(textAlign)
+        )
 
-            P(
-                attrs = Modifier
-                    .margin(topBottom = 0.px)
-                    .fontFamily(Constants.FONT_FAMILY)
-                    .fontSize(14.px)
-                    .fontWeight(FontWeight.Normal)
-                    .thenIf(breakpoint > Breakpoint.MD) {
-                        Modifier.textAlign(TextAlign.End)
-                    }
-                    .toAttrs()
-            ) {
-                Text(experience.formattedDate)
-            }
+        SpanText(
+            text = experience.formattedDate,
+            modifier = Modifier
+                .fontSize(14.px)
+                .textAlign(textAlign)
+        )
 
-            P(
-                attrs = Modifier
-                    .margin(topBottom = 0.px)
-                    .fontFamily(Constants.FONT_FAMILY)
-                    .fontSize(14.px)
-                    .fontWeight(FontWeight.Normal)
-                    .thenIf(breakpoint > Breakpoint.MD) {
-                        Modifier.textAlign(TextAlign.End)
-                    }
-                    .toAttrs()
-            ) {
-                Text(experience.company.name)
-            }
-        }
+        SpanText(
+            text = experience.company.name,
+            modifier = Modifier
+                .fontSize(14.px)
+                .textAlign(textAlign)
+        )
     }
 }
 
 @Composable
-fun ExperienceNumber(
+private fun TimelineMarker(
     active: Boolean,
     experience: Experience
 ) {
     val colorMode by ColorMode.currentState
 
-    Box(
+    Column(
         modifier = Modifier.fillMaxHeight(),
-        contentAlignment = Alignment.Center
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            modifier = Modifier.fillMaxHeight()
-                .width(3.px)
-                .backgroundColor(colorMode.toPalette().primary)
-        )
-
+        // Vertical upper line
         Box(
             modifier = Modifier
+                .weight(1)
+                .width(3.px)
+                .backgroundColor(colorMode.toColorScheme.primary)
+        )
+
+        Column(
+            modifier = Modifier
                 .padding(leftRight = 4.px, topBottom = 10.px)
-                .border(width = 3.px, style = LineStyle.Solid, colorMode.toPalette().primary)
-                .backgroundColor(if (active) colorMode.toPalette().primary else colorMode.toPalette().background)
+                .border(width = 3.px, style = LineStyle.Solid, colorMode.toColorScheme.primary)
+                .backgroundColor(if (active) colorMode.toColorScheme.primary else Color.transparent)
                 .borderRadius(50.px),
-            contentAlignment = Alignment.Center
+            verticalArrangement = Arrangement.spacedBy(10.px)
         ) {
-            Column {
-                experience.tags.forEachIndexed { index, tag ->
-                    if (index != 0) {
-                        Spacer(Modifier.height(10.px))
-                    }
-                    experience.techStackSvg(tag, if (active) colorMode.toPalette().onPrimary else colorMode.toPalette().primary)
-                }
+            experience.tags.forEach { tag ->
+                experience.techStackSvg(tag, if (active) colorMode.toColorScheme.onPrimary else colorMode.toColorScheme.primary)
             }
         }
+
+        // Vertical bottom line
+        Box(
+            modifier = Modifier
+                .weight(1)
+                .width(3.px)
+                .backgroundColor(colorMode.toColorScheme.primary)
+        )
     }
 }

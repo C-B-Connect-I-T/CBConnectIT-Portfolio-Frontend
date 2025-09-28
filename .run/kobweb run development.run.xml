@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="kobweb run development" type="ShConfigurationType">
-    <option name="SCRIPT_TEXT" value="export BASE_URL=&quot;http://localhost:8080&quot;; kobweb run" />
+    <option name="SCRIPT_TEXT" value="export BASE_URL=&quot;http://192.168.68.58:2025&quot;; kobweb run" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="" />
     <option name="SCRIPT_OPTIONS" value="" />

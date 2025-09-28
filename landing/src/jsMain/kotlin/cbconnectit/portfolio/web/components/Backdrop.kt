@@ -2,6 +2,7 @@ package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import cbconnectit.portfolio.web.backdropGradient
 import com.varabyte.kobweb.compose.css.functions.LinearGradient
 import com.varabyte.kobweb.compose.css.functions.linearGradient
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -23,16 +24,12 @@ import org.jetbrains.compose.web.css.px
 
 @Composable
 fun Backdrop(
-    colorMode: ColorMode,
     modifier: Modifier = Modifier,
     borderRadius: CSSSizeValue<CSSUnit.px> = 8.px,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
-    val gradient = if (colorMode.isLight) {
-        linearGradient(LinearGradient.Direction.ToBottomRight, Color.rgb(237,240,242), Colors.White)
-    } else {
-        linearGradient(LinearGradient.Direction.ToBottomRight, Color.rgb(20, 22, 28), Color.rgb(76, 79, 82))
-    }
+    val colorMode by ColorMode.currentState
+    val gradient = colorMode.backdropGradient
 
     Box(
         Modifier
