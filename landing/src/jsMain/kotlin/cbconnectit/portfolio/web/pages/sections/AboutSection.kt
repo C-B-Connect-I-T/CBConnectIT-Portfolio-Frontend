@@ -5,13 +5,10 @@ import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.components.HighLightCard
 import cbconnectit.portfolio.web.components.SectionTitle
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.svg.completedProjectsSvg
-import cbconnectit.portfolio.web.svg.experienceSvg
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.format
 import com.materialdesignsystem.components.widgets.DsMaterialSymbols
-import com.materialdesignsystem.components.widgets.MaterialSymbolType
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement

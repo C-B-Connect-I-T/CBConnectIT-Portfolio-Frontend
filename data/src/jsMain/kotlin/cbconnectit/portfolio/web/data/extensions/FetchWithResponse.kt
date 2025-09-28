@@ -42,4 +42,4 @@ inline fun <reified T> buildFormData(
     return formData
 }
 
-inline fun <reified T> String?.parseData(): T = NetworkingConfig.getJson.decodeFromString(this ?: "")
+inline fun <reified T> String?.parseData(): T = NetworkingConfig.json.decodeFromString(this ?: "")

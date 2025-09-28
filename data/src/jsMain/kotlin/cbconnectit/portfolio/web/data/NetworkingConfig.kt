@@ -1,5 +1,9 @@
 package cbconnectit.portfolio.web.data
 
+import cbconnectit.portfolio.web.data.NetworkingConfig.refreshTokenCallback
+import cbconnectit.portfolio.web.data.extensions.UNAUTHORIZED_STATUS_CODE
+import cbconnectit.portfolio.web.data.extensions.parseData
+import cbconnectit.portfolio.web.data.models.NetworkResponse
 import cbconnectit.portfolio.web.data.models.domain.CredentialTokens
 import cbconnectit.portfolio.web.data.models.dto.responses.ErrorResponse
 import com.varabyte.kobweb.browser.http.FetchDefaults
@@ -8,9 +12,6 @@ import com.varabyte.kobweb.browser.http.ResponseException
 import com.varabyte.kobweb.browser.http.fetch
 import com.varabyte.kobweb.navigation.OpenLinkStrategy
 import com.varabyte.kobweb.navigation.open
-import cbconnectit.portfolio.web.data.extensions.UNAUTHORIZED_STATUS_CODE
-import cbconnectit.portfolio.web.data.extensions.parseData
-import cbconnectit.portfolio.web.data.models.NetworkResponse
 import kotlinx.browser.window
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -27,8 +28,20 @@ object NetworkingConfig {
     var baseUrl: String = ""
         private set
 
-    fun init(baseUrl: String?) {
+    internal var refreshTokenCallback: (() -> Unit)? = null
+        private set
+
+    var json: Json = Json
+        private set
+
+    fun init(
+        baseUrl: String?,
+        refreshToken: () -> Unit,
+        json: Json? = null
+    ) {
         NetworkingConfig.baseUrl = baseUrl ?: ""
+        refreshTokenCallback = refreshToken
+        this.json = json ?: Json { ignoreUnknownKeys = true; isLenient = true }
     }
 
     fun getTokens(): CredentialTokens? {
@@ -47,8 +60,6 @@ object NetworkingConfig {
 
         return headersMap
     }
-
-    val getJson = Json { ignoreUnknownKeys = true; isLenient = true }
 }
 
 // <editor-fold desc="Regular calls">
@@ -179,8 +190,7 @@ suspend fun <Res> fetchWithBody(
 private suspend fun refreshToken(): Boolean = refreshMutex.withLock {
     repeat(REFRESH_RETRIES) { attempt ->
         try {
-            // TODO: add the AuthRepo and implement the refresh logic
-//            AuthRepo.refreshToken()
+            refreshTokenCallback?.invoke()
             return true
         } catch (_: Exception) {
             if (attempt == 2) return false

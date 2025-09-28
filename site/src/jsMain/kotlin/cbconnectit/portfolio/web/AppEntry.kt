@@ -96,7 +96,11 @@ fun updateTheme(ctx: InitSilkContext) {
 @Composable
 fun AppEntry(content: @Composable () -> Unit) {
     MaterialTheme.setSchemes(lightScheme = CbLightColorScheme, darkScheme = CbDarkColorScheme)
-    NetworkingConfig.init(AppGlobals[Constants.BASE_URL] ?: "")
+    NetworkingConfig.init(
+        AppGlobals[Constants.BASE_URL] ?: "",
+        {
+            // AuthRepo.refreshToken()
+        })
 
     SilkApp {
         val colorMode = ColorMode.current
