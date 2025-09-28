@@ -5,7 +5,7 @@ kotlin = "2.2.10"
 kotlinx-serialization-json = "1.4.1"
 #kotlin-bootstrap = "0.0.8"
 detekt = "1.23.8"
-material-kobweb = "0.1.0"
+material-kobweb = "07ca1f5587"
 
 [libraries]
 compose-html-core = { module = "org.jetbrains.compose.html:html-core", version.ref = "jetbrains-compose" }
