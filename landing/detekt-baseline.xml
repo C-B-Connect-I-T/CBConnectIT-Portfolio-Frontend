@@ -12,7 +12,7 @@
     <ID>MagicNumber:BackToTopButton.kt$400.0</ID>
     <ID>MagicNumber:ContactForm.kt$ContactFormViewModel$302</ID>
     <ID>MagicNumber:ExperienceCard.kt$1.65</ID>
-    <ID>MagicNumber:Header.kt$10</ID>
+    <ID>MagicNumber:LandingHeader.kt$10</ID>
     <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$11</ID>
     <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$2017</ID>
     <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$365</ID>
@@ -44,7 +44,7 @@
     <ID>WildcardImport:ExperienceCard.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:FooterSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:Functions.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:Header.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
+    <ID>WildcardImport:LandingHeader.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:HomeContract.kt$import cbconnectit.portfolio.web.data.models.domain.*</ID>
     <ID>WildcardImport:HomePage.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:HomePage.kt$import cbconnectit.portfolio.web.pages.sections.*</ID>
