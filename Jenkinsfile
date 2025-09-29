@@ -58,7 +58,8 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${IMAGE_NAME}-${ENVIRONMENT}:${VERSION} ."
+                // Provide the BASE_URL as a build argument to the Dockerfile so it's available during the build
+                sh "docker build --build-arg BASE_URL=${BASE_URL} -t ${IMAGE_NAME}-${ENVIRONMENT}:${VERSION} ."
             }
         }
 
