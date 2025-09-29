@@ -6,7 +6,6 @@ import cbconnectit.portfolio.web.data.NetworkingConfig
 import cbconnectit.portfolio.web.styles.CbDarkColorScheme
 import cbconnectit.portfolio.web.styles.CbLightColorScheme
 import com.materialdesignsystem.MaterialTheme
-import com.materialdesignsystem.constants.Constants
 import com.materialdesignsystem.extensions.ButtonSizeXL
 import com.materialdesignsystem.toColorScheme
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -97,7 +96,7 @@ fun updateTheme(ctx: InitSilkContext) {
 fun AppEntry(content: @Composable () -> Unit) {
     MaterialTheme.setSchemes(lightScheme = CbLightColorScheme, darkScheme = CbDarkColorScheme)
     NetworkingConfig.init(
-        AppGlobals[Constants.BASE_URL] ?: "",
+        AppGlobals["BASE_URL"] ?: "",
         {
             // AuthRepo.refreshToken()
         })
