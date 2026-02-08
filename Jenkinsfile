@@ -2,17 +2,22 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "portfolio-frontend"
+        PROJECT_NAME = "portfolio-frontend"
+        DOCKER_NETWORK = "infrastructure_app-network"
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Determine Environment') {
             steps {
                 script {
-                    sh 'git fetch --tags'
-
                     def tag = sh(script: "git describe --exact-match --tags HEAD || echo ''", returnStdout: true).trim()
-                    def branch = env.GIT_BRANCH?.replaceFirst(/^origin\//, '') ?: 'develop'
+                    def branch = env.GIT_BRANCH?.replaceFirst(/^origin\//, '') ?: 'main'
 
                     echo "Branch: ${branch}"
                     echo "Tag: ${tag}"
@@ -21,10 +26,10 @@ pipeline {
                     def version = 'latest'
 
                     if (tag) {
-                        if (tag ==~ ~/^staging-v\d+\.\d+\.\d+$/) {
+                        if (tag ==~ /^staging-v\d+\.\d+\.\d+$/) {
                             environment = 'staging'
                             version = tag.replaceFirst(/^staging-v/, '')
-                        } else if (tag ==~ ~/^v\d+\.\d+\.\d+$/) {
+                        } else if (tag ==~ /^v\d+\.\d+\.\d+$/) {
                             environment = 'production'
                             version = tag.replaceFirst(/^v/, '')
                         } else {
@@ -32,6 +37,7 @@ pipeline {
                         }
                     } else if (branch == 'main' || branch == 'master') {
                         environment = 'develop'
+                        version = 'latest'
                     } else {
                         echo "Skipping build: Not a relevant branch or tag"
                         currentBuild.result = 'SUCCESS'
@@ -40,37 +46,121 @@ pipeline {
 
                     env.ENVIRONMENT = environment
                     env.VERSION = version
-                    env.CONTAINER_NAME = "${IMAGE_NAME}-${environment}"
+                    env.CONTAINER_NAME = "${PROJECT_NAME}-${environment}"
 
-                    env.EXPOSED_PORT = environment == 'production' ? '2022' :
-                                       environment == 'staging' ? '2021' : '2020'
+                    // Port mapping (adjust per project)
+                    def ports = [develop: '2020', staging: '2021', production: '2022']
+                    env.EXPOSED_PORT = ports[environment]
 
-                    env.BASE_URL = environment == 'production' ? 'https://cb-connect-it.com' :
-                                   environment == 'staging' ? 'https://stag.cb-connect-it.com' :
-                                   'https://dev.cb-connect-it.com'
+                    // Base URL configuration for each environment
+                    def baseUrls = [
+                        develop: 'https://dev.cb-connect-it.com',
+                        staging: 'https://stag.cb-connect-it.com',
+                        production: 'https://cb-connect-it.com'
+                    ]
+                    env.BASE_URL = baseUrls[environment]
 
-                    echo "Version: ${VERSION}"
-                    echo "Exposed port: ${EXPOSED_PORT}"
                     echo "Environment: ${ENVIRONMENT}"
+                    echo "Version: ${VERSION}"
+                    echo "Container: ${CONTAINER_NAME}"
+                    echo "Port: ${EXPOSED_PORT}"
+                    echo "Base URL: ${BASE_URL}"
+                }
+            }
+        }
+
+        stage('Run Detekt Analysis') {
+            steps {
+                script {
+                    sh './gradlew detekt --no-daemon'
+                }
+            }
+            post {
+                always {
+                    recordIssues(
+                        tools: [detekt(pattern: '**/build/reports/detekt/detekt.xml')]
+                    )
                 }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                // Provide the BASE_URL as a build argument to the Dockerfile so it's available during the build
-                sh "docker build --build-arg BASE_URL=${BASE_URL} -t ${IMAGE_NAME}-${ENVIRONMENT}:${VERSION} ."
+                script {
+                    echo "Building Docker image with BASE_URL: ${BASE_URL}"
+
+                    // Build the Docker image with BASE_URL as a build argument
+                    // The Dockerfile will handle the Kobweb export internally
+                    sh """
+                        docker build \
+                          --build-arg BASE_URL=${BASE_URL} \
+                          -t ${PROJECT_NAME}-${ENVIRONMENT}:${VERSION} \
+                          .
+                    """
+
+                    // Tag with 'latest' for the environment
+                    sh "docker tag ${PROJECT_NAME}-${ENVIRONMENT}:${VERSION} ${PROJECT_NAME}-${ENVIRONMENT}:latest"
+                }
             }
         }
 
-        stage('Deploy to Docker') {
+        stage('Stop Old Container') {
             steps {
                 script {
-                    sh "docker stop ${CONTAINER_NAME} || true"
-                    sh "docker rm ${CONTAINER_NAME} || true"
-                    sh "docker run -d --name ${CONTAINER_NAME} -p ${EXPOSED_PORT}:8081 ${IMAGE_NAME}-${ENVIRONMENT}:${VERSION}"
+                    sh """
+                        docker stop ${CONTAINER_NAME} || true
+                        docker rm ${CONTAINER_NAME} || true
+                    """
+                }
+            }
+        }
+
+        stage('Deploy Container') {
+            steps {
+                script {
+                    sh """
+                        docker run -d \\
+                          --name ${CONTAINER_NAME} \\
+                          --network ${DOCKER_NETWORK} \\
+                          -p ${EXPOSED_PORT}:8081 \\
+                          --restart unless-stopped \\
+                          --memory="512m" \\
+                          --cpus="0.5" \\
+                          ${PROJECT_NAME}-${ENVIRONMENT}:${VERSION}
+                    """
+                }
+            }
+        }
+
+        stage('Cleanup Old Images') {
+            steps {
+                script {
+                    // Keep only the last 3 images per environment
+                    sh """
+                        docker images ${PROJECT_NAME}-${ENVIRONMENT} --format '{{.ID}} {{.CreatedAt}}' | \\
+                        sort -k2 -r | \\
+                        tail -n +4 | \\
+                        awk '{print \$1}' | \\
+                        xargs -r docker rmi || true
+                    """
                 }
             }
         }
     }
+
+    post {
+        success {
+            echo "✓ Deployment successful for ${PROJECT_NAME}-${ENVIRONMENT}:${VERSION}"
+            echo "Access at: http://localhost:${EXPOSED_PORT}"
+        }
+        failure {
+            echo "✗ Deployment failed for ${PROJECT_NAME}-${ENVIRONMENT}:${VERSION}"
+            // TODO: Implement rollback logic
+        }
+        always {
+            // Clean workspace
+            cleanWs()
+        }
+    }
 }
+
