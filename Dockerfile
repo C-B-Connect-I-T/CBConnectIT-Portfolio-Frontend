@@ -51,8 +51,13 @@ WORKDIR /project/${KOBWEB_APP_ROOT}
 # Decrease Gradle memory usage to avoid OOM situations in tight environments
 # (many free Cloud tiers only give you 512M of RAM). The following amount
 # should be enough to build and export our site.
+# Note: Increased to 1024m because webpack requires more memory for Kotlin/JS builds
 RUN mkdir ~/.gradle && \
-    echo "org.gradle.jvmargs=-Xmx512m" >> ~/.gradle/gradle.properties
+    echo "org.gradle.jvmargs=-Xmx1024m" >> ~/.gradle/gradle.properties
+
+# Set Node.js heap memory size to avoid OOM during webpack bundling
+# This is critical for Kotlin/JS projects which require significant memory during the build process
+ENV NODE_OPTIONS="--max-old-space-size=1024"
 
 RUN kobweb export --notty
 
@@ -67,8 +72,8 @@ EXPOSE 8081:8081
 
 COPY --from=export /project/${KOBWEB_APP_ROOT}/.kobweb .kobweb
 
-# Because many free tiers only give you 512M of RAM, let's limit the server's
-# memory usage to that. You can remove this ENV line if your server isn't so
-# restricted. That said, 512M should be plenty for most (all?) sites.
+# Set memory limit for the server. For Kotlin/JS applications with significant
+# client-side code, we need more memory than the typical 512M.
+# Adjust this value based on your hosting environment's available RAM.
 ENV JAVA_TOOL_OPTIONS="-Xmx512m"
-ENTRYPOINT .kobweb/server/start.sh
+ENTRYPOINT [".kobweb/server/start.sh"]
