@@ -94,6 +94,8 @@ pipeline {
                     sh """
                         docker build \
                           --build-arg BASE_URL=${BASE_URL} \
+                          --memory="3g" \
+                          --memory-swap="3g" \
                           -t ${PROJECT_NAME}-${ENVIRONMENT}:${VERSION} \
                           .
                     """
