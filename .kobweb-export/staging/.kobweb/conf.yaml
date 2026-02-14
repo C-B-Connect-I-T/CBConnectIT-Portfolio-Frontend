@@ -1,0 +1,14 @@
+site:
+  title: "Portfolio Web Compose"
+
+server:
+  files:
+    dev:
+      contentRoot: "build/processedResources/js/main/public"
+      script: "build/kotlin-webpack/js/developmentExecutable/bolla.js"
+      api: "build/libs/bolla.jar"
+    prod:
+      script: "build/kotlin-webpack/js/productionExecutable/bolla.js"
+      siteRoot: ".kobweb/site"
+
+  port: 8081
