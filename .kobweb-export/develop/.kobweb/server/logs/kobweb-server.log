@@ -1,0 +1,59 @@
+2026-02-14 15:29:48.485 [main] DEBUG io.ktor.server.Application - Java Home: /usr/lib/jvm
+2026-02-14 15:29:48.519 [main] DEBUG io.ktor.server.Application - Class Loader: jdk.internal.loader.ClassLoaders$AppClassLoader@639fee48: [file:/home/runner/work/CBConnectIT-Portfolio-Frontend/CBConnectIT-Portfolio-Frontend/site/.kobweb/server/server.jar!/okio]
+2026-02-14 15:29:48.552 [main] DEBUG io.ktor.server.Application - Failed to load module 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke' by classpath reference, falling back to currently loaded value
+io.ktor.server.engine.internal.ReloadingException: Module function cannot be found for the fully qualified name 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke'
+	at io.ktor.server.engine.internal.CallableUtilsKt.executeModuleFunction(CallableUtils.kt:68)
+	at io.ktor.server.engine.EmbeddedServer$launchModuleByName$2.invokeSuspend(EmbeddedServerJvm.kt:443)
+	at io.ktor.server.engine.EmbeddedServer$launchModuleByName$2.invoke(EmbeddedServerJvm.kt)
+	at io.ktor.server.engine.EmbeddedServer$launchModuleByName$2.invoke(EmbeddedServerJvm.kt)
+	at io.ktor.server.engine.EmbeddedServer.avoidingDoubleStartupFor(EmbeddedServerJvm.kt:469)
+	at io.ktor.server.engine.EmbeddedServer.launchModuleByName(EmbeddedServerJvm.kt:442)
+	at io.ktor.server.engine.EmbeddedServer.access$launchModuleByName(EmbeddedServerJvm.kt:33)
+	at io.ktor.server.engine.EmbeddedServer$toDynamicModuleOrNull$1.invokeSuspend(EmbeddedServerJvm.kt:425)
+	at io.ktor.server.engine.EmbeddedServer$toDynamicModuleOrNull$1.invoke(EmbeddedServerJvm.kt)
+	at io.ktor.server.engine.EmbeddedServer$toDynamicModuleOrNull$1.invoke(EmbeddedServerJvm.kt)
+	at io.ktor.server.application.ApplicationModules_jvmKt$LoadSequentially$1.loadModules(ApplicationModules.jvm.kt:75)
+	at io.ktor.server.engine.EmbeddedServer$instantiateAndConfigureApplication$1$1.invokeSuspend(EmbeddedServerJvm.kt:385)
+	at io.ktor.server.engine.EmbeddedServer$instantiateAndConfigureApplication$1$1.invoke(EmbeddedServerJvm.kt)
+	at io.ktor.server.engine.EmbeddedServer$instantiateAndConfigureApplication$1$1.invoke(EmbeddedServerJvm.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndspatched(Undispatched.kt:66)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturnIgnoreTimeout(Undispatched.kt:50)
+	at kotlinx.coroutines.TimeoutKt.setupTimeout(Timeout.kt:149)
+	at kotlinx.coroutines.TimeoutKt.withTimeout(Timeout.kt:44)
+	at kotlinx.coroutines.TimeoutKt.withTimeout-KLykuaI(Timeout.kt:72)
+	at io.ktor.server.engine.EmbeddedServer$instantiateAndConfigureApplication$1.invokeSuspend(EmbeddedServerJvm.kt:384)
+	at io.ktor.server.engine.EmbeddedServer$instantiateAndConfigureApplication$1.invoke(EmbeddedServerJvm.kt)
+	at io.ktor.server.engine.EmbeddedServer$instantiateAndConfigureApplication$1.invoke(EmbeddedServerJvm.kt)
+	at io.ktor.server.engine.EmbeddedServer$avoidingDoubleStartup$1.invokeSuspend(EmbeddedServerJvm.kt:450)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:94)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:70)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:48)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source)
+	at io.ktor.server.engine.EmbeddedServer.avoidingDoubleStartup(EmbeddedServerJvm.kt:449)
+	at io.ktor.server.engine.EmbeddedServer.instantiateAndConfigureApplication(EmbeddedServerJvm.kt:383)
+	at io.ktor.server.engine.EmbeddedServer.createApplication(EmbeddedServerJvm.kt:169)
+	at io.ktor.server.engine.EmbeddedServer.start(EmbeddedServerJvm.kt:314)
+	at io.ktor.server.engine.EmbeddedServer.start$default(EmbeddedServerJvm.kt:309)
+	at com.varabyte.kobweb.server.ApplicationKt.main(Application.kt:138)
+	at com.varabyte.kobweb.server.ApplicationKt$main$6.invoke(Application.kt)
+	at com.varabyte.kobweb.server.ApplicationKt$main$6.invoke(Application.kt)
+	at kotlin.coroutines.intrinsics.IntrinsicsKt__IntrinsicsJvmKt$createCoroutineUnintercepted$$inlined$createCoroutineFromSuspendFunction$IntrinsicsKt__IntrinsicsJvmKt$1.invokeSuspend(IntrinsicsJvm.kt:270)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlin.coroutines.ContinuationKt.startCoroutine(Continuation.kt:115)
+	at kotlin.coroutines.jvm.internal.RunSuspendKt.runSuspend(RunSuspend.kt:19)
+	at com.varabyte.kobweb.server.ApplicationKt.main(Application.kt)
+2026-02-14 15:29:48.553 [main] INFO  io.ktor.server.Application - Initializing server engine for Kobweb project "Portfolio Web Compose"
+2026-02-14 15:29:48.555 [main] WARN  io.ktor.server.Application - API jar specified but does not exist! Please fix conf.yaml, updating the path (or removing the value if you aren't declaring API endpoints). Invalid path: "build/libs/bolla.jar"
+2026-02-14 15:29:48.640 [main] INFO  io.ktor.server.Application - CORS: No hosts registered.
+2026-02-14 15:29:48.678 [main] INFO  io.ktor.server.Application - Application started in 0.471 seconds.
+2026-02-14 15:29:48.808 [main] INFO  io.ktor.server.Application - Responding at http://0.0.0.0:8081
+2026-02-14 15:30:38.717 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/projects"
+2026-02-14 15:30:40.429 [DefaultDispatcher-worker-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/services/service"
+2026-02-14 15:30:41.942 [eventLoopGroupProxy-4-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/services"
+2026-02-14 15:30:43.442 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/"
+2026-02-14 15:30:46.511 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Kobweb server shutting down...
+2026-02-14 15:30:47.519 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Server finished shutting down.
