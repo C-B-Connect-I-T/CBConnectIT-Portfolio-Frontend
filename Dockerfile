@@ -1,79 +1,68 @@
 #-----------------------------------------------------------------------------
-# Variables are shared across multiple stages (they need to be explicitly
-# opted into each stage by being declaring there too, but their values need
-# only be specified once).
-ARG KOBWEB_APP_ROOT="site"
-# ^ NOTE: Kobweb apps generally live in a root "site" folder in your project,
-# but you can change this in case your project has a custom layout.
-
-FROM eclipse-temurin:21 AS java
-
+# Optimized Dockerfile for pre-built Kobweb exports
+# This approach assumes the .kobweb directory is already built and committed
+# to the repository, dramatically reducing build time and resource usage.
 #-----------------------------------------------------------------------------
-# Create an intermediate stage which builds and exports our site. In the
-# final stage, we'll only extract what we need from this stage, saving a lot
-# of space.
-FROM java AS export
 
-ENV KOBWEB_CLI_VERSION=0.9.18
-ARG KOBWEB_APP_ROOT
-ARG BASE_URL
-ARG BASE_URL=${BASE_URL}
+ARG KOBWEB_EXPORT_DIR=".kobweb-export"
+# ^ Directory where pre-built exports are stored in the repo
 
-ENV NODE_MAJOR=20
+FROM eclipse-temurin:21-jre-alpine AS run
 
-# Copy the project code to an arbitrary subdir so we can install stuff in the
-# Docker container root without worrying about clobbering project files.
-COPY . /project
+ARG KOBWEB_EXPORT_DIR
+ARG ENVIRONMENT=develop
 
-# Update and install required OS packages to continue
-# Note: Node install instructions from: https://github.com/nodesource/distributions#installation-instructions
-# Note: Playwright is a system for running browsers, and here we use it to
-# install Chromium.
-RUN apt-get update
-RUN apt-get install -y ca-certificates curl gnupg unzip wget
-RUN mkdir -p /etc/apt/keyrings
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-RUN apt-get update
-RUN apt-get install -y nodejs
-RUN npm init -y
-RUN npx playwright install --with-deps chromium
+# Install only what's needed to run (not build)
+RUN apk add --no-cache curl
 
-# Fetch the latest version of the Kobweb CLI
-RUN wget https://github.com/varabyte/kobweb-cli/releases/download/v${KOBWEB_CLI_VERSION}/kobweb-${KOBWEB_CLI_VERSION}.zip \
-    && unzip kobweb-${KOBWEB_CLI_VERSION}.zip \
-    && rm kobweb-${KOBWEB_CLI_VERSION}.zip
+# Copy the pre-built export for the specific environment
+# This copies the .kobweb directory from the repo to /.kobweb in the container
+COPY ${KOBWEB_EXPORT_DIR}/${ENVIRONMENT}/.kobweb .kobweb
 
-ENV PATH="/kobweb-${KOBWEB_CLI_VERSION}/bin:${PATH}"
+# Verify the export exists and show detailed diagnostics if not
+RUN if [ ! -f ".kobweb/server/start.sh" ]; then \
+      echo "==========================================="; \
+      echo "ERROR: start.sh not found at expected path!"; \
+      echo "==========================================="; \
+      echo ""; \
+      echo "Expected path: .kobweb/server/start.sh"; \
+      echo "Environment: ${ENVIRONMENT}"; \
+      echo "Export dir: ${KOBWEB_EXPORT_DIR}"; \
+      echo ""; \
+      echo "Current directory structure:"; \
+      ls -laR .kobweb || echo "Failed to list .kobweb directory"; \
+      echo ""; \
+      echo "Possible causes:"; \
+      echo "1. GitHub Actions didn't run or failed"; \
+      echo "2. Export wasn't committed to ${KOBWEB_EXPORT_DIR}/${ENVIRONMENT}/"; \
+      echo "3. Directory structure is wrong (missing .kobweb parent folder)"; \
+      echo "4. Wrong ENVIRONMENT value: '${ENVIRONMENT}'"; \
+      echo ""; \
+      echo "Expected repository structure:"; \
+      echo "${KOBWEB_EXPORT_DIR}/"; \
+      echo "  ${ENVIRONMENT}/"; \
+      echo "    .kobweb/"; \
+      echo "      server/"; \
+      echo "        start.sh"; \
+      echo ""; \
+      exit 1; \
+    fi
 
-WORKDIR /project/${KOBWEB_APP_ROOT}
+# Make start script executable
+RUN chmod +x .kobweb/server/start.sh
 
-# Decrease Gradle memory usage to avoid OOM situations in tight environments
-# (many free Cloud tiers only give you 512M of RAM). The following amount
-# should be enough to build and export our site.
-# Note: Increased to 1024m because webpack requires more memory for Kotlin/JS builds
-RUN mkdir ~/.gradle && \
-    echo "org.gradle.jvmargs=-Xmx1024m" >> ~/.gradle/gradle.properties
-
-# Set Node.js heap memory size to avoid OOM during webpack bundling
-# This is critical for Kotlin/JS projects which require significant memory during the build process
-ENV NODE_OPTIONS="--max-old-space-size=1024"
-
-RUN kobweb export --notty
-
-#-----------------------------------------------------------------------------
-# Create the final stage, which contains just enough bits to run the Kobweb
-# server.
-FROM java AS run
-
-ARG KOBWEB_APP_ROOT
+# Show success message with details
+RUN echo "✓ Kobweb export validated successfully for ${ENVIRONMENT}" && \
+    echo "  Entry point: .kobweb/server/start.sh" && \
+    ls -lh .kobweb/server/start.sh
 
 EXPOSE 8081:8081
 
-COPY --from=export /project/${KOBWEB_APP_ROOT}/.kobweb .kobweb
+# Use JRE with minimal memory footprint
+ENV JAVA_TOOL_OPTIONS="-Xmx512m -Xms256m -XX:MaxMetaspaceSize=128m"
 
-# Set memory limit for the server. For Kotlin/JS applications with significant
-# client-side code, we need more memory than the typical 512M.
-# Adjust this value based on your hosting environment's available RAM.
-ENV JAVA_TOOL_OPTIONS="-Xmx512m"
-ENTRYPOINT [".kobweb/server/start.sh"]
+# Healthcheck on port 8081 (Kobweb's default port, verified in conf.yaml)
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost:8081/ || exit 1
+
+ENTRYPOINT ["/bin/sh", ".kobweb/server/start.sh"]

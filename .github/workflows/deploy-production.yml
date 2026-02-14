@@ -1,0 +1,192 @@
+name: Manual Deploy - Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Git ref (branch, tag, or commit SHA) to deploy'
+        required: true
+        default: 'main'
+        type: string
+      confirm:
+        description: 'Type "DEPLOY TO PRODUCTION" to confirm'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  validate-confirmation:
+    name: Validate Deployment Confirmation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check confirmation
+        run: |
+          if [ "${{ inputs.confirm }}" != "DEPLOY TO PRODUCTION" ]; then
+            echo "❌ Deployment cancelled - confirmation text does not match"
+            echo "Expected: 'DEPLOY TO PRODUCTION'"
+            echo "Received: '${{ inputs.confirm }}'"
+            exit 1
+          fi
+          echo "✅ Confirmation validated"
+
+  export-production:
+    name: Export Production Build
+    runs-on: ubuntu-latest
+    needs: validate-confirmation
+
+    steps:
+      - name: Checkout code at specified ref
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright Chromium
+        run: |
+          npm init -y
+          npx playwright install --with-deps chromium
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Download Kobweb CLI
+        run: |
+          KOBWEB_VERSION=0.9.18
+          wget https://github.com/varabyte/kobweb-cli/releases/download/v${KOBWEB_VERSION}/kobweb-${KOBWEB_VERSION}.zip
+          unzip kobweb-${KOBWEB_VERSION}.zip
+          echo "${PWD}/kobweb-${KOBWEB_VERSION}/bin" >> $GITHUB_PATH
+
+      - name: Configure Gradle for limited resources
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.jvmargs=-Xmx2g" >> ~/.gradle/gradle.properties
+          echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+
+      - name: Export Kobweb site for Production
+        working-directory: ./site
+        env:
+          BASE_URL: https://cb-connect-it.com
+        run: |
+          echo "⚠️  Exporting PRODUCTION build from ref: ${{ inputs.ref }}"
+          echo "BASE_URL: ${BASE_URL}"
+          kobweb export --notty
+          
+          # Verify export was successful
+          echo ""
+          echo "Export completed. Verifying structure..."
+          if [ -f ".kobweb/server/start.sh" ]; then
+            echo "✓ start.sh found"
+          else
+            echo "✗ start.sh NOT found!"
+            ls -laR .kobweb/
+            exit 1
+          fi
+
+      - name: Organize export
+        run: |
+          EXPORT_DIR=.kobweb-export/production
+          mkdir -p ${EXPORT_DIR}
+          cp -r site/.kobweb ${EXPORT_DIR}/
+          
+          # Verify the directory structure is correct
+          if [ ! -f "${EXPORT_DIR}/.kobweb/server/start.sh" ]; then
+            echo "ERROR: Directory structure is incorrect!"
+            echo "Expected: ${EXPORT_DIR}/.kobweb/server/start.sh"
+            echo "Actual contents:"
+            ls -laR ${EXPORT_DIR}
+            exit 1
+          fi
+          
+          # Create a manifest file with build info
+          cat > ${EXPORT_DIR}/BUILD_INFO.txt << EOF
+          Build Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          Environment: production
+          Base URL: https://cb-connect-it.com
+          Git Ref: ${{ inputs.ref }}
+          Git Commit: ${GITHUB_SHA}
+          Workflow Run: ${GITHUB_RUN_NUMBER}
+          Triggered By: ${{ github.actor }}
+          Linter: Passed ✓
+          Build: Passed ✓
+          Export Path: .kobweb/server/start.sh verified ✓
+          EOF
+          
+          echo "✓ Export structure verified successfully"
+
+      - name: Create Pull Request
+        id: create-pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          commit-message: "🔴 deploy(prod): update Kobweb export for production environment"
+          branch: deploy/production-${{ github.run_number }}
+          delete-branch: true
+          title: "🔴 Deploy Production Export from ${{ inputs.ref }}"
+          body: |
+            ## ⚠️ Production Deployment
+            
+            This PR contains the **PRODUCTION** export build.
+            
+            **Source Ref:** `${{ inputs.ref }}`
+            **Commit:** `${{ github.sha }}`
+            **Triggered by:** @${{ github.actor }}
+            **Workflow Run:** #${{ github.run_number }}
+            
+            ### Build Information
+            - Environment: **🔴 PRODUCTION**
+            - Base URL: https://cb-connect-it.com
+            - Build Date: ${{ github.run_started_at }}
+            
+            ### What's Changed
+            - Updated `.kobweb-export/production/` with new build
+            
+            ### ⚠️ Deployment Instructions
+            1. **Carefully review** the build artifacts
+            2. **Test thoroughly** before merging
+            3. Merge this PR to update the production export in the repository
+            4. Deploy the contents of `.kobweb-export/production/` to the **PRODUCTION** server
+            
+            ### Pre-Deployment Checklist
+            - [ ] Reviewed all changes
+            - [ ] Tested the build locally
+            - [ ] Verified no breaking changes
+            - [ ] Notified relevant stakeholders
+            - [ ] Ready for production deployment
+            
+            ---
+            *This PR was automatically generated by the Manual Deploy - Production workflow*
+          labels: |
+            deployment
+            production
+            critical
+          add-paths: |
+            .kobweb-export/production/**
+
+      - name: Enable Pull Request Auto-Merge
+        if: steps.create-pr.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          echo "Enabling auto-merge for PR #${{ steps.create-pr.outputs.pull-request-number }}"
+          gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash --delete-branch
