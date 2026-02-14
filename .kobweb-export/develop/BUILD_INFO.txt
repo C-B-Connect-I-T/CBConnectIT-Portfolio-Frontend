@@ -1,0 +1,10 @@
+Build Date: 2026-02-14 15:30:48 UTC
+Environment: develop
+Base URL: https://dev.cb-connect-it.com
+Git Commit: 9dce53c490d81d8dfd4ef88ddf5a692d1358ff6a
+Git Ref: refs/heads/main
+Workflow Run: 1
+Triggered By: ShaHar91
+Linter: Passed ✓
+Build: Passed ✓
+Export Path: .kobweb/server/start.sh verified ✓
