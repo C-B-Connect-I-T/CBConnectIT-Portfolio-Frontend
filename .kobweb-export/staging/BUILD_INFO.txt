@@ -1,0 +1,10 @@
+Build Date: 2026-02-14 15:37:35 UTC
+Environment: staging
+Base URL: https://stag.cb-connect-it.com
+Git Ref: main
+Git Commit: 8c4283bd7fc37ddea26f5f7720272b6d519f1a95
+Workflow Run: 1
+Triggered By: ShaHar91
+Linter: Passed ✓
+Build: Passed ✓
+Export Path: .kobweb/server/start.sh verified ✓
