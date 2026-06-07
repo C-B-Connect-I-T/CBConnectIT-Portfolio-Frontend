@@ -21,7 +21,7 @@ kobweb {
 
 kotlin {
     // TODO: remove the moduleName override!!
-    configAsKobwebApplication("bolla", false)
+    configAsKobwebApplication("cb-connect-it_portfolio", false)
 
     @Suppress("UNUSED_VARIABLE") // Suppress spurious warnings about sourceset variables not being used
     sourceSets {

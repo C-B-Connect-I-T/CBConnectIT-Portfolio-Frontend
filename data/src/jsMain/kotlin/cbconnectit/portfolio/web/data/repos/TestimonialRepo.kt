@@ -12,7 +12,7 @@ object TestimonialRepo {
     private val testimonialUrl = "${NetworkingConfig.baseUrl}/api/v1/testimonials"
 
     suspend fun getTestimonials(): List<Testimonial> {
-        val response: NetworkResponse<List<TestimonialDto>, ErrorResponse> = getRequest(testimonialUrl, allowUnauthenticated = true)
+        val response: NetworkResponse<List<TestimonialDto>, ErrorResponse> = getRequest(testimonialUrl)
 
         return when (response) {
             is NetworkResponse.Success -> response.body.map { it.toTestimonial() }

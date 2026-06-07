@@ -17,7 +17,7 @@ object ServiceRepo {
     private val serviceUrl = "${NetworkingConfig.baseUrl}/api/v1/services"
 
     suspend fun getServices(): List<Service> {
-        val response: NetworkResponse<List<ServiceDto>, ErrorResponse> = getRequest(serviceUrl, allowUnauthenticated = true)
+        val response: NetworkResponse<List<ServiceDto>, ErrorResponse> = getRequest(serviceUrl)
 
         return when (response) {
             is NetworkResponse.Success -> response.body.map { it.toService() }
@@ -27,7 +27,7 @@ object ServiceRepo {
 
     suspend fun getServiceById(id: String): Service? {
         val url = "$serviceUrl/$id"
-        val response: NetworkResponse<ServiceDto, ErrorResponse> = getRequest(url, allowUnauthenticated = true)
+        val response: NetworkResponse<ServiceDto, ErrorResponse> = getRequest(url)
 
         return when (response) {
             is NetworkResponse.Success -> response.body.toService()

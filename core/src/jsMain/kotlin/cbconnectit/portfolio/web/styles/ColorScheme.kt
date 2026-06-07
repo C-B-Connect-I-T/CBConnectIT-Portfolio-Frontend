@@ -5,8 +5,30 @@ package cbconnectit.portfolio.web.styles
 import com.materialdesignsystem.theme.darkColorScheme
 import com.materialdesignsystem.theme.lightColorScheme
 import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.palette.Palette
 import com.varabyte.kobweb.silk.theme.colors.palette.colorMode
+
+private val SuccessColorLight = Color.rgb(0xCFEBC1)
+private val OnSuccessColorLight = Color.rgb(0x364D2E)
+private val WarningColorLight = Color.rgb(0xFFDEA8)
+private val OnWarningColorLight = Color.rgb(0x5E4200)
+private val InfoColorLight = Color.rgb(0xA7C7E7)
+private val OnInfoColorLight = Color.rgb(0x001C3B)
+
+private val SuccessColorDark = Color.rgb(0x364D2E)
+private val OnSuccessColorDark = Color.rgb(0xCFEBC1)
+private val WarningColorDark = Color.rgb(0x5E4200)
+private val OnWarningColorDark = Color.rgb(0xFFDEA8)
+private val InfoColorDark = Color.rgb(0x001C3B)
+private val OnInfoColorDark = Color.rgb(0xA7C7E7)
+
+val ColorMode.SuccessColor get() = if (this == ColorMode.LIGHT) SuccessColorLight else SuccessColorDark
+val ColorMode.OnSuccessColor get() = if (this == ColorMode.LIGHT) OnSuccessColorLight else OnSuccessColorDark
+val ColorMode.WarningColor get() = if (this == ColorMode.LIGHT) WarningColorLight else WarningColorDark
+val ColorMode.OnWarningColor get() = if (this == ColorMode.LIGHT) OnWarningColorLight else OnWarningColorDark
+val ColorMode.InfoColor get() = if (this == ColorMode.LIGHT) InfoColorLight else InfoColorDark
+val ColorMode.OnInfoColor get() = if (this == ColorMode.LIGHT) OnInfoColorLight else OnInfoColorDark
 
 private val PrimaryLight = Color.rgb(78, 91, 146)
 private val OnPrimaryLight = Color.rgb(255, 255, 255)

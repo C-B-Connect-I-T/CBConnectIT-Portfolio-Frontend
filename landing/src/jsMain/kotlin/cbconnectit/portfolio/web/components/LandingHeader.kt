@@ -7,6 +7,7 @@ import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.pages.sections.NavigationItems
 import cbconnectit.portfolio.web.svg.darkModeSvg
 import cbconnectit.portfolio.web.svg.lightModeSvg
+import cbconnectit.portfolio.web.utils.Constants.COLOR_MODE_KEY
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.logoImage
 import com.materialdesignsystem.components.sections.BaseHeader
@@ -21,7 +22,14 @@ import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.modifiers.cursor
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
+import com.varabyte.kobweb.compose.ui.modifiers.height
+import com.varabyte.kobweb.compose.ui.modifiers.margin
+import com.varabyte.kobweb.compose.ui.modifiers.onClick
+import com.varabyte.kobweb.compose.ui.modifiers.padding
+import com.varabyte.kobweb.compose.ui.modifiers.setVariable
+import com.varabyte.kobweb.compose.ui.modifiers.zIndex
 import com.varabyte.kobweb.silk.components.forms.ButtonVars
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.components.overlay.Tooltip
@@ -29,6 +37,7 @@ import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.style.breakpoint.displayUntil
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.silk.theme.colors.saveToLocalStorage
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.A
@@ -68,6 +77,7 @@ fun LandingHeader(
                 colorMode = colorMode.opposite
                 // Trigger a custom event, so we can listen to this change in order to recalculate grid item size for the testimonials
                 window.dispatchEvent(Event("update-color-mode"))
+                colorMode.saveToLocalStorage(COLOR_MODE_KEY)
             }
         ) {
             when (colorMode) {

@@ -7,6 +7,7 @@ import com.varabyte.kobweb.compose.ui.attrsModifier
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.modifiers.display
 import com.varabyte.kobweb.compose.ui.modifiers.overflow
+import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.attributes.AttrsScope
 import org.jetbrains.compose.web.css.DisplayStyle
 import org.w3c.dom.HTMLParagraphElement
@@ -98,4 +99,9 @@ fun String.format(vararg args: Any?): String {
             else -> args[match.substring(1, match.length - 1).toInt()].toString()
         }
     }
+}
+
+fun logoImage(colorMode: ColorMode) = when (colorMode) {
+    ColorMode.DARK -> Res.Image.logoDark
+    ColorMode.LIGHT -> Res.Image.logo
 }

@@ -8,8 +8,6 @@ import org.w3c.files.File
 import org.w3c.xhr.FormData
 import kotlin.collections.iterator
 
-const val UNAUTHORIZED_STATUS_CODE = 401
-
 fun buildFormData(
     extraFields: Map<String, Any?> = emptyMap()
 ): FormData = buildFormData<Any>(null, extraFields = extraFields)

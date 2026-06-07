@@ -32,8 +32,3 @@ fun ObserveViewportEntered(
         }
     }
 }
-
-fun logoImage(colorMode: ColorMode) = when (colorMode) {
-    ColorMode.DARK -> Res.Image.logoDark
-    ColorMode.LIGHT -> Res.Image.logo
-}
