@@ -47,10 +47,15 @@ sealed class Navigation(val route: String) {
             fun getProject(id: String) = "$route/?projectId=$id"
         }
 
-        sealed class Admin(route: String): Screen("/admin$route") {
+        sealed class Admin(route: String) : Screen("/admin$route") {
             data object Home : Admin("")
-
-            data class Login(val returnTo: String? = null) : Screen("/login" + if (returnTo != null) "?returnTo=${encodeReturnUrl(returnTo)}" else "")
+            data object Testimonials : Admin("/testimonials")
+            data object Services : Admin("/services")
+            data object Projects : Admin("/projects")
+            data object Experiences : Admin("/experiences")
+            data object Settings : Admin("/settings")
+            data class Login(val returnTo: String? = null) :
+                Admin("/login" + if (returnTo != null) "?returnTo=${encodeReturnUrl(returnTo)}" else "")
         }
     }
 

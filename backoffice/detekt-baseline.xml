@@ -2,7 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>UnusedParameter:AdminHomePage.kt$sendIntent: (AdminHomeContract.Intent) -&gt; Unit</ID>
-    <ID>UnusedPrivateProperty:AdminHomePage.kt$val colorScheme = ColorMode.current.toColorScheme</ID>
+    <ID>MagicNumber:AdminFooter.kt$0.25f</ID>
+    <ID>MagicNumber:AdminHeader.kt$0.6f</ID>
+    <ID>MagicNumber:AdminSidePanel.kt$9</ID>
   </CurrentIssues>
 </SmellBaseline>

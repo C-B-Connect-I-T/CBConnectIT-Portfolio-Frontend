@@ -18,6 +18,7 @@ import com.materialkobweb.MaterialTheme
 import com.materialkobweb.components.toast.ToastColors
 import com.materialkobweb.components.toast.ToastContainer
 import com.materialkobweb.toColorScheme
+import com.materialkobweb.utils.Logger
 import com.varabyte.kobweb.compose.css.ScrollBehavior
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -96,6 +97,8 @@ fun AppEntry(content: @Composable () -> Unit) {
     LaunchedEffect(Unit) {
         AuthRepo.checkAuthStatus()
     }
+
+    Logger.init(SiteGlobals.environment)
 
     SilkApp {
         Surface(modifier = SmoothColorStyle.toModifier()) {
