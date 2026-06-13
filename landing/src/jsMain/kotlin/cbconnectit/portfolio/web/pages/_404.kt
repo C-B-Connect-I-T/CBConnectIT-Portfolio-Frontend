@@ -6,6 +6,7 @@ import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Res
 import com.materialkobweb.components.Spacer
 import com.materialkobweb.components.widgets.FilledButton
+import com.materialkobweb.components.widgets.FilledButtonLink
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -71,15 +72,10 @@ fun ErrorPage() {
 
                 Spacer(Modifier.height(24.px))
 
-                A(
-                    href = Navigation.Screen.Home.route,
-                    attrs = Modifier
-                        .textDecorationLine(TextDecorationLine.None)
-                        .toAttrs()
+                FilledButtonLink(
+                    path = Navigation.Screen.Home.route
                 ) {
-                    FilledButton(onClick = {}) {
-                        Text(Res.String.GoToHome)
-                    }
+                    Text(Res.String.GoToHome)
                 }
             }
         }

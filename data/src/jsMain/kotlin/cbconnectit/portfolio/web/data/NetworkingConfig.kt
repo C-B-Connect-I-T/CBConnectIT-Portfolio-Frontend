@@ -173,7 +173,7 @@ suspend fun <Res> fetchWithBody(
         } else {
             parseBody(responseText)
         }
-        NetworkResponse.Success(data, null)
+        NetworkResponse.Success(data, res)
     } catch (e: ResponseException) {
         // Don't attempt refresh for auth endpoints to prevent deadlocks
         if (e.response.status.toInt() != UNAUTHORIZED_STATUS_CODE || isAuthEndpoint(resource)) {
@@ -183,7 +183,7 @@ suspend fun <Res> fetchWithBody(
             } catch (_: Exception) {
                 null
             }
-            return NetworkResponse.ServerError(data, null)
+            return NetworkResponse.ServerError(data, e.response)
         }
 
         // Attempt to refresh the token (via cookie rotation on the backend)
@@ -227,7 +227,9 @@ private suspend fun fetchWithCredentials(
     )
 
     // Set credentials to include cookies
-    options.asDynamic().credentials = "include"
+    // TODO: test out what this does in production with an url containing "https://www.cb-connect-it.com" or "https://cb-connect-it.com"
+    options.asDynamic().credentials =
+        if (NetworkingConfig.baseUrl.isNotBlank() && resource.startsWith(NetworkingConfig.baseUrl)) "include" else "omit"
 
     if (body != undefined) {
         options.asDynamic().body = body

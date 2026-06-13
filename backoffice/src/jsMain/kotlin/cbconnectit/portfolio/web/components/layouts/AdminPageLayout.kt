@@ -1,6 +1,7 @@
 package cbconnectit.portfolio.web.components.layouts
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,17 +37,20 @@ fun AdminPageLayout(
     fabOnClick: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
+    val ctx = rememberPageContext()
     val authStatus by TokenManager.authStatus.collectAsState()
     val isAuthenticated = authStatus?.authenticated
     val userRole = authStatus?.roleType
 
     // Guard: skip auth checks during export, return early if checks fail
     if (!SiteGlobals.isExporting) {
-        when {
-            isAuthenticated == null -> return // Still loading
-            !isAuthenticated || (userRole != UserRole.Admin && userRole != UserRole.Moderator) -> {
-                rememberPageContext().router.navigateTo(Navigation.Screen.Admin.Login().route)
-                return
+        LaunchedEffect(isAuthenticated, userRole) {
+            when {
+                isAuthenticated == null -> return@LaunchedEffect // Still loading
+                !isAuthenticated || (userRole != UserRole.Admin && userRole != UserRole.Moderator) -> {
+                    ctx.router.navigateTo(Navigation.Screen.Admin.Login().route)
+                    return@LaunchedEffect
+                }
             }
         }
     }

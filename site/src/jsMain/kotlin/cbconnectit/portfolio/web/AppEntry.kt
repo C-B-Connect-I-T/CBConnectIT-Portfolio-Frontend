@@ -60,7 +60,9 @@ fun updateTheme(ctx: InitSilkContext) {
             textContent = """
                 {
                     const storedColor = localStorage.getItem('${COLOR_MODE_KEY}'); // 'LIGHT', 'DARK', or null
-                    const desiredColor = storedColor ? `silk-${'$'}{storedColor.toLowerCase()}` : 'silk-dark';
+                    const desiredColor = storedColor
+                         ? `silk-${'$'}{'$'}{storedColor.toLowerCase()}`
+                         : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'silk-light' : 'silk-dark');
                     const oppositeColor = desiredColor === 'silk-dark' ? 'silk-light' : 'silk-dark';
                     document.documentElement.classList.replace(oppositeColor, desiredColor);
                 }

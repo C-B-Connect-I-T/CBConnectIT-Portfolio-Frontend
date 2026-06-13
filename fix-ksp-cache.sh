@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 
 # Script to fix KSP cache corruption issues
 # This script cleans KSP caches and related build artifacts

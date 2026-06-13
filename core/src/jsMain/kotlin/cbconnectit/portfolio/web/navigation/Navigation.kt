@@ -8,6 +8,7 @@ import cbconnectit.portfolio.web.data.models.domain.Tag
 import cbconnectit.portfolio.web.data.repos.AuthRepo
 import cbconnectit.portfolio.web.utils.Identifiers
 import cbconnectit.portfolio.web.utils.Res
+import cbconnectit.portfolio.web.utils.encodeReturnUrl
 import cbconnectit.portfolio.web.utils.joinToStringIndexed
 import com.materialkobweb.components.widgets.DsSpinner
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -49,7 +50,7 @@ sealed class Navigation(val route: String) {
         sealed class Admin(route: String): Screen("/admin$route") {
             data object Home : Admin("")
 
-            data class Login(val returnTo: String? = null) : Admin("/login")
+            data class Login(val returnTo: String? = null) : Screen("/login" + if (returnTo != null) "?returnTo=${encodeReturnUrl(returnTo)}" else "")
         }
     }
 

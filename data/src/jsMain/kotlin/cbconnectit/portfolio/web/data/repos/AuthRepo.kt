@@ -22,7 +22,7 @@ object AuthRepo {
             // Backend sets HTTP-only cookies, we just need to update local auth state
             // Extract role from the response or make a follow-up call to get user info
             is NetworkResponse.Success -> checkAuthStatus() // Update auth state
-            is NetworkResponse.ServerError -> throw RuntimeException(response.body?.errorDescription)
+            is NetworkResponse.ServerError -> throw RuntimeException(response.body?.errorDescription ?: "Server error")
             is NetworkResponse.Error -> throw response.error ?: Exception("Unknown error")
         }
     }
@@ -36,7 +36,7 @@ object AuthRepo {
         when (response) {
             // Update auth state after successful refresh
             is NetworkResponse.Success -> checkAuthStatus()
-            is NetworkResponse.ServerError -> throw RuntimeException(response.body?.errorDescription)
+            is NetworkResponse.ServerError -> throw RuntimeException(response.body?.errorDescription ?: "Server error")
             is NetworkResponse.Error -> throw response.error ?: Exception("Unknown error")
         }
     }

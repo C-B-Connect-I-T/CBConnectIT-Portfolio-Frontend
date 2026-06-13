@@ -1,6 +1,8 @@
 package cbconnectit.portfolio.web.utils
 
 import cbconnectit.portfolio.web.externals.parse
+import com.varabyte.kobweb.browser.uri.decodeURIComponent
+import com.varabyte.kobweb.browser.uri.encodeURIComponent
 import com.varabyte.kobweb.compose.css.Overflow
 import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -8,6 +10,7 @@ import com.varabyte.kobweb.compose.ui.attrsModifier
 import com.varabyte.kobweb.compose.ui.modifiers.display
 import com.varabyte.kobweb.compose.ui.modifiers.overflow
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import kotlinx.browser.window
 import org.jetbrains.compose.web.attributes.AttrsScope
 import org.jetbrains.compose.web.css.CSSColorValue
 import org.jetbrains.compose.web.css.Color
@@ -119,4 +122,34 @@ fun StyleVariable.PropertyValue<CSSColorValue>.withAlpha(alpha: Float): CSSColor
 fun logoImage(colorMode: ColorMode) = when (colorMode) {
     ColorMode.DARK -> Res.Image.logoDark
     ColorMode.LIGHT -> Res.Image.logo
+}
+
+/**
+ * Safely encodes a URL for use as a query parameter using base64 encoding.
+ * This is more reliable than URL encoding for complex URLs with multiple query parameters.
+ * Uses encodeURIComponent to handle non-Latin1 characters (e.g., Dutch special characters like ë or é)
+ * before base64 encoding to prevent DOMException.
+ */
+fun encodeReturnUrl(url: String): String {
+    return try {
+        val uriEncoded = encodeURIComponent(url)
+        window.btoa(uriEncoded)
+    } catch (e: Exception) {
+        Logger.error("Functions", "Failed to encode return URL: $url", e)
+        ""
+    }
+}
+
+/**
+ * Decodes a base64-encoded URL from a query parameter.
+ * Uses decodeURIComponent after base64 decoding to properly restore non-Latin1 characters.
+ */
+fun decodeReturnUrl(encodedUrl: String): String? {
+    return try {
+        val base64Decoded = window.atob(encodedUrl)
+        decodeURIComponent(base64Decoded)
+    } catch (e: Exception) {
+        Logger.error("Functions", "Failed to decode return URL: $encodedUrl", e)
+        null
+    }
 }
