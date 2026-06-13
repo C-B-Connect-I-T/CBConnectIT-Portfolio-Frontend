@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ForbiddenComment:NetworkingConfig.kt$// TODO: we should reset the analytics identity here as well, but the way the modules are ordered, this is not possible for now...</ID>
     <ID>ThrowsCount:ExperienceRepo.kt$ExperienceRepo$suspend fun getExperiences(): List&lt;Experience&gt;</ID>
     <ID>TooGenericExceptionCaught:AuthRepo.kt$AuthRepo$e: Exception</ID>
     <ID>TooGenericExceptionCaught:NetworkingConfig.kt$e: Exception</ID>
