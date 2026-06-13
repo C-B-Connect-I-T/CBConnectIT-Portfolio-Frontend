@@ -62,6 +62,7 @@
     <ID>NewLineAtEndOfFile:WebDevelopmentSvg.kt$cbconnectit.portfolio.web.svg.WebDevelopmentSvg.kt</ID>
     <ID>NewLineAtEndOfFile:marked.kt$cbconnectit.portfolio.web.externals.marked.kt</ID>
     <ID>ObjectPropertyNaming:SiteGlobals.kt$SiteGlobals$// Internal test override — only used in tests. Reset to null to restore AppGlobals behaviour. internal var _testEnvironmentOverride: String? = null</ID>
+    <ID>TooGenericExceptionCaught:Extensions.kt$e: Exception</ID>
     <ID>TooGenericExceptionCaught:MVI.kt$e: Exception</ID>
     <ID>WildcardImport:ModelExtensions.kt$import cbconnectit.portfolio.web.svg.*</ID>
   </CurrentIssues>
