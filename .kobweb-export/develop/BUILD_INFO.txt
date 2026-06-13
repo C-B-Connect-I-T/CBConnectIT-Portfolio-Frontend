@@ -1,9 +1,9 @@
-Build Date: 2026-02-14 15:30:48 UTC
+Build Date: 2026-06-13 08:33:29 UTC
 Environment: develop
 Base URL: https://dev.cb-connect-it.com
-Git Commit: 9dce53c490d81d8dfd4ef88ddf5a692d1358ff6a
+Git Commit: 81ef89b1465e6858bbbe326ac3561f017effc0a1
 Git Ref: refs/heads/main
-Workflow Run: 1
+Workflow Run: 2
 Triggered By: ShaHar91
 Linter: Passed ✓
 Build: Passed ✓
