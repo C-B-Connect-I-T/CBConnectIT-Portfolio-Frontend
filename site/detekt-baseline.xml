@@ -2,8 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-      <ID>MagicNumber:AppEntry.kt$0.08f</ID>
-      <ID>MagicNumber:AppEntry.kt$0.12f</ID>
-      <ID>MagicNumber:AppEntry.kt$1.4</ID>
+    <ID>MagicNumber:AppEntry.kt$1.4</ID>
   </CurrentIssues>
 </SmellBaseline>

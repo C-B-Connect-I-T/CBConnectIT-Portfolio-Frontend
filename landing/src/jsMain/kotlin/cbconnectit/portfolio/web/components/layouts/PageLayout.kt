@@ -8,9 +8,9 @@ import cbconnectit.portfolio.web.pages.sections.FooterSection
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.format
 import cbconnectit.portfolio.web.utils.logoImage
-import com.materialdesignsystem.components.DsPageLayout
-import com.materialdesignsystem.components.sections.NavigationItem
-import com.materialdesignsystem.components.sections.OverflowMenu
+import com.materialkobweb.components.DsPageLayout
+import com.materialkobweb.components.sections.NavigationItem
+import com.materialkobweb.components.sections.OverflowMenu
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Modifier

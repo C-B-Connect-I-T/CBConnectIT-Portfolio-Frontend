@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.data.models.domain.Link
 import cbconnectit.portfolio.web.data.models.enums.LinkIcon
 import cbconnectit.portfolio.web.utils.Identifiers.SocialBar.socialIcon
-import com.materialdesignsystem.components.widgets.DsBorderRadius
-import com.materialdesignsystem.components.widgets.ElevatedIconButton
-import com.materialdesignsystem.constants.AttributeValue
-import com.materialdesignsystem.constants.Attributes
+import com.materialkobweb.components.widgets.DsBorderRadius
+import com.materialkobweb.components.widgets.ElevatedIconButton
+import com.materialkobweb.constants.AttributeValue
+import com.materialkobweb.constants.Attributes
 import com.varabyte.kobweb.compose.css.CSSLengthOrPercentageNumericValue
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Modifier

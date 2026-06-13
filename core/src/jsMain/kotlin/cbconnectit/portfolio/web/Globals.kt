@@ -1,6 +1,6 @@
 package cbconnectit.portfolio.web
 
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.functions.LinearGradient
 import com.varabyte.kobweb.compose.css.functions.linearGradient
 import com.varabyte.kobweb.compose.ui.graphics.Color

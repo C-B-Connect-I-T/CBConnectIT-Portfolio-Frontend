@@ -3,8 +3,8 @@ package cbconnectit.portfolio.web.components
 import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.extensions.getServiceTypeIcon
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.css.Transition

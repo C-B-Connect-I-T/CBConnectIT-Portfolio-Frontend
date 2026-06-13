@@ -1,34 +1,33 @@
 package cbconnectit.portfolio.web.data
 
 import cbconnectit.portfolio.web.data.NetworkingConfig.refreshTokenCallback
-import cbconnectit.portfolio.web.data.extensions.UNAUTHORIZED_STATUS_CODE
 import cbconnectit.portfolio.web.data.extensions.parseData
 import cbconnectit.portfolio.web.data.models.NetworkResponse
-import cbconnectit.portfolio.web.data.models.domain.CredentialTokens
 import cbconnectit.portfolio.web.data.models.dto.responses.ErrorResponse
-import com.varabyte.kobweb.browser.http.FetchDefaults
 import com.varabyte.kobweb.browser.http.HttpMethod
 import com.varabyte.kobweb.browser.http.ResponseException
-import com.varabyte.kobweb.browser.http.fetch
 import com.varabyte.kobweb.navigation.OpenLinkStrategy
 import com.varabyte.kobweb.navigation.open
 import kotlinx.browser.window
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.w3c.dom.url.URL
-import org.w3c.fetch.RequestRedirect
+import org.w3c.fetch.CORS
+import org.w3c.fetch.RequestInit
+import org.w3c.fetch.RequestMode
+import org.w3c.fetch.Response
 import org.w3c.xhr.FormData
-
+import kotlin.js.Promise
 
 object NetworkingConfig {
 
     var baseUrl: String = ""
         private set
 
-    internal var refreshTokenCallback: (() -> Unit)? = null
+    internal var refreshTokenCallback: (suspend () -> Unit)? = null
         private set
 
     var json: Json = Json
@@ -36,26 +35,22 @@ object NetworkingConfig {
 
     fun init(
         baseUrl: String?,
-        refreshToken: () -> Unit,
+        refreshToken: suspend () -> Unit,
         json: Json? = null
     ) {
         NetworkingConfig.baseUrl = baseUrl ?: ""
         refreshTokenCallback = refreshToken
-        this.json = json ?: Json { ignoreUnknownKeys = true; isLenient = true }
-    }
-
-    fun getTokens(): CredentialTokens? {
-        val tokens = window.localStorage.getItem("tokens")
-        return tokens?.let { Json.decodeFromString<CredentialTokens>(it) }
+        this.json = json ?: Json { ignoreUnknownKeys = true; isLenient = true; encodeDefaults = true }
     }
 
     fun getHeadersMap(isMultipart: Boolean = false): Map<String, Any> {
-        val tokens = getTokens()
         val headersMap = buildMap {
             if (!isMultipart) {
                 put("Content-Type", "application/json")
             }
-            tokens?.let { put("Authorization", "${it.tokenType}${it.accessToken}") }
+            // Custom header to identify this as a web client using cookie-based auth
+            put("X-Client-Type", "web")
+            put("X-Auth-Method", "cookie")
         }
 
         return headersMap
@@ -65,11 +60,10 @@ object NetworkingConfig {
 // <editor-fold desc="Regular calls">
 suspend inline fun <reified T, reified S> postRequest(
     resource: String,
-    body: T,
-    allowUnauthenticated: Boolean = false
+    body: T
 ): NetworkResponse<S, ErrorResponse> {
     val bodyJson = if (body !is FormData) {
-        runCatching { Json.encodeToString(body) }
+        runCatching { NetworkingConfig.json.encodeToString(body) }
             .getOrElse { return NetworkResponse.UnknownError(it, null) }.encodeToByteArray()
     } else body
 
@@ -77,14 +71,13 @@ suspend inline fun <reified T, reified S> postRequest(
         HttpMethod.POST,
         resource = resource,
         body = bodyJson,
-        allowUnauthenticated = allowUnauthenticated,
         parseBody = { it.parseData() }
     )
 }
 
 suspend inline fun <reified T, reified S> putRequest(resource: String, body: T): NetworkResponse<S, ErrorResponse> {
     val bodyJson = if (body !is FormData) {
-        runCatching { Json.encodeToString(body) }
+        runCatching { NetworkingConfig.json.encodeToString(body) }
             .getOrElse { return NetworkResponse.UnknownError(it, null) }.encodeToByteArray()
     } else body
 
@@ -97,9 +90,9 @@ suspend inline fun <reified T, reified S> putRequest(resource: String, body: T):
 }
 
 suspend inline fun <reified S> getRequest(
+
     resource: String,
-    queryOptions: QueryOptions = QueryOptions(),
-    allowUnauthenticated: Boolean = false
+    queryOptions: QueryOptions = QueryOptions()
 ): NetworkResponse<S, ErrorResponse> {
     val url = URL(resource)
     queryOptions.offset?.let { url.searchParams.append("offset", it.toString()) }
@@ -111,80 +104,156 @@ suspend inline fun <reified S> getRequest(
         }
         url.searchParams.append("sort", sort)
     }
+    queryOptions.params.forEach { (key, value) ->
+        url.searchParams.append(key, value)
+    }
 
     return fetchWithBody(
         HttpMethod.GET,
         resource = url.toString(),
-        allowUnauthenticated = allowUnauthenticated,
         parseBody = { it.parseData() }
     )
 }
 
-suspend fun deleteRequest(resource: String): NetworkResponse<Unit, ErrorResponse> {
-    val response = fetchWithBody(
+suspend inline fun <reified S> deleteRequest(resource: String): NetworkResponse<S, ErrorResponse> {
+    return fetchWithBody(
         HttpMethod.DELETE,
         resource = resource,
-        parseBody = { it.parseData<Unit>() }
+        parseBody = { it.parseData() }
     )
-
-    return response
 }
 
 private val refreshMutex = Mutex()
 private const val REFRESH_RETRIES = 3
 
+/**
+ * Set of auth endpoints that should not trigger automatic token refresh to prevent deadlocks.
+ * These endpoints are part of the authentication flow and may legitimately return 401.
+ */
+private val AUTH_ENDPOINTS = setOf(
+    "/api/oauth/refresh",
+    "/api/oauth/status",
+    "/api/oauth/token",
+    "/api/oauth/logout",
+    "/api/oauth/register"
+)
+
+/**
+ * Checks if the given resource URL is an authentication endpoint.
+ */
+private fun isAuthEndpoint(resource: String): Boolean {
+    return AUTH_ENDPOINTS.any { authEndpoint ->
+        resource.contains(authEndpoint)
+    }
+}
+
 suspend fun <Res> fetchWithBody(
     method: HttpMethod,
     resource: String,
     body: dynamic? = null,
-    allowUnauthenticated: Boolean = false,
-    redirect: RequestRedirect? = FetchDefaults.Redirect,
     parseBody: (jsonString: String) -> Res
 ): NetworkResponse<Res, ErrorResponse> {
     val headers = NetworkingConfig.getHeadersMap(body !is ByteArray)
 
-    // TODO [TicketNumber]: not sure if this is still needed, but it was in the original code
-//    if (body is ByteArray) {
-//        headers.toMutableMap()["Content-Length"] = body.size
-//    }
-
     return try {
-        val res = window.fetch(
+        // Use custom fetch with credentials to send HTTP-only cookies
+        val res = fetchWithCredentials(
             method,
             resource,
             headers,
             body ?: undefined,
-            redirect ?: undefined
         )
 
-        val data = parseBody(res.decodeToString())
-        NetworkResponse.Success(data, null)
+        val responseText = res.decodeToString()
+
+        @Suppress("UNCHECKED_CAST")
+        val data = if (responseText.isEmpty() || responseText.isBlank()) {
+            // Handle empty responses by returning Unit cast to Res
+            Unit as Res
+        } else {
+            parseBody(responseText)
+        }
+        NetworkResponse.Success(data, res)
     } catch (e: ResponseException) {
-        if (e.response.status.toInt() != UNAUTHORIZED_STATUS_CODE || allowUnauthenticated) {
+        // Don't attempt refresh for auth endpoints to prevent deadlocks
+        if (e.response.status.toInt() != UNAUTHORIZED_STATUS_CODE || isAuthEndpoint(resource)) {
             // If the error is not 401 Unauthorized, we can return a server error response
-            val data = e.bodyBytes?.decodeToString().parseData<ErrorResponse>()
-            return NetworkResponse.ServerError(data, null)
+            val data = try {
+                e.bodyBytes?.decodeToString().parseData<ErrorResponse>()
+            } catch (_: Exception) {
+                null
+            }
+            return NetworkResponse.ServerError(data, e.response)
         }
 
-        // If we reach here, it means the user is unauthorized so we need to check if the user wants to refresh their login
-        val remember = window.localStorage.getItem("remember")?.toBoolean() ?: false
-        if (!remember) window.open("/admin/login", OpenLinkStrategy.IN_PLACE)
-
-        // Attempt to refresh the token
+        // Attempt to refresh the token (via cookie rotation on the backend)
         val isRefreshedSuccessfully = refreshToken()
-        if (!isRefreshedSuccessfully) window.open("/admin/login", OpenLinkStrategy.IN_PLACE)
+        if (!isRefreshedSuccessfully) {
+            // Clear auth state and redirect to home
+            TokenManager.clear()
+            window.open("/", OpenLinkStrategy.IN_PLACE)
+        }
 
-        // Retry the original request with the new token attached automatically
+        // Retry the original request (cookies will be automatically sent)
         fetchWithBody(
             method,
             resource = resource,
             body = body,
-            redirect = redirect,
             parseBody = parseBody
         )
     } catch (e: Exception) {
         NetworkResponse.UnknownError(e, null)
     }
+}
+
+/**
+ * Custom fetch wrapper that includes credentials to send HTTP-only cookies
+ */
+private suspend fun fetchWithCredentials(
+    method: HttpMethod,
+    resource: String,
+    headers: Map<String, Any>,
+    body: dynamic,
+): Response {
+    val headersObj = js("({})")
+    headers.forEach { (key, value) ->
+        headersObj[key] = value
+    }
+
+    val options = RequestInit(
+        method = method.name,
+        mode = RequestMode.CORS,
+        headers = headersObj,
+    )
+
+    // Set credentials to include cookies
+    // TODO: test out what this does in production with an url containing "https://www.cb-connect-it.com" or "https://cb-connect-it.com"
+    options.asDynamic().credentials =
+        if (NetworkingConfig.baseUrl.isNotBlank() && resource.startsWith(NetworkingConfig.baseUrl)) "include" else "omit"
+
+    if (body != undefined) {
+        options.asDynamic().body = body
+    }
+
+    return window.fetch(resource, options).await().also { response ->
+        if (!response.ok) {
+            val bodyText = response.text().await()
+            val bodyBytes = bodyText.encodeToByteArray()
+            throw ResponseException(response, bodyBytes)
+        }
+    }
+}
+
+private suspend fun Response.decodeToString(): String {
+    return this.text().await()
+}
+
+@Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
+private suspend fun <T> Promise<T>.await(): T = suspendCancellableCoroutine { cont ->
+    this.then(
+        onFulfilled = { cont.resumeWith(Result.success(it)) },
+        onRejected = { cont.resumeWith(Result.failure(it)) }
+    )
 }
 
 private suspend fun refreshToken(): Boolean = refreshMutex.withLock {
@@ -220,6 +289,7 @@ data class QueryOptions(
 //    val filters: List<FilterCondition> = emptyList(),
     val sorts: List<SortCondition> = emptyList(),
     val limit: Int? = null,
-    val offset: Int? = null
+    val offset: Int? = null,
+    val params: Map<String, String> = emptyMap()
 )
 // </editor-fold>

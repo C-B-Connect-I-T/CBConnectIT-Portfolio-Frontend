@@ -8,8 +8,8 @@ import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.format
-import com.materialdesignsystem.components.widgets.DsMaterialSymbols
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.widgets.DsMaterialSymbols
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column

@@ -12,7 +12,7 @@ object TagRepo {
     private val tagUrl = "${NetworkingConfig.baseUrl}/api/v1/tags"
 
     suspend fun getTags(): List<Tag> {
-        val response: NetworkResponse<List<TagDto>, ErrorResponse> = getRequest(tagUrl, allowUnauthenticated = true)
+        val response: NetworkResponse<List<TagDto>, ErrorResponse> = getRequest(tagUrl)
 
         return when (response) {
             is NetworkResponse.Success -> response.body.map { it.toTag() }

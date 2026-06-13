@@ -12,7 +12,7 @@ object ProjectRepo {
     private val projectUrl = "${NetworkingConfig.baseUrl}/api/v1/projects"
 
     suspend fun getProjects(): List<Project> {
-        val response: NetworkResponse<List<ProjectDto>, ErrorResponse> = getRequest(projectUrl, allowUnauthenticated = true)
+        val response: NetworkResponse<List<ProjectDto>, ErrorResponse> = getRequest(projectUrl)
 
         return when (response) {
             is NetworkResponse.Success -> response.body.map { it.toProject() }

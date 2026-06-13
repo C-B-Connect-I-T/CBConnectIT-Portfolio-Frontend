@@ -12,10 +12,11 @@
     <ID>MagicNumber:BackToTopButton.kt$400.0</ID>
     <ID>MagicNumber:ContactForm.kt$ContactFormViewModel$302</ID>
     <ID>MagicNumber:ExperienceCard.kt$1.65</ID>
-    <ID>MagicNumber:LandingHeader.kt$10</ID>
     <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$11</ID>
     <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$2017</ID>
     <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$365</ID>
+    <ID>MagicNumber:LandingHeader.kt$0.6f</ID>
+    <ID>MagicNumber:LandingHeader.kt$10</ID>
     <ID>MagicNumber:ServiceSection.kt$18</ID>
     <ID>MagicNumber:ServiceSection.kt$27</ID>
     <ID>MagicNumber:ServiceTypeCard.kt$10</ID>
@@ -23,7 +24,6 @@
     <ID>MagicNumber:TestimonialSection.kt$250</ID>
     <ID>NewLineAtEndOfFile:BackToTopButton.kt$cbconnectit.portfolio.web.components.BackToTopButton.kt</ID>
     <ID>NewLineAtEndOfFile:Backdrop.kt$cbconnectit.portfolio.web.components.Backdrop.kt</ID>
-    <ID>NewLineAtEndOfFile:Functions.kt$cbconnectit.portfolio.web.utils.Functions.kt</ID>
     <ID>NewLineAtEndOfFile:HightlightCard.kt$cbconnectit.portfolio.web.components.HightlightCard.kt</ID>
     <ID>NewLineAtEndOfFile:MainServiceCard.kt$cbconnectit.portfolio.web.components.MainServiceCard.kt</ID>
     <ID>NewLineAtEndOfFile:SectionTitle.kt$cbconnectit.portfolio.web.components.SectionTitle.kt</ID>
@@ -37,14 +37,11 @@
     <ID>WildcardImport:AboutSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:BackToTopButton.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:BackToTopButton.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ContactForm.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ContactForm.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:ContactSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:ExperienceCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:ExperienceCard.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:FooterSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:Functions.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:LandingHeader.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:HomeContract.kt$import cbconnectit.portfolio.web.data.models.domain.*</ID>
     <ID>WildcardImport:HomePage.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:HomePage.kt$import cbconnectit.portfolio.web.pages.sections.*</ID>
@@ -54,9 +51,6 @@
     <ID>WildcardImport:PortfolioSection.kt$import com.varabyte.kobweb.compose.css.*</ID>
     <ID>WildcardImport:PortfolioSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:PortfolioSection.kt$import org.jetbrains.compose.web.css.*</ID>
-    <ID>WildcardImport:ProjectsPage.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:ProjectsPage.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ProjectsPage.kt$import org.jetbrains.compose.web.css.*</ID>
     <ID>WildcardImport:SectionTitle.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:SectionTitle.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
     <ID>WildcardImport:ServicePage.kt$import cbconnectit.portfolio.web.utils.*</ID>

@@ -8,13 +8,9 @@ object Constants {
 
     const val QUERY_PARAM = "query"
 
-    const val LOREM_IPSUM_SHORTEST =
-        "Lorum ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    const val LOREM_IPSUM_SHORT =
-        "Lorum ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorum ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorum ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-
     const val SECTION_PADDING = 100
 
+    const val COLOR_MODE_KEY = "cbconnectit:app:colorMode"
 }
 
 object Res {
@@ -28,9 +24,13 @@ object Res {
         const val All = "All"
         const val ServiceDocumentTitle = "Services"
         const val SubServicesDocumentTitle = "Services: {0}"
+        const val NotFoundDocumentTitle = "404 - Page not found"
 
         const val LearnMore = "Learn more"
         const val ReadMore = "Read more"
+        const val GoToHome = "Go to home"
+        const val NotFoundTitle = "Page not found"
+        const val NotFoundDescription = "The page you are looking for does not exist."
 
         const val MyServices = "My Services"
         const val ServicesBannerDescription =
@@ -68,12 +68,19 @@ object Res {
         const val FullName = "Full Name"
         const val Email = "Email"
         const val EmailAddress = "Email Address"
+        const val EnterEmail = "Enter your email"
         const val Message = "Message"
         const val YourMessage = "Your Message"
         const val Submit = "Submit"
+        const val Password = "Password"
+        const val EnterPassword = "Enter your password"
 
         const val ToggleColorMode = "Toggle color mode"
         const val SeeAll = "See all"
+
+        const val SignIn ="Sign in"
+
+        const val LogoImageAlt = "Logo image"
     }
 
     object Image {

@@ -8,10 +8,10 @@ import cbconnectit.portfolio.web.svg.chevronRightSvg
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.maxLines
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.components.widgets.DsBorderRadius
-import com.materialdesignsystem.components.widgets.TextButton
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.components.widgets.DsBorderRadius
+import com.materialkobweb.components.widgets.TextButton
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.functions.linearGradient
 import com.varabyte.kobweb.compose.css.functions.url

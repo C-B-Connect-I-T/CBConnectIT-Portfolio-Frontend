@@ -7,10 +7,10 @@ import cbconnectit.portfolio.web.extensions.getServiceTypeIcon
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.svg.chevronRightSvg
 import cbconnectit.portfolio.web.utils.Res
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.components.widgets.DsBorderRadius
-import com.materialdesignsystem.components.widgets.TextButton
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.components.widgets.DsBorderRadius
+import com.materialkobweb.components.widgets.TextButton
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
