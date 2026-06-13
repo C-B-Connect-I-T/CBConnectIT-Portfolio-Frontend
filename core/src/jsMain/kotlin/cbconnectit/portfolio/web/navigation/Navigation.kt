@@ -9,7 +9,7 @@ import cbconnectit.portfolio.web.data.repos.AuthRepo
 import cbconnectit.portfolio.web.utils.Identifiers
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.joinToStringIndexed
-import com.materialdesignsystem.components.widgets.DsSpinner
+import com.materialkobweb.components.widgets.DsSpinner
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier

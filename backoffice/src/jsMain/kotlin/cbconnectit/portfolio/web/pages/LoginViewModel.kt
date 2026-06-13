@@ -1,6 +1,6 @@
 package cbconnectit.portfolio.web.pages
 
-import cbconnectit.portfolio.web.components.toast.ToastManager
+import com.materialkobweb.components.toast.ToastManager
 import cbconnectit.portfolio.web.data.repos.AuthRepo
 import cbconnectit.portfolio.web.utils.MVI
 import cbconnectit.portfolio.web.utils.ViewModel
@@ -62,7 +62,7 @@ class LoginViewModel(
             ToastManager.warning("Vul alle velden in", title = "Ongeldige invoer")
             return
         }
-
+        
         try {
             authRepo.login(email, password)
             ToastManager.success("Je bent succesvol ingelogd!", title = "Welkom")

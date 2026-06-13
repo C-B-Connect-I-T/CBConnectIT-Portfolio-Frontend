@@ -9,10 +9,9 @@ import cbconnectit.portfolio.web.navigation.unauthenticatedGuard
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.logoImage
 import cbconnectit.portfolio.web.utils.rememberViewModel
-import com.materialdesignsystem.components.widgets.DsEditableField
-import com.materialdesignsystem.components.widgets.FilledButton
-import com.materialdesignsystem.constants.Identifiers
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.widgets.DsEditableField
+import com.materialkobweb.components.widgets.FilledButton
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -114,7 +113,7 @@ private fun LoginPageContent(
             ) {
                 DsEditableField(
                     modifier = Modifier.fillMaxWidth(),
-                    id = Identifiers.LoginForm.inputEmail,
+                    id = "inputEmail",
                     label = Res.String.Email,
                     placeholder = Res.String.EnterEmail,
                     value = state.emailAddress,
@@ -127,7 +126,7 @@ private fun LoginPageContent(
 
                 DsEditableField(
                     modifier = Modifier.fillMaxWidth(),
-                    id = Identifiers.LoginForm.inputPassword,
+                    id = "inputPassword",
                     label = Res.String.Password,
                     placeholder = Res.String.EnterPassword,
                     value = state.password,

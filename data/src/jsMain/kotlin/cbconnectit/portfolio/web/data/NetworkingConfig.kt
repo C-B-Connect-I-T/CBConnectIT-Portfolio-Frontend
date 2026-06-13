@@ -189,7 +189,6 @@ suspend fun <Res> fetchWithBody(
         // Attempt to refresh the token (via cookie rotation on the backend)
         val isRefreshedSuccessfully = refreshToken()
         if (!isRefreshedSuccessfully) {
-            // TODO: we should reset the analytics identity here as well, but the way the modules are ordered, this is not possible for now...
             // Clear auth state and redirect to home
             TokenManager.clear()
             window.open("/", OpenLinkStrategy.IN_PLACE)

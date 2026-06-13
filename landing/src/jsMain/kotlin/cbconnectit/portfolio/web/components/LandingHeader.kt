@@ -10,18 +10,23 @@ import cbconnectit.portfolio.web.svg.lightModeSvg
 import cbconnectit.portfolio.web.utils.Constants.COLOR_MODE_KEY
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.logoImage
-import com.materialdesignsystem.components.sections.BaseHeader
-import com.materialdesignsystem.components.widgets.BorderRadius
-import com.materialdesignsystem.components.widgets.DsMaterialSymbols
-import com.materialdesignsystem.components.widgets.FilledIconButton
-import com.materialdesignsystem.toColorScheme
+import cbconnectit.portfolio.web.utils.withAlpha
+import com.materialkobweb.components.sections.BaseHeader
+import com.materialkobweb.components.widgets.BorderRadius
+import com.materialkobweb.components.widgets.DsMaterialSymbols
+import com.materialkobweb.components.widgets.FilledIconButton
+import com.materialkobweb.styles.MaterialColorVars
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.browser.dom.ElementTarget
 import com.varabyte.kobweb.compose.css.Cursor
+import com.varabyte.kobweb.compose.css.functions.LinearGradient
+import com.varabyte.kobweb.compose.css.functions.linearGradient
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.modifiers.backgroundImage
 import com.varabyte.kobweb.compose.ui.modifiers.cursor
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.height
@@ -51,8 +56,14 @@ fun LandingHeader(
     var colorMode by ColorMode.currentState
 
     BaseHeader(
-        modifier = Modifier.padding(leftRight = 24.px),
-        backgroundColor = colorMode.toColorScheme.background
+        modifier = Modifier.padding(leftRight = 24.px)
+            .backgroundImage(
+                linearGradient(
+                    MaterialColorVars.Background.value(),
+                    MaterialColorVars.Background.withAlpha(0.6f),
+                    LinearGradient.Direction.ToBottom
+                )
+            )
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

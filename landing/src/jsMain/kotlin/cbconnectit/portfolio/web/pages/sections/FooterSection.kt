@@ -7,8 +7,8 @@ import cbconnectit.portfolio.web.models.enums.Social
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.navigation.SectionItem
 import cbconnectit.portfolio.web.utils.logoImage
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.components.sections.NavigationItem
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.components.sections.NavigationItem
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column

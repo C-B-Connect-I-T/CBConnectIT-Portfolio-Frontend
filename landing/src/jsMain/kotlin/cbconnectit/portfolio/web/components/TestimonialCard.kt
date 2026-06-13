@@ -5,8 +5,8 @@ import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.data.models.domain.Testimonial
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.content
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.item
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column

@@ -8,9 +8,9 @@ import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.*
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.components.widgets.FilledButton
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.components.widgets.FilledButton
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.functions.linearGradient
 import com.varabyte.kobweb.compose.css.functions.url

@@ -2,8 +2,8 @@ package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment

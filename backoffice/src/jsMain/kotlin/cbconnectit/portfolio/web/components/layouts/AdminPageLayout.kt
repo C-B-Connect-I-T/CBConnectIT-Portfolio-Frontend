@@ -12,10 +12,10 @@ import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.SiteGlobals
 import cbconnectit.portfolio.web.utils.format
-import com.materialdesignsystem.components.DsPageLayout
-import com.materialdesignsystem.components.sections.OverflowMenu
-import com.materialdesignsystem.components.widgets.DsAddFloatingActionButton
-import com.materialdesignsystem.components.widgets.FilledIconButtonStyle
+import com.materialkobweb.components.DsPageLayout
+import com.materialkobweb.components.sections.OverflowMenu
+import com.materialkobweb.components.widgets.DsAddFloatingActionButton
+import com.materialkobweb.components.widgets.FilledIconButtonStyle
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier

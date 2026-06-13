@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Res
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.components.widgets.FilledButton
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.components.widgets.FilledButton
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement

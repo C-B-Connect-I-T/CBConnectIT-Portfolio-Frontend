@@ -6,7 +6,7 @@ import cbconnectit.portfolio.web.components.ContactForm
 import cbconnectit.portfolio.web.components.SectionTitle
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Constants
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment

@@ -1,11 +1,11 @@
 package cbconnectit.portfolio.web.components
 
 import androidx.compose.runtime.*
-import com.materialdesignsystem.components.widgets.BorderRadius
-import com.materialdesignsystem.components.widgets.DsFloatingActionButton
-import com.materialdesignsystem.components.widgets.DsMaterialSymbols
-import com.materialdesignsystem.components.widgets.FilledIconButtonStyle
-import com.materialdesignsystem.extensions.ButtonSizeXL
+import com.materialkobweb.components.widgets.BorderRadius
+import com.materialkobweb.components.widgets.DsFloatingActionButton
+import com.materialkobweb.components.widgets.DsMaterialSymbols
+import com.materialkobweb.components.widgets.FilledIconButtonStyle
+import com.materialkobweb.extensions.ButtonSizeXL
 import com.varabyte.kobweb.compose.css.PointerEvents
 import com.varabyte.kobweb.compose.css.Visibility
 import com.varabyte.kobweb.compose.ui.Modifier

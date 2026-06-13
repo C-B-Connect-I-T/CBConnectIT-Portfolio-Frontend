@@ -2,20 +2,25 @@ package cbconnectit.portfolio.web
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import cbconnectit.portfolio.web.components.toast.ToastContainer
 import cbconnectit.portfolio.web.data.NetworkingConfig
 import cbconnectit.portfolio.web.data.repos.AuthRepo
 import cbconnectit.portfolio.web.styles.CbDarkColorScheme
 import cbconnectit.portfolio.web.styles.CbLightColorScheme
+import cbconnectit.portfolio.web.styles.InfoColor
+import cbconnectit.portfolio.web.styles.OnInfoColor
+import cbconnectit.portfolio.web.styles.OnSuccessColor
+import cbconnectit.portfolio.web.styles.OnWarningColor
+import cbconnectit.portfolio.web.styles.SuccessColor
+import cbconnectit.portfolio.web.styles.WarningColor
 import cbconnectit.portfolio.web.utils.Constants.COLOR_MODE_KEY
 import cbconnectit.portfolio.web.utils.SiteGlobals
-import com.materialdesignsystem.MaterialTheme
-import com.materialdesignsystem.extensions.ButtonSizeXL
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.MaterialTheme
+import com.materialkobweb.components.toast.ToastColors
+import com.materialkobweb.components.toast.ToastContainer
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.ScrollBehavior
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.graphics.lightened
 import com.varabyte.kobweb.compose.ui.modifiers.backgroundColor
 import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
 import com.varabyte.kobweb.compose.ui.modifiers.lineHeight
@@ -32,10 +37,6 @@ import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.loadFromLocalStorage
-import com.varabyte.kobweb.silk.theme.colors.palette.background
-import com.varabyte.kobweb.silk.theme.colors.palette.button
-import com.varabyte.kobweb.silk.theme.colors.palette.color
-import com.varabyte.kobweb.silk.theme.colors.palette.link
 import com.varabyte.kobweb.silk.theme.colors.systemPreference
 import kotlinx.browser.document
 import org.jetbrains.compose.web.css.vh
@@ -68,43 +69,6 @@ fun updateTheme(ctx: InitSilkContext) {
         document.head?.appendChild(node)
     }
 
-    ctx.theme.registerStyle("silk-button-size_xl", ButtonSizeXL)
-
-    val lightColorScheme = ColorMode.LIGHT.toColorScheme
-    val darkColorScheme = ColorMode.DARK.toColorScheme
-
-    // Background
-    ctx.theme.palettes.light.background = lightColorScheme.background
-    ctx.theme.palettes.dark.background = darkColorScheme.background
-
-    // Color
-    ctx.theme.palettes.light.color = lightColorScheme.onBackground
-    ctx.theme.palettes.dark.color = darkColorScheme.onBackground
-
-    // Button
-    ctx.theme.palettes.light.button.set(
-        default = lightColorScheme.primary,
-        hover = lightColorScheme.primary.darkened(0.08f),
-        focus = lightColorScheme.primary.darkened(0.12f),
-        pressed = lightColorScheme.primary.darkened(0.12f),
-    )
-    ctx.theme.palettes.dark.button.set(
-        default = darkColorScheme.primary,
-        hover = darkColorScheme.primary.lightened(0.08f),
-        focus = darkColorScheme.primary.lightened(0.12f),
-        pressed = darkColorScheme.primary.lightened(0.12f),
-    )
-
-    // Link
-    ctx.theme.palettes.light.link.set(
-        lightColorScheme.onBackground,
-        lightColorScheme.onBackground
-    )
-    ctx.theme.palettes.dark.link.set(
-        darkColorScheme.onBackground,
-        darkColorScheme.onBackground
-    )
-
     ctx.stylesheet.apply {
         registerStyleBase("body") {
             Modifier
@@ -133,6 +97,8 @@ fun AppEntry(content: @Composable () -> Unit) {
 
     SilkApp {
         Surface(modifier = SmoothColorStyle.toModifier()) {
+            val colorMode = ColorMode.current
+
             Box(
                 modifier = Modifier
                     .minHeight(100.vh)
@@ -141,7 +107,18 @@ fun AppEntry(content: @Composable () -> Unit) {
             )
 
             // Global toast container
-            ToastContainer()
+            ToastContainer(
+                toastColors = ToastColors(
+                    successColor = colorMode.SuccessColor,
+                    onSuccessColor = colorMode.OnSuccessColor,
+                    warningColor = colorMode.WarningColor,
+                    onWarningColor = colorMode.OnWarningColor,
+                    errorColor = colorMode.toColorScheme.errorContainer,
+                    onErrorColor = colorMode.toColorScheme.onErrorContainer,
+                    infoColor = colorMode.InfoColor,
+                    onInfoColor = colorMode.OnInfoColor
+                )
+            )
         }
     }
 }

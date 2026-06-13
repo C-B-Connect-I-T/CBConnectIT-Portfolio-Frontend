@@ -13,9 +13,9 @@ import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Identifiers
 import cbconnectit.portfolio.web.utils.Res
 import cbconnectit.portfolio.web.utils.markdownParagraph
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.components.widgets.DsMultiSelect
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.components.widgets.DsMultiSelect
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement

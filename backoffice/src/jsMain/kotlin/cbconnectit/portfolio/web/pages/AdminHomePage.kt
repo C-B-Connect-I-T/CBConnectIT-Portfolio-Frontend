@@ -8,8 +8,8 @@ import androidx.compose.runtime.remember
 import cbconnectit.portfolio.web.components.layouts.AdminPageLayout
 import cbconnectit.portfolio.web.navigation.authenticatedGuard
 import cbconnectit.portfolio.web.navigation.logout
-import com.materialdesignsystem.components.widgets.FilledButton
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.widgets.FilledButton
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Modifier

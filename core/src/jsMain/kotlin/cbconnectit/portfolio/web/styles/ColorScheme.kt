@@ -2,8 +2,8 @@
 
 package cbconnectit.portfolio.web.styles
 
-import com.materialdesignsystem.theme.darkColorScheme
-import com.materialdesignsystem.theme.lightColorScheme
+import com.materialkobweb.theme.darkColorScheme
+import com.materialkobweb.theme.lightColorScheme
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.palette.Palette

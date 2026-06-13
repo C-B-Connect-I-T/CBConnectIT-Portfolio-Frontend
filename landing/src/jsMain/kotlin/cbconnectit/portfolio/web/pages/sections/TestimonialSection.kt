@@ -15,7 +15,7 @@ import cbconnectit.portfolio.web.utils.Identifiers.PropertyName.gridRowGap
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.content
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.grid
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.item
-import com.materialdesignsystem.components.Spacer
+import com.materialkobweb.components.Spacer
 import com.varabyte.kobweb.compose.css.GridEntry
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment

@@ -2,13 +2,15 @@ package cbconnectit.portfolio.web.utils
 
 import cbconnectit.portfolio.web.externals.parse
 import com.varabyte.kobweb.compose.css.Overflow
+import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.attrsModifier
-import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.modifiers.display
 import com.varabyte.kobweb.compose.ui.modifiers.overflow
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.attributes.AttrsScope
+import org.jetbrains.compose.web.css.CSSColorValue
+import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.DisplayStyle
 import org.w3c.dom.HTMLParagraphElement
 
@@ -99,6 +101,19 @@ fun String.format(vararg args: Any?): String {
             else -> args[match.substring(1, match.length - 1).toInt()].toString()
         }
     }
+}
+
+/**
+ * Applies an alpha (opacity) value to a CSS color variable using color-mix.
+ * @param alpha The opacity level (0.0 = fully transparent, 1.0 = fully opaque)
+ * @return A CSSColorValue with the alpha applied
+ */
+fun StyleVariable.PropertyValue<CSSColorValue>.withAlpha(alpha: Float): CSSColorValue {
+    require(alpha in 0f..1f)
+
+    val percentage = ((1 - alpha) * 100).toInt()
+    val colorMix = "color-mix(in srgb, ${this.value()}, transparent $percentage%)"
+    return Color(colorMix)
 }
 
 fun logoImage(colorMode: ColorMode) = when (colorMode) {

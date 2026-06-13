@@ -9,10 +9,10 @@ import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.utils.Constants
 import cbconnectit.portfolio.web.utils.Constants.SECTION_WIDTH
 import cbconnectit.portfolio.web.utils.Res
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.components.widgets.DsBorderRadius
-import com.materialdesignsystem.components.widgets.FilledButton
-import com.materialdesignsystem.toColorScheme
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.components.widgets.DsBorderRadius
+import com.materialkobweb.components.widgets.FilledButton
+import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box

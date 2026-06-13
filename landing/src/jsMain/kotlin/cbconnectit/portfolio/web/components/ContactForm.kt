@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import com.materialkobweb.components.toast.ToastManager
 import cbconnectit.portfolio.web.data.extensions.buildFormData
 import cbconnectit.portfolio.web.data.models.NetworkResponse
 import cbconnectit.portfolio.web.data.models.dto.responses.ErrorResponse
@@ -17,15 +18,22 @@ import cbconnectit.portfolio.web.utils.Identifiers.ContactForm.inputMessage
 import cbconnectit.portfolio.web.utils.Identifiers.ContactForm.inputName
 import cbconnectit.portfolio.web.utils.MVI
 import cbconnectit.portfolio.web.utils.Res
-import com.materialdesignsystem.components.Spacer
-import com.materialdesignsystem.components.widgets.DsBorderRadius
-import com.materialdesignsystem.components.widgets.DsEditableArea
-import com.materialdesignsystem.components.widgets.DsEditableField
-import com.materialdesignsystem.components.widgets.FilledButton
+import com.materialkobweb.components.Spacer
+import com.materialkobweb.components.widgets.DsBorderRadius
+import com.materialkobweb.components.widgets.DsEditableArea
+import com.materialkobweb.components.widgets.DsEditableField
+import com.materialkobweb.components.widgets.FilledButton
+import com.materialkobweb.styles.MaterialColorVars
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.attrsModifier
-import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.modifiers.alignItems
+import com.varabyte.kobweb.compose.ui.modifiers.ariaInvalid
+import com.varabyte.kobweb.compose.ui.modifiers.display
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
+import com.varabyte.kobweb.compose.ui.modifiers.flexDirection
+import com.varabyte.kobweb.compose.ui.modifiers.height
+import com.varabyte.kobweb.compose.ui.modifiers.maxWidth
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import kotlinx.coroutines.CoroutineScope
@@ -34,8 +42,13 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.AlignItems
+import org.jetbrains.compose.web.css.DisplayStyle
+import org.jetbrains.compose.web.css.FlexDirection
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Text
 
 @Composable
@@ -78,10 +91,12 @@ fun ContactFormContent(
                 },
             placeholder = Res.String.FullName,
             required = true,
+            valid = !state.hasAttemptedSubmission || state.name.isNotBlank(),
             id = inputName,
             label = Res.String.Name,
             value = state.name,
-            onValueChange = { sendIntent(ContactFormContract.Intent.UpdateName(it)) }
+            onValueChange = { sendIntent(ContactFormContract.Intent.UpdateName(it)) },
+            backgroundColor = MaterialColorVars.SurfaceContainer.value(),
         )
 
         Spacer(Modifier.height(16.px))
@@ -100,9 +115,10 @@ fun ContactFormContent(
             id = inputEmail,
             required = true,
             label = Res.String.Email,
-            valid = state.isEmailValid,
+            valid = !state.hasAttemptedSubmission || state.isEmailValid,
             value = state.email,
-            onValueChange = { sendIntent(ContactFormContract.Intent.UpdateEmail(it)) }
+            onValueChange = { sendIntent(ContactFormContract.Intent.UpdateEmail(it)) },
+            backgroundColor = MaterialColorVars.SurfaceContainer.value(),
         )
 
         Spacer(Modifier.height(16.px))
@@ -143,8 +159,10 @@ class ContactFormViewModel(
             is ContactFormContract.Intent.SubmitForm -> {
                 val state = _state.value
 
+                updateState { it.copy(hasAttemptedSubmission = true) }
+
                 if (!state.isFormValid) {
-                    println("Form is not valid")
+                    ToastManager.warning("Form is not valid")
                     return@launch
                 }
 
@@ -159,14 +177,14 @@ class ContactFormViewModel(
                 try {
                     val response: NetworkResponse<Unit, ErrorResponse> = postRequest("https://formspree.io/f/xanpqwdz", formData)
                     if (response is NetworkResponse.Success && response.code == 302) {
-                        println("Form submitted successfully")
+                        ToastManager.success("Form submitted successfully")
                     } else {
-                        println("Form submission failed: ${response}")
+                        ToastManager.error("Form submitted error")
                     }
 
                     updateState { ContactFormContract.State() }
                 } catch (e: Exception) {
-                    println("Form submission failed exceptionally: ${e.message}")
+                    ToastManager.error("Form submission failed: ${e.message}")
                 }
             }
         }
@@ -176,8 +194,8 @@ class ContactFormViewModel(
         _effect.emit(effect)
     }
 
-    override fun updateState(update: (ContactFormContract.State) -> ContactFormContract.State) {
-        _state.value = update(_state.value)
+    override fun updateState(block: (ContactFormContract.State) -> ContactFormContract.State) {
+        _state.update(block)
     }
 }
 
@@ -185,7 +203,8 @@ interface ContactFormContract : MVI<ContactFormContract.State, ContactFormContra
     data class State(
         val name: String = "",
         val email: String = "",
-        val message: String = ""
+        val message: String = "",
+        val hasAttemptedSubmission: Boolean = false
     ) {
         val isFormValid: Boolean
             get() = name.isNotBlank() && isEmailValid && message.isNotBlank()
