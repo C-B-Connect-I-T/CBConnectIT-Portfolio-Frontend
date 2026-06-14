@@ -81,11 +81,14 @@ object Res {
         const val SignIn ="Sign in"
 
         const val LogoImageAlt = "Logo image"
+
+        const val Copyright = "© Copyright {0} C.B Connect I.T. | All Rights Reserved"
+        const val WebsiteCreatedBy = "Website created by C.B. Connect I.T."
     }
 
     object Image {
-        const val logo = "/logo.svg"
-        const val logoDark = "/logo_dark.svg"
+        const val logo = "/logo_horizontal_light.png"
+        const val logoDark = "/logo_horizontal_dark.png"
         const val mainImage = "/images/img_person_main.png"
 
         const val laugh = "/laugh.png"

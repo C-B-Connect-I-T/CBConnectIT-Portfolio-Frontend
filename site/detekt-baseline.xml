@@ -2,6 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>LongMethod:main.kt$public fun main()</ID>
     <ID>MagicNumber:AppEntry.kt$1.4</ID>
   </CurrentIssues>
 </SmellBaseline>

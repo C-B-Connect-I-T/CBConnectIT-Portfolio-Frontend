@@ -2,6 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>ForbiddenComment:TitleLarge.kt$// TODO: replace this with the H1Heading everywhere. Do check the visuals if the UI is still correct!</ID>
     <ID>MagicNumber:BackendDevelopmentSvg.kt$30</ID>
     <ID>MagicNumber:BackendDevelopmentSvg.kt$32</ID>
     <ID>MagicNumber:ChevronRightSvg.kt$10</ID>

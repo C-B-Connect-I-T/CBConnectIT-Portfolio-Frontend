@@ -21,7 +21,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.compose.runtime)
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+            api("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
         }
         jsMain.dependencies {
             implementation(libs.compose.html.core)
