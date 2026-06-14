@@ -22,6 +22,8 @@ import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.px
 
+private const val HEADER_BACKGROUND_ALPHA = 0.6f
+
 @Composable
 fun AdminHeader(
     onMenuClick: () -> Unit
@@ -35,7 +37,7 @@ fun AdminHeader(
             .backgroundImage(
                 linearGradient(
                     MaterialColorVars.Background.value(),
-                    MaterialColorVars.Background.withAlpha(0.6f),
+                    MaterialColorVars.Background.withAlpha(HEADER_BACKGROUND_ALPHA),
                     LinearGradient.Direction.ToBottom
                 )
             )
@@ -53,6 +55,7 @@ fun AdminHeader(
         // Logo
         Image(
             src = logoImage(colorMode),
+            alt = "Logo image",
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(topBottom = 24.px)

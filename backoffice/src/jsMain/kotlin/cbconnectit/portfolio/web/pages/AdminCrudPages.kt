@@ -2,7 +2,6 @@ package cbconnectit.portfolio.web.pages
 
 import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.components.layout.AdminPageLayout
-import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.navigation.authenticatedGuard
 import com.materialkobweb.components.widgets.FilledButton
 import com.materialkobweb.toColorScheme

@@ -32,6 +32,8 @@ import org.jetbrains.compose.web.css.Position
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 
+private const val SIDE_PANEL_Z_INDEX = 9
+
 @Composable
 fun AdminSidePanel() {
     val ctx = rememberPageContext()
@@ -47,7 +49,7 @@ fun AdminSidePanel() {
             .top(0.px)
             .backgroundColor(colorMode.toColorScheme.surfaceContainer)
             .color(colorMode.toColorScheme.onSurface)
-            .zIndex(9)
+            .zIndex(SIDE_PANEL_Z_INDEX)
             .alignSelf(AlignSelf.Start),
         verticalArrangement = Arrangement.spacedBy(10.px),
         horizontalAlignment = Alignment.Start

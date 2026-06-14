@@ -98,7 +98,9 @@ fun AppEntry(content: @Composable () -> Unit) {
         AuthRepo.checkAuthStatus()
     }
 
-    Logger.init(SiteGlobals.environment)
+    LaunchedEffect(SiteGlobals.environment) {
+        Logger.init(SiteGlobals.environment)
+    }
 
     SilkApp {
         Surface(modifier = SmoothColorStyle.toModifier()) {

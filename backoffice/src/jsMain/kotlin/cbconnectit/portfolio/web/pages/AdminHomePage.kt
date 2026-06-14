@@ -19,10 +19,8 @@ import com.varabyte.kobweb.compose.ui.modifiers.borderRadius
 import com.varabyte.kobweb.compose.ui.modifiers.color
 import com.varabyte.kobweb.compose.ui.modifiers.cursor
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
-import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.core.Page
-import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.navigation.UndecoratedLinkVariant
 import com.varabyte.kobweb.silk.components.text.SpanText
@@ -55,7 +53,7 @@ fun AdminPageContent(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(if (breakpoint > Breakpoint.MD) 85.percent else 100.percent)
+            .fillMaxWidth(if (breakpoint > Breakpoint.MD) 80.percent else 90.percent)
             .padding(top = if (breakpoint >= Breakpoint.MD) 24.px else 12.px),
         verticalArrangement = Arrangement.spacedBy(30.px)
     ) {
@@ -73,11 +71,13 @@ fun AdminPageContent(
             horizontalArrangement = Arrangement.spacedBy(16.px)
         ) {
             DashboardCard(
+                modifier = Modifier.fillMaxWidth(50.percent),
                 title = "Testimonials",
                 subtitle = "Beheer testimonials en publicatie status.",
                 path = Navigation.Screen.Admin.Testimonials.route
             )
             DashboardCard(
+                modifier = Modifier.fillMaxWidth(50.percent),
                 title = "Services",
                 subtitle = "Voeg services toe, werk bij of verwijder ze.",
                 path = Navigation.Screen.Admin.Services.route
@@ -89,11 +89,13 @@ fun AdminPageContent(
             horizontalArrangement = Arrangement.spacedBy(16.px)
         ) {
             DashboardCard(
+                modifier = Modifier.fillMaxWidth(50.percent),
                 title = "Projects",
                 subtitle = "Onderhoud portfolio projecten en metadata.",
                 path = Navigation.Screen.Admin.Projects.route
             )
             DashboardCard(
+                modifier = Modifier.fillMaxWidth(50.percent),
                 title = "Experiences",
                 subtitle = "Beheer ervaring-items in de tijdslijn.",
                 path = Navigation.Screen.Admin.Experiences.route
@@ -104,6 +106,7 @@ fun AdminPageContent(
 
 @Composable
 private fun DashboardCard(
+    modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
     path: String
@@ -111,12 +114,13 @@ private fun DashboardCard(
     val colorScheme = ColorMode.current.toColorScheme
 
     Link(
-        modifier = Modifier.fillMaxWidth(50.percent),
+        modifier = modifier,
         variant = UndecoratedLinkVariant,
         path = path,
     ) {
         Box(
             modifier = Modifier
+                .fillMaxWidth()
                 .borderRadius(14.px)
                 .backgroundColor(colorScheme.surfaceContainer)
                 .padding(18.px)

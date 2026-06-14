@@ -3,7 +3,6 @@ package cbconnectit.portfolio.web.components
 import androidx.compose.runtime.Composable
 import cbconnectit.portfolio.web.navigation.Navigation
 import cbconnectit.portfolio.web.navigation.logout
-import com.materialkobweb.styles.MaterialColorVars
 import com.materialkobweb.components.sections.NavigationItem
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.margin

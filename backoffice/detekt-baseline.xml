@@ -1,9 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>MagicNumber:AdminFooter.kt$0.25f</ID>
-    <ID>MagicNumber:AdminHeader.kt$0.6f</ID>
-    <ID>MagicNumber:AdminSidePanel.kt$9</ID>
-  </CurrentIssues>
+  <CurrentIssues/>
 </SmellBaseline>

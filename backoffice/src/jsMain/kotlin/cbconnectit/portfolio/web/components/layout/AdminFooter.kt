@@ -21,6 +21,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.web.css.px
 
+private const val FOOTER_TEXT_ALPHA = 0.25f
+
 @Composable
 fun AdminFooter() {
     val currentYear = Clock.System.now()
@@ -37,7 +39,7 @@ fun AdminFooter() {
         SpanText(
             modifier = Modifier
                 .fontSize(14.px)
-                .color(MaterialColorVars.OnBackground.withAlpha(0.25f))
+                .color(MaterialColorVars.OnBackground.withAlpha(FOOTER_TEXT_ALPHA))
                 .textAlign(TextAlign.Center),
             text = Res.String.Copyright.format(currentYear),
         )
@@ -45,7 +47,7 @@ fun AdminFooter() {
             modifier = Modifier
                 .margin(top = 6.px)
                 .fontSize(14.px)
-                .color(MaterialColorVars.OnBackground.withAlpha(0.25f))
+                .color(MaterialColorVars.OnBackground.withAlpha(FOOTER_TEXT_ALPHA))
                 .textAlign(TextAlign.Center),
             text = Res.String.WebsiteCreatedBy
         )
