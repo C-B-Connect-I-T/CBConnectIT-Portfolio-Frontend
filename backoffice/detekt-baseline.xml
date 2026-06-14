@@ -1,5 +1,18 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues/>
-  <CurrentIssues/>
+  <CurrentIssues>
+    <ID>ForbiddenComment:ManageTagsPage.kt$// TODO: when trying to delete a tag that is linked to projects, let the backend return that it is not possible (with a number associated of the linked projects)</ID>
+    <ID>MaxLineLength:ManageTagsPage.kt$// 1. Backend enforces it (source of truth): reject DELETE /tags/{id} if linked projects exist. ┃</ID>
+    <ID>MaxLineLength:ManageTagsPage.kt$// 1. Prevents accidental data integrity loss. ┃</ID>
+    <ID>MaxLineLength:ManageTagsPage.kt$// 2. Forces explicit user intent (detach/reassign first). ┃</ID>
+    <ID>MaxLineLength:ManageTagsPage.kt$// 2. Frontend surfaces it nicely: disable or warn in dialog (“Tag is used by X projects; remove links first”). ┃</ID>
+    <ID>MaxLineLength:ManageTagsPage.kt$// 3. Keeps history and reporting stable. ┃</ID>
+    <ID>MaxLineLength:ManageTagsPage.kt$// 3. Optional advanced flow later: “Delete and remove from all projects” as a separate destructive action. ┃</ID>
+    <ID>MaxLineLength:ManageTagsPage.kt$// Common policy: ┃</ID>
+    <ID>MaxLineLength:ManageTagsPage.kt$// Why this is usually best: ┃</ID>
+    <ID>MaxLineLength:ManageTagsPage.kt$// ┃</ID>
+    <ID>TooGenericExceptionCaught:ManageTagsViewModel.kt$ManageTagsViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:TagsViewModel.kt$TagsViewModel$e: Exception</ID>
+  </CurrentIssues>
 </SmellBaseline>

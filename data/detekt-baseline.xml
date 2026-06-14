@@ -3,11 +3,17 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>ForbiddenComment:NetworkingConfig.kt$// TODO: test out what this does in production with an url containing "https://www.cb-connect-it.com" or "https://cb-connect-it.com"</ID>
-    <ID>ThrowsCount:ExperienceRepo.kt$ExperienceRepo$suspend fun getExperiences(): List&lt;Experience&gt;</ID>
     <ID>TooGenericExceptionCaught:AuthRepo.kt$AuthRepo$e: Exception</ID>
     <ID>TooGenericExceptionCaught:NetworkingConfig.kt$e: Exception</ID>
     <ID>TooGenericExceptionThrown:ExperienceRepo.kt$ExperienceRepo$throw Exception("Netwerkfout: controleer je internetverbinding")</ID>
     <ID>TooGenericExceptionThrown:ExperienceRepo.kt$ExperienceRepo$throw Exception("Onbekende fout bij het ophalen van ervaringen")</ID>
     <ID>TooGenericExceptionThrown:ExperienceRepo.kt$ExperienceRepo$throw Exception(errorMessage)</ID>
+    <ID>TooGenericExceptionThrown:TagRepo.kt$TagRepo$throw Exception("Netwerkfout: controleer je internetverbinding")</ID>
+    <ID>TooGenericExceptionThrown:TagRepo.kt$TagRepo$throw Exception("Onbekende fout bij het aanmaken van tag")</ID>
+    <ID>TooGenericExceptionThrown:TagRepo.kt$TagRepo$throw Exception("Onbekende fout bij het bijwerken van tag")</ID>
+    <ID>TooGenericExceptionThrown:TagRepo.kt$TagRepo$throw Exception("Onbekende fout bij het ophalen van tag")</ID>
+    <ID>TooGenericExceptionThrown:TagRepo.kt$TagRepo$throw Exception("Onbekende fout bij het ophalen van tags")</ID>
+    <ID>TooGenericExceptionThrown:TagRepo.kt$TagRepo$throw Exception("Onbekende fout bij het verwijderen van tag")</ID>
+    <ID>TooGenericExceptionThrown:TagRepo.kt$TagRepo$throw Exception(errorMessage)</ID>
   </CurrentIssues>
 </SmellBaseline>

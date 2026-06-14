@@ -81,8 +81,8 @@ private fun TagsPageContent(
             items = state.tags,
             columns = tagsTableColumns,
             emptyMessage = when {
-                state.isLoading -> "Tags laden..."
-                else -> "Nog geen tags gevonden."
+                state.isLoading -> "Loading tags..."
+                else -> "No tags found yet."
             },
             onRowClick = { tag ->
                 sendIntent(TagsContract.Intent.NavigateToManage(tag.id))
@@ -93,7 +93,7 @@ private fun TagsPageContent(
 
 private val tagsTableColumns = listOf<TableColumnDef<Tag>>(
     TableColumnDef(
-        heading = "Naam",
+        heading = "Name",
         comparator = compareBy { it.name.lowercase() }
     ) { tag ->
         Text(tag.name)
