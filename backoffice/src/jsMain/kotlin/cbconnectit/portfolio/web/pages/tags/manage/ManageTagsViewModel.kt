@@ -3,6 +3,7 @@ package cbconnectit.portfolio.web.pages.tags.manage
 import cbconnectit.portfolio.web.data.models.dto.requests.tag.InsertTag
 import cbconnectit.portfolio.web.data.models.dto.requests.tag.UpdateTag
 import cbconnectit.portfolio.web.data.repos.TagRepo
+import cbconnectit.portfolio.web.data.models.fold
 import cbconnectit.portfolio.web.utils.ViewModel
 import com.materialkobweb.components.toast.ToastManager
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -40,19 +41,21 @@ class ManageTagsViewModel(
         if (tagId == null) return
 
         updateState { it.copy(isLoading = true) }
-        try {
-            val tag = tagsRepo.getTagById(tagId)
-            updateState {
-                it.copy(
-                    tag = tag,
-                    name = tag.name,
-                    isLoading = false
-                )
+        tagsRepo.getTagById(tagId).fold(
+            onSuccess = { tag ->
+                updateState {
+                    it.copy(
+                        tag = tag,
+                        name = tag.name,
+                        isLoading = false
+                    )
+                }
+            },
+            onError = { error ->
+                updateState { it.copy(isLoading = false) }
+                ToastManager.error(error.message)
             }
-        } catch (e: Exception) {
-            updateState { it.copy(isLoading = false) }
-            ToastManager.error(e.message ?: "Er is een fout opgetreden bij het ophalen van de tag")
-        }
+        )
     }
 
     private suspend fun saveTag() {
@@ -66,38 +69,50 @@ class ManageTagsViewModel(
         }
 
         updateState { it.copy(isSaving = true) }
-        try {
-            if (tagId != null) {
-                if (currentState.tag?.name != name) {
-                    tagsRepo.updateTag(tagId, UpdateTag(name = name))
-                    ToastManager.success("Tag succesvol bijgewerkt")
-                }
-            } else {
-                tagsRepo.insertTag(InsertTag(name = name))
-                ToastManager.success("Tag succesvol aangemaakt")
-            }
-            emitEffect(ManageTagsContract.Effect.NavigateBackToTags)
-        } catch (e: Exception) {
-            ToastManager.error(e.message ?: "Er is een fout opgetreden bij het opslaan van de tag")
-        } finally {
+        if (tagId != null && currentState.tag?.name == name) {
             updateState { it.copy(isSaving = false) }
+            emitEffect(ManageTagsContract.Effect.NavigateBackToTags)
+            return
         }
+
+        val saveResult = if (tagId != null) {
+            tagsRepo.updateTag(tagId, UpdateTag(name = name))
+        } else {
+            tagsRepo.insertTag(InsertTag(name = name))
+        }
+
+        saveResult.fold(
+            onSuccess = {
+                val successMessage = if (tagId != null) {
+                    "Tag succesvol bijgewerkt"
+                } else {
+                    "Tag succesvol aangemaakt"
+                }
+                ToastManager.success(successMessage)
+                emitEffect(ManageTagsContract.Effect.NavigateBackToTags)
+            },
+            onError = { error ->
+                ToastManager.error(error.message)
+            }
+        )
+        updateState { it.copy(isSaving = false) }
     }
 
     private suspend fun deleteTag() {
         if (tagId == null) return
 
         updateState { it.copy(isDeleting = true) }
-        try {
-            tagsRepo.deleteTag(tagId)
-            ToastManager.success("Tag succesvol verwijderd")
-            updateState { it.copy(showDeleteDialog = false) }
-            emitEffect(ManageTagsContract.Effect.NavigateBackToTags)
-        } catch (e: Exception) {
-            ToastManager.error(e.message ?: "Er is een fout opgetreden bij het verwijderen van de tag")
-        } finally {
-            updateState { it.copy(isDeleting = false) }
-        }
+        tagsRepo.deleteTag(tagId).fold(
+            onSuccess = {
+                ToastManager.success("Tag succesvol verwijderd")
+                updateState { it.copy(showDeleteDialog = false) }
+                emitEffect(ManageTagsContract.Effect.NavigateBackToTags)
+            },
+            onError = { error ->
+                ToastManager.error(error.message)
+            }
+        )
+        updateState { it.copy(isDeleting = false) }
     }
 
     override fun emitEffect(effect: ManageTagsContract.Effect) = coroutineScope.launch {

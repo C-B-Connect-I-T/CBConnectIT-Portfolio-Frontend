@@ -1,6 +1,10 @@
 package cbconnectit.portfolio.web.pages
 
-import cbconnectit.portfolio.web.data.models.domain.*
+import cbconnectit.portfolio.web.data.models.domain.Experience
+import cbconnectit.portfolio.web.data.models.domain.Project
+import cbconnectit.portfolio.web.data.models.domain.Service
+import cbconnectit.portfolio.web.data.models.domain.Tag
+import cbconnectit.portfolio.web.data.models.domain.Testimonial
 import cbconnectit.portfolio.web.utils.MVI
 
 interface HomeContract : MVI<HomeContract.State, HomeContract.Intent, HomeContract.Effect> {

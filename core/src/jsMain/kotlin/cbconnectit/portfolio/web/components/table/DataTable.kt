@@ -221,6 +221,16 @@ fun <T> DataTable(
                                     attr("data-resizable", col.resizable.asDataAttrValue())
                                     attr("data-sortable", isSortable.asDataAttrValue())
                                     attr("data-sorted", isSorted.asDataAttrValue())
+
+                                    if (isSortable) {
+                                        val sortValue = when {
+                                            !isSorted -> "none"
+                                            sortAscending -> "ascending"
+                                            else -> "descending"
+                                        }
+
+                                        attr("aria-sort", sortValue)
+                                    }
                                 }
                         ) { Text(col.heading + indicator) }
                     }

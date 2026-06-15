@@ -12,7 +12,5 @@
     <ID>MaxLineLength:ManageTagsPage.kt$// Common policy: ┃</ID>
     <ID>MaxLineLength:ManageTagsPage.kt$// Why this is usually best: ┃</ID>
     <ID>MaxLineLength:ManageTagsPage.kt$// ┃</ID>
-    <ID>TooGenericExceptionCaught:ManageTagsViewModel.kt$ManageTagsViewModel$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:TagsViewModel.kt$TagsViewModel$e: Exception</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -6,7 +6,6 @@ import cbconnectit.portfolio.web.utils.MVI
 interface ServiceContract : MVI<ServiceContract.State, ServiceContract.Intent, ServiceContract.Effect> {
     data class State(
         val isLoading: Boolean = false,
-        val error: String? = null,
         val service: Service? = null,
     )
 

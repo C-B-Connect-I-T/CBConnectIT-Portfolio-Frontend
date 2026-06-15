@@ -7,11 +7,20 @@ import androidx.compose.runtime.remember
 import cbconnectit.portfolio.web.components.layouts.PageLayout
 import cbconnectit.portfolio.web.data.models.domain.Service
 import cbconnectit.portfolio.web.navigation.Navigation
-import cbconnectit.portfolio.web.utils.*
+import cbconnectit.portfolio.web.utils.Constants
+import cbconnectit.portfolio.web.utils.Res
+import cbconnectit.portfolio.web.utils.format
+import cbconnectit.portfolio.web.utils.markdownParagraph
 import com.materialkobweb.components.Spacer
 import com.materialkobweb.components.widgets.FilledButton
 import com.materialkobweb.toColorScheme
-import com.varabyte.kobweb.compose.css.*
+import com.varabyte.kobweb.compose.css.Background
+import com.varabyte.kobweb.compose.css.BackgroundImage
+import com.varabyte.kobweb.compose.css.BackgroundPosition
+import com.varabyte.kobweb.compose.css.BackgroundSize
+import com.varabyte.kobweb.compose.css.CSSPosition
+import com.varabyte.kobweb.compose.css.FontWeight
+import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.css.functions.linearGradient
 import com.varabyte.kobweb.compose.css.functions.url
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -19,7 +28,25 @@ import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.modifiers.alignItems
+import com.varabyte.kobweb.compose.ui.modifiers.background
+import com.varabyte.kobweb.compose.ui.modifiers.backgroundColor
+import com.varabyte.kobweb.compose.ui.modifiers.color
+import com.varabyte.kobweb.compose.ui.modifiers.display
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
+import com.varabyte.kobweb.compose.ui.modifiers.flexDirection
+import com.varabyte.kobweb.compose.ui.modifiers.fontSize
+import com.varabyte.kobweb.compose.ui.modifiers.fontWeight
+import com.varabyte.kobweb.compose.ui.modifiers.gap
+import com.varabyte.kobweb.compose.ui.modifiers.height
+import com.varabyte.kobweb.compose.ui.modifiers.margin
+import com.varabyte.kobweb.compose.ui.modifiers.maxWidth
+import com.varabyte.kobweb.compose.ui.modifiers.order
+import com.varabyte.kobweb.compose.ui.modifiers.padding
+import com.varabyte.kobweb.compose.ui.modifiers.scrollMargin
+import com.varabyte.kobweb.compose.ui.modifiers.textDecorationLine
+import com.varabyte.kobweb.compose.ui.modifiers.width
 import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
@@ -29,8 +56,11 @@ import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.css.AlignItems
+import org.jetbrains.compose.web.css.DisplayStyle
+import org.jetbrains.compose.web.css.FlexDirection
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Text
@@ -47,13 +77,12 @@ fun ServicePage() {
     val viewModel = remember(serviceId) { ServiceViewModel(serviceId) }
     val state by viewModel.state.collectAsState()
 
-    ServicePageContent(state = state, sendIntent = viewModel::sendIntent)
+    ServicePageContent(state = state)
 }
 
 @Composable
 fun ServicePageContent(
-    state: ServiceContract.State,
-    sendIntent: (ServiceContract.Intent) -> Unit
+    state: ServiceContract.State
 ) {
     val service = state.service
     val breakpoint = rememberBreakpoint()

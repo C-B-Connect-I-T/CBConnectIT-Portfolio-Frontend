@@ -1,7 +1,9 @@
 package cbconnectit.portfolio.web.pages.services.service
 
+import cbconnectit.portfolio.web.data.models.fold
 import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import cbconnectit.portfolio.web.utils.MVI
+import com.materialkobweb.components.toast.ToastManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -43,25 +45,22 @@ class ServiceViewModel(
             return@withContext
         }
 
-        updateState { it.copy(isLoading = true, error = null) }
+        updateState { it.copy(isLoading = true) }
 
-        try {
-            val service = serviceRepo.getServiceById(serviceId)
-
-            updateState {
-                it.copy(
-                    isLoading = false,
-                    service = service
-                )
+        serviceRepo.getServiceById(serviceId).fold(
+            onSuccess = { service ->
+                updateState {
+                    it.copy(
+                        isLoading = false,
+                        service = service
+                    )
+                }
+            },
+            onError = { error ->
+                updateState { it.copy(isLoading = false) }
+                ToastManager.error(error.message)
             }
-        } catch (e: Exception) {
-            updateState {
-                it.copy(
-                    isLoading = false,
-                    error = e.message
-                )
-            }
-        }
+        )
     }
 
     override fun emitEffect(effect: ServiceContract.Effect) = coroutineScope.launch {

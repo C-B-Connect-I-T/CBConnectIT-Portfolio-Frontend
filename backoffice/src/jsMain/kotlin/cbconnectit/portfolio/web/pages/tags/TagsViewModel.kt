@@ -1,6 +1,7 @@
 package cbconnectit.portfolio.web.pages.tags
 
 import cbconnectit.portfolio.web.data.repos.TagRepo
+import cbconnectit.portfolio.web.data.models.fold
 import cbconnectit.portfolio.web.utils.ViewModel
 import com.materialkobweb.components.toast.ToastManager
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,13 +32,15 @@ class TagsViewModel(
     private suspend fun loadTags() {
         updateState { it.copy(isLoading = true) }
 
-        try {
-            val tags = tagsRepo.getTags()
-            updateState { it.copy(tags = tags, isLoading = false) }
-        } catch (e: Exception) {
-            updateState { it.copy(isLoading = false) }
-            ToastManager.error(e.message ?: "Er is een fout opgetreden bij het ophalen van tags")
-        }
+        tagsRepo.getTags().fold(
+            onSuccess = { tags ->
+                updateState { it.copy(tags = tags, isLoading = false) }
+            },
+            onError = { error ->
+                updateState { it.copy(isLoading = false) }
+                ToastManager.error(error.message)
+            }
+        )
     }
 
     override fun emitEffect(effect: TagsContract.Effect) = coroutineScope.launch {

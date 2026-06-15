@@ -2,8 +2,11 @@ package cbconnectit.portfolio.web.data.repos
 
 import cbconnectit.portfolio.web.data.NetworkingConfig
 import cbconnectit.portfolio.web.data.deleteRequest
+import cbconnectit.portfolio.web.data.extensions.toRepoResult
 import cbconnectit.portfolio.web.data.getRequest
 import cbconnectit.portfolio.web.data.models.NetworkResponse
+import cbconnectit.portfolio.web.data.models.RepoErrorKind
+import cbconnectit.portfolio.web.data.models.RepoResult
 import cbconnectit.portfolio.web.data.models.domain.Tag
 import cbconnectit.portfolio.web.data.models.domain.toTag
 import cbconnectit.portfolio.web.data.models.dto.requests.tag.InsertTag
@@ -16,78 +19,58 @@ import cbconnectit.portfolio.web.data.putRequest
 object TagRepo {
     private val tagUrl = "${NetworkingConfig.baseUrl}/api/v1/tags"
 
-    suspend fun getTags(): List<Tag> {
+    suspend fun getTags(): RepoResult<List<Tag>> {
         val response: NetworkResponse<List<TagDto>, ErrorResponse> = getRequest(tagUrl)
 
-        return when (response) {
-            is NetworkResponse.Success -> response.body.map { it.toTag() }
-            is NetworkResponse.ServerError -> {
-                val errorMessage = response.body?.errorDescription ?: response.body?.error ?: "Server fout bij het ophalen van tags"
-                throw Exception(errorMessage)
-            }
-
-            is NetworkResponse.NetworkError -> throw Exception("Netwerkfout: controleer je internetverbinding")
-            is NetworkResponse.UnknownError -> throw Exception("Onbekende fout bij het ophalen van tags")
-        }
+        return response.toRepoResult(
+            successMapper = { tagDtos -> tagDtos.map { it.toTag() } },
+            defaultServerErrorMessage = "Server fout bij het ophalen van tags",
+            networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
+            unknownErrorMessage = "Onbekende fout bij het ophalen van tags"
+        )
     }
 
-    suspend fun getTagById(id: String): Tag {
+    suspend fun getTagById(id: String): RepoResult<Tag> {
         val response: NetworkResponse<TagDto, ErrorResponse> = getRequest("$tagUrl/$id")
 
-        return when (response) {
-            is NetworkResponse.Success -> response.body.toTag()
-            is NetworkResponse.ServerError -> {
-                val errorMessage = response.body?.errorDescription ?: response.body?.error ?: "Server fout bij het ophalen van tag"
-                throw Exception(errorMessage)
-            }
-
-            is NetworkResponse.NetworkError -> throw Exception("Netwerkfout: controleer je internetverbinding")
-            is NetworkResponse.UnknownError -> throw Exception("Onbekende fout bij het ophalen van tag")
-        }
+        return response.toRepoResult(
+            successMapper = { tagDto -> tagDto.toTag() },
+            defaultServerErrorMessage = "Server fout bij het ophalen van tag",
+            networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
+            unknownErrorMessage = "Onbekende fout bij het ophalen van tag"
+        )
     }
 
-    suspend fun insertTag(tag: InsertTag): Tag {
+    suspend fun insertTag(tag: InsertTag): RepoResult<Tag> {
         val response: NetworkResponse<TagDto, ErrorResponse> = postRequest(resource = tagUrl, body = tag)
 
-        return when (response) {
-            is NetworkResponse.Success -> response.body.toTag()
-            is NetworkResponse.ServerError -> {
-                val errorMessage = response.body?.errorDescription ?: response.body?.error ?: "Server fout bij het aanmaken van tag"
-                throw Exception(errorMessage)
-            }
-
-            is NetworkResponse.NetworkError -> throw Exception("Netwerkfout: controleer je internetverbinding")
-            is NetworkResponse.UnknownError -> throw Exception("Onbekende fout bij het aanmaken van tag")
-        }
+        return response.toRepoResult(
+            successMapper = { tagDto -> tagDto.toTag() },
+            defaultServerErrorMessage = "Server fout bij het aanmaken van tag",
+            networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
+            unknownErrorMessage = "Onbekende fout bij het aanmaken van tag"
+        )
     }
 
-    suspend fun updateTag(id: String, update: UpdateTag): Tag {
+    suspend fun updateTag(id: String, update: UpdateTag): RepoResult<Tag> {
         val response: NetworkResponse<TagDto, ErrorResponse> = putRequest(resource = "$tagUrl/$id", body = update)
 
-        return when (response) {
-            is NetworkResponse.Success -> response.body.toTag()
-            is NetworkResponse.ServerError -> {
-                val errorMessage = response.body?.errorDescription ?: response.body?.error ?: "Server fout bij het bijwerken van tag"
-                throw Exception(errorMessage)
-            }
-
-            is NetworkResponse.NetworkError -> throw Exception("Netwerkfout: controleer je internetverbinding")
-            is NetworkResponse.UnknownError -> throw Exception("Onbekende fout bij het bijwerken van tag")
-        }
+        return response.toRepoResult(
+            successMapper = { tagDto -> tagDto.toTag() },
+            defaultServerErrorMessage = "Server fout bij het bijwerken van tag",
+            networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
+            unknownErrorMessage = "Onbekende fout bij het bijwerken van tag"
+        )
     }
 
-    suspend fun deleteTag(id: String) {
+    suspend fun deleteTag(id: String): RepoResult<Unit> {
         val response: NetworkResponse<Unit, ErrorResponse> = deleteRequest("$tagUrl/$id")
 
-        when (response) {
-            is NetworkResponse.Success -> Unit
-            is NetworkResponse.ServerError -> {
-                val errorMessage = response.body?.errorDescription ?: response.body?.error ?: "Server fout bij het verwijderen van tag"
-                throw Exception(errorMessage)
-            }
-
-            is NetworkResponse.NetworkError -> throw Exception("Netwerkfout: controleer je internetverbinding")
-            is NetworkResponse.UnknownError -> throw Exception("Onbekende fout bij het verwijderen van tag")
-        }
+        return response.toRepoResult(
+            successMapper = { },
+            defaultServerErrorMessage = "Server fout bij het verwijderen van tag",
+            networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
+            unknownErrorMessage = "Onbekende fout bij het verwijderen van tag"
+        )
     }
 }
