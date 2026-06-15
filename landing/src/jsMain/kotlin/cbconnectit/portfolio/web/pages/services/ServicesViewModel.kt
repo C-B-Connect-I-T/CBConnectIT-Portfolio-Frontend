@@ -1,5 +1,6 @@
 package cbconnectit.portfolio.web.pages.services
 
+import cbconnectit.portfolio.web.data.models.fold
 import cbconnectit.portfolio.web.data.repos.ServiceRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +35,10 @@ class ServicesViewModel(
     }
 
     private suspend fun loadInitialData() = withContext(Dispatchers.Default) {
-        val services = serviceRepo.getServices()
+        val services = serviceRepo.getServices().fold(
+            onSuccess = { it },
+            onError = { emptyList() }
+        )
 
         updateState {
             it.copy(

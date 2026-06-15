@@ -2,6 +2,7 @@ package cbconnectit.portfolio.web.pages.projects
 
 import cbconnectit.portfolio.web.data.repos.ProjectRepo
 import cbconnectit.portfolio.web.data.repos.TagRepo
+import cbconnectit.portfolio.web.data.models.fold
 import cbconnectit.portfolio.web.utils.MVI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,8 +45,14 @@ class ProjectsViewModel(
         val projectsDeferred = async { projectRepo.getProjects() }
         val tagsDeferred = async { tagRepo.getTags() }
 
-        val projects = projectsDeferred.await()
-        val tags = tagsDeferred.await()
+        val projects = projectsDeferred.await().fold(
+            onSuccess = { it },
+            onError = { emptyList() }
+        )
+        val tags = tagsDeferred.await().fold(
+            onSuccess = { it },
+            onError = { emptyList() }
+        )
 
         updateState {
             it.copy(

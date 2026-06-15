@@ -1,5 +1,6 @@
 package cbconnectit.portfolio.web.pages
 
+import cbconnectit.portfolio.web.data.models.fold
 import cbconnectit.portfolio.web.data.repos.ExperienceRepo
 import cbconnectit.portfolio.web.data.repos.ProjectRepo
 import cbconnectit.portfolio.web.data.repos.ServiceRepo
@@ -64,10 +65,22 @@ class HomeViewModel(
         val testimonialsDeferred = async { testimonialRepo.getTestimonials() }
         val experiencesDeferred = async { experienceRepo.getExperiences() }
 
-        val services = servicesDeferred.await()
-        val projects = projectsDeferred.await()
-        val testimonials = testimonialsDeferred.await()
-        val experiences = experiencesDeferred.await()
+        val services = servicesDeferred.await().fold(
+            onSuccess = { it },
+            onError = { emptyList() }
+        )
+        val projects = projectsDeferred.await().fold(
+            onSuccess = { it },
+            onError = { emptyList() }
+        )
+        val testimonials = testimonialsDeferred.await().fold(
+            onSuccess = { it },
+            onError = { emptyList() }
+        )
+        val experiences = experiencesDeferred.await().fold(
+            onSuccess = { it },
+            onError = { emptyList() }
+        )
 
         updateState {
             it.copy(

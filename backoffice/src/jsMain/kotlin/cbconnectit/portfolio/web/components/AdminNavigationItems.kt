@@ -17,11 +17,27 @@ fun AdminNavigationItems(
     val currentPath = context.route.path
 
     NavigationItem(
-        modifier = Modifier.margin(bottom = 16.px),
+        modifier = Modifier.margin(bottom = 75.px),
         selected = currentPath == Navigation.Screen.Admin.Home.route,
         title = "Home",
         icon = "home",
         href = Navigation.Screen.Admin.Home.route
+    )
+
+    NavigationItem(
+        modifier = Modifier.margin(bottom = 16.px),
+        selected = currentPath.contains(Navigation.Screen.Admin.Companies.route),
+        title = "Companies",
+        icon = "domain",
+        href = Navigation.Screen.Admin.Companies.route
+    )
+
+    NavigationItem(
+        modifier = Modifier.margin(bottom = 16.px),
+        selected = currentPath.contains(Navigation.Screen.Admin.Tags.Index.route),
+        title = "Tags",
+        icon = "tag",
+        href = Navigation.Screen.Admin.Tags.Index.route
     )
 
     NavigationItem(
@@ -57,7 +73,7 @@ fun AdminNavigationItems(
     )
 
     NavigationItem(
-        modifier = Modifier.margin(bottom = 16.px),
+        modifier = Modifier.margin(bottom = 75.px),
         title = "Settings",
         selected = currentPath.contains(Navigation.Screen.Admin.Settings.route),
         icon = "settings",
@@ -65,7 +81,6 @@ fun AdminNavigationItems(
     )
 
     NavigationItem(
-        modifier = Modifier.margin(top = 75.px),
         title = "Logout",
         icon = "logout",
         href = Navigation.Screen.Home.route,

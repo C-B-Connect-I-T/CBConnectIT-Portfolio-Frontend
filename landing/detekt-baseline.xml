@@ -22,50 +22,6 @@
     <ID>MagicNumber:ServiceTypeCard.kt$10</ID>
     <ID>MagicNumber:TestimonialSection.kt$100</ID>
     <ID>MagicNumber:TestimonialSection.kt$250</ID>
-    <ID>NewLineAtEndOfFile:BackToTopButton.kt$cbconnectit.portfolio.web.components.BackToTopButton.kt</ID>
-    <ID>NewLineAtEndOfFile:Backdrop.kt$cbconnectit.portfolio.web.components.Backdrop.kt</ID>
-    <ID>NewLineAtEndOfFile:HightlightCard.kt$cbconnectit.portfolio.web.components.HightlightCard.kt</ID>
-    <ID>NewLineAtEndOfFile:MainServiceCard.kt$cbconnectit.portfolio.web.components.MainServiceCard.kt</ID>
-    <ID>NewLineAtEndOfFile:SectionTitle.kt$cbconnectit.portfolio.web.components.SectionTitle.kt</ID>
-    <ID>NewLineAtEndOfFile:Social.kt$cbconnectit.portfolio.web.models.enums.Social.kt</ID>
-    <ID>NewLineAtEndOfFile:TechnologyStacks.kt$cbconnectit.portfolio.web.models.enums.TechnologyStacks.kt</ID>
-    <ID>NewLineAtEndOfFile:TestimonialCard.kt$cbconnectit.portfolio.web.components.TestimonialCard.kt</ID>
     <ID>TooGenericExceptionCaught:ContactForm.kt$ContactFormViewModel$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:ServiceViewModel.kt$ServiceViewModel$e: Exception</ID>
-    <ID>UnusedParameter:ServicePage.kt$sendIntent: (ServiceContract.Intent) -&gt; Unit</ID>
-    <ID>UnusedParameter:ServicesPage.kt$sendIntent: (ServicesContract.Intent) -&gt; Unit</ID>
-    <ID>WildcardImport:AboutSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:BackToTopButton.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:BackToTopButton.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ContactSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ExperienceCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ExperienceCard.kt$import org.jetbrains.compose.web.css.*</ID>
-    <ID>WildcardImport:FooterSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:Functions.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:HomeContract.kt$import cbconnectit.portfolio.web.data.models.domain.*</ID>
-    <ID>WildcardImport:HomePage.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:HomePage.kt$import cbconnectit.portfolio.web.pages.sections.*</ID>
-    <ID>WildcardImport:MainSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:MainServiceCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:PageLayout.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:PortfolioSection.kt$import com.varabyte.kobweb.compose.css.*</ID>
-    <ID>WildcardImport:PortfolioSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:PortfolioSection.kt$import org.jetbrains.compose.web.css.*</ID>
-    <ID>WildcardImport:SectionTitle.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:SectionTitle.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ServicePage.kt$import cbconnectit.portfolio.web.utils.*</ID>
-    <ID>WildcardImport:ServicePage.kt$import com.varabyte.kobweb.compose.css.*</ID>
-    <ID>WildcardImport:ServicePage.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ServicePage.kt$import org.jetbrains.compose.web.css.*</ID>
-    <ID>WildcardImport:ServiceSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ServiceTypeCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ServicesPage.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:ServicesPage.kt$import com.varabyte.kobweb.compose.css.*</ID>
-    <ID>WildcardImport:ServicesPage.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:ServicesPage.kt$import org.jetbrains.compose.web.css.*</ID>
-    <ID>WildcardImport:SocialBar.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:SocialBar.kt$import org.jetbrains.compose.web.css.*</ID>
-    <ID>WildcardImport:TestimonialCard.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
-    <ID>WildcardImport:TestimonialSection.kt$import com.varabyte.kobweb.compose.ui.modifiers.*</ID>
   </CurrentIssues>
 </SmellBaseline>
