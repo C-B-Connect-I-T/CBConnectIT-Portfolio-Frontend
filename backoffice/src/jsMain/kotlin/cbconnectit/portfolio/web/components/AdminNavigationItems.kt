@@ -26,10 +26,10 @@ fun AdminNavigationItems(
 
     NavigationItem(
         modifier = Modifier.margin(bottom = 16.px),
-        selected = currentPath.contains(Navigation.Screen.Admin.Companies.route),
+        selected = currentPath.contains(Navigation.Screen.Admin.Companies.Index.route),
         title = "Companies",
         icon = "domain",
-        href = Navigation.Screen.Admin.Companies.route
+        href = Navigation.Screen.Admin.Companies.Index.route
     )
 
     NavigationItem(

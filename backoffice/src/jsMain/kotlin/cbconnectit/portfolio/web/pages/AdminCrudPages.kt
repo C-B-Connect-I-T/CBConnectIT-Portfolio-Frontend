@@ -26,16 +26,6 @@ import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.Text
 
-@Page("/admin/companies")
-@Composable
-fun AdminCompaniesPage() = authenticatedGuard {
-    AdminCrudSkeletonPage(
-        title = "Companies",
-        createActionLabel = "Nieuw company",
-        emptyStateText = "Nog geen companies toegevoegd."
-    )
-}
-
 @Page("/admin/testimonials")
 @Composable
 fun AdminTestimonialsPage() = authenticatedGuard {
