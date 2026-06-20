@@ -65,10 +65,14 @@ sealed class Navigation(val route: String) {
                 data class Manage(val id: String? = null) : JobPositions("/manage" + if (id != null) "?id=$id" else "")
             }
 
+            sealed class Experiences(route: String) : Admin("/experiences$route") {
+                data object Index : Experiences("")
+                data class Manage(val id: String? = null) : Experiences("/manage" + if (id != null) "?id=$id" else "")
+            }
+
             data object Testimonials : Admin("/testimonials")
             data object Services : Admin("/services")
             data object Projects : Admin("/projects")
-            data object Experiences : Admin("/experiences")
             data object Settings : Admin("/settings")
             data class Login(val returnTo: String? = null) :
                 Admin("/login" + if (returnTo != null) "?returnTo=${encodeReturnUrl(returnTo)}" else "")
