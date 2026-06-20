@@ -74,10 +74,10 @@ fun AdminNavigationItems(
 
     NavigationItem(
         modifier = Modifier.margin(bottom = 16.px),
-        selected = currentPath.contains(Navigation.Screen.Admin.Experiences.route),
+        selected = currentPath.contains(Navigation.Screen.Admin.Experiences.Index.route),
         title = "Experiences",
         icon = "work_history",
-        href = Navigation.Screen.Admin.Experiences.route
+        href = Navigation.Screen.Admin.Experiences.Index.route
     )
 
     NavigationItem(

@@ -56,16 +56,6 @@ fun AdminProjectsPage() = authenticatedGuard {
     )
 }
 
-@Page("/admin/experiences")
-@Composable
-fun AdminExperiencesPage() = authenticatedGuard {
-    AdminCrudSkeletonPage(
-        title = "Experiences",
-        createActionLabel = "Nieuwe experience",
-        emptyStateText = "Nog geen experiences toegevoegd."
-    )
-}
-
 @Page("/admin/settings")
 @Composable
 fun AdminSettingsPage() = authenticatedGuard {

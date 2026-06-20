@@ -98,7 +98,7 @@ fun AdminPageContent(
                 modifier = Modifier.fillMaxWidth(50.percent),
                 title = "Experiences",
                 subtitle = "Beheer ervaring-items in de tijdslijn.",
-                path = Navigation.Screen.Admin.Experiences.route
+                path = Navigation.Screen.Admin.Experiences.Index.route
             )
         }
     }
