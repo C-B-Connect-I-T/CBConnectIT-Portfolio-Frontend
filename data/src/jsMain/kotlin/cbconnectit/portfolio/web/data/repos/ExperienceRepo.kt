@@ -23,9 +23,9 @@ object ExperienceRepo {
 
         return response.toRepoResult(
             successMapper = { experienceDtos -> experienceDtos.map { it.toExperience() } },
-            defaultServerErrorMessage = "Server fout bij het ophalen van experiences",
+            defaultServerErrorMessage = "Server fout bij het ophalen van ervaringen",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het ophalen van experiences"
+            unknownErrorMessage = "Onbekende fout bij het ophalen van ervaringen"
         )
     }
 
@@ -34,9 +34,9 @@ object ExperienceRepo {
 
         return response.toRepoResult(
             successMapper = { experienceDto -> experienceDto.toExperience() },
-            defaultServerErrorMessage = "Server fout bij het ophalen van experience",
+            defaultServerErrorMessage = "Server fout bij het ophalen van ervaring",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het ophalen van experience"
+            unknownErrorMessage = "Onbekende fout bij het ophalen van ervaring"
         )
     }
 
@@ -45,9 +45,9 @@ object ExperienceRepo {
 
         return response.toRepoResult(
             successMapper = { experienceDto -> experienceDto.toExperience() },
-            defaultServerErrorMessage = "Server fout bij het aanmaken van experience",
+            defaultServerErrorMessage = "Server fout bij het aanmaken van ervaring",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het aanmaken van experience"
+            unknownErrorMessage = "Onbekende fout bij het aanmaken van ervaring"
         )
     }
 
@@ -56,9 +56,9 @@ object ExperienceRepo {
 
         return response.toRepoResult(
             successMapper = { experienceDto -> experienceDto.toExperience() },
-            defaultServerErrorMessage = "Server fout bij het bijwerken van experience",
+            defaultServerErrorMessage = "Server fout bij het bijwerken van ervaring",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het bijwerken van experience"
+            unknownErrorMessage = "Onbekende fout bij het bijwerken van ervaring"
         )
     }
 
@@ -67,9 +67,9 @@ object ExperienceRepo {
 
         return response.toRepoResult(
             successMapper = { },
-            defaultServerErrorMessage = "Server fout bij het verwijderen van experience",
+            defaultServerErrorMessage = "Server fout bij het verwijderen van ervaring",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het verwijderen van experience"
+            unknownErrorMessage = "Onbekende fout bij het verwijderen van ervaring"
         )
     }
 }

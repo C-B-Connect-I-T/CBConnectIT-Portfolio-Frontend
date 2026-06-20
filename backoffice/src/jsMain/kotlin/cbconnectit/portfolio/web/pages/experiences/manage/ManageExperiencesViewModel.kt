@@ -142,8 +142,14 @@ class ManageExperiencesViewModel(
             return
         }
 
-        val fromDate = currentState.from.trim().let(LocalDate::parse)
-        val toDate = currentState.to.trim().let(LocalDate::parse)
+        val fromDate = runCatching { currentState.from.trim().let(LocalDate::parse) }.getOrElse {
+            ToastManager.warning("Vul een geldige startdatum in.")
+            return
+        }
+        val toDate = runCatching { currentState.to.trim().let(LocalDate::parse) }.getOrElse {
+            ToastManager.warning("Vul een geldige einddatum in.")
+            return
+        }
 
         if (fromDate > toDate) {
             ToastManager.warning("De startdatum moet voor of gelijk zijn aan de einddatum")
@@ -169,7 +175,7 @@ class ManageExperiencesViewModel(
                     from = normalizedFrom,
                     to = normalizedTo,
                     asFreelance = currentState.asFreelance,
-                    tags = currentState.selectedTagIds.ifEmpty { null },
+                    tags = currentState.selectedTagIds,
                     companyId = currentState.companyId,
                     jobPositionId = currentState.jobPositionId
                 )
@@ -182,7 +188,7 @@ class ManageExperiencesViewModel(
                     from = normalizedFrom,
                     to = normalizedTo,
                     asFreelance = currentState.asFreelance,
-                    tags = currentState.selectedTagIds.ifEmpty { null },
+                    tags = currentState.selectedTagIds,
                     companyId = currentState.companyId,
                     jobPositionId = currentState.jobPositionId
                 )
@@ -212,7 +218,7 @@ class ManageExperiencesViewModel(
         normalizedTo: String
     ): Boolean {
         val currentExperience = currentState.experience ?: return false
-        val initialTagIds = currentExperience.tags.map { it.id }
+        val initialTagIds = currentExperience.tags.map { it.id }.sorted()
 
         return currentExperience.shortDescription == currentState.shortDescription.trim() &&
                 currentExperience.description == currentState.description.trim() &&
@@ -221,7 +227,7 @@ class ManageExperiencesViewModel(
                 currentExperience.asFreelance == currentState.asFreelance &&
                 currentExperience.company.id == currentState.companyId &&
                 currentExperience.jobPosition.id == currentState.jobPositionId &&
-                initialTagIds == currentState.selectedTagIds
+                initialTagIds == currentState.selectedTagIds.sorted()
     }
 
     private suspend fun deleteExperience() {

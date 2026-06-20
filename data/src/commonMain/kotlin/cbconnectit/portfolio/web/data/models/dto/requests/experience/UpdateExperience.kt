@@ -12,7 +12,7 @@ data class UpdateExperience(
     val to: String,
     @SerialName("as_freelance")
     val asFreelance: Boolean = false,
-    val tags: List<String>? = emptyList(), // TODO: determine if this really should be a required field!!
+    val tags: List<String> = emptyList(),
     @SerialName("company_id")
     val companyId: String,
     @SerialName("job_position_id")
