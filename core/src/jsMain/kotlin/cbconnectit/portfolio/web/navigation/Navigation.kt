@@ -49,7 +49,11 @@ sealed class Navigation(val route: String) {
 
         sealed class Admin(route: String) : Screen("/admin$route") {
             data object Home : Admin("")
-            data object Companies : Admin("/companies")
+
+            sealed class Companies(route: String) : Admin("/companies$route") {
+                data object Index : Companies("")
+                data class Manage(val id: String? = null) : Companies("/manage" + if (id != null) "?id=$id" else "")
+            }
 
             sealed class Tags(route: String) : Admin("/tags$route") {
                 data object Index : Tags("")
