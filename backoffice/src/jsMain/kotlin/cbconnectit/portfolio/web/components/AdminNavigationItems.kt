@@ -34,6 +34,14 @@ fun AdminNavigationItems(
 
     NavigationItem(
         modifier = Modifier.margin(bottom = 16.px),
+        selected = currentPath.contains(Navigation.Screen.Admin.JobPositions.Index.route),
+        title = "Job Positions",
+        icon = "badge",
+        href = Navigation.Screen.Admin.JobPositions.Index.route
+    )
+
+    NavigationItem(
+        modifier = Modifier.margin(bottom = 16.px),
         selected = currentPath.contains(Navigation.Screen.Admin.Tags.Index.route),
         title = "Tags",
         icon = "tag",
