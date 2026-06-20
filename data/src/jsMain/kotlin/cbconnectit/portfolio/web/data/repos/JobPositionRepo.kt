@@ -23,9 +23,9 @@ object JobPositionRepo {
 
         return response.toRepoResult(
             successMapper = { jobPositionDtos -> jobPositionDtos.map { it.toJobPosition() } },
-            defaultServerErrorMessage = "Server fout bij het ophalen van jobPositions",
+            defaultServerErrorMessage = "Server fout bij het ophalen van jobposities",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het ophalen van jobPositions"
+            unknownErrorMessage = "Onbekende fout bij het ophalen van jobposities"
         )
     }
 
@@ -34,9 +34,9 @@ object JobPositionRepo {
 
         return response.toRepoResult(
             successMapper = { jobPositionDto -> jobPositionDto.toJobPosition() },
-            defaultServerErrorMessage = "Server fout bij het ophalen van jobPosition",
+            defaultServerErrorMessage = "Server fout bij het ophalen van jobpositie",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het ophalen van jobPosition"
+            unknownErrorMessage = "Onbekende fout bij het ophalen van jobpositie"
         )
     }
 
@@ -45,9 +45,9 @@ object JobPositionRepo {
 
         return response.toRepoResult(
             successMapper = { jobPositionDto -> jobPositionDto.toJobPosition() },
-            defaultServerErrorMessage = "Server fout bij het aanmaken van jobPosition",
+            defaultServerErrorMessage = "Server fout bij het aanmaken van jobpositie",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het aanmaken van jobPosition"
+            unknownErrorMessage = "Onbekende fout bij het aanmaken van jobpositie"
         )
     }
 
@@ -56,9 +56,9 @@ object JobPositionRepo {
 
         return response.toRepoResult(
             successMapper = { jobPositionDto -> jobPositionDto.toJobPosition() },
-            defaultServerErrorMessage = "Server fout bij het bijwerken van jobPosition",
+            defaultServerErrorMessage = "Server fout bij het bijwerken van jobpositie",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het bijwerken van jobPosition"
+            unknownErrorMessage = "Onbekende fout bij het bijwerken van jobpositie"
         )
     }
 
@@ -67,9 +67,9 @@ object JobPositionRepo {
 
         return response.toRepoResult(
             successMapper = { },
-            defaultServerErrorMessage = "Server fout bij het verwijderen van jobPosition",
+            defaultServerErrorMessage = "Server fout bij het verwijderen van jobpositie",
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
-            unknownErrorMessage = "Onbekende fout bij het verwijderen van jobPosition"
+            unknownErrorMessage = "Onbekende fout bij het verwijderen van jobpositie"
         )
     }
 }
