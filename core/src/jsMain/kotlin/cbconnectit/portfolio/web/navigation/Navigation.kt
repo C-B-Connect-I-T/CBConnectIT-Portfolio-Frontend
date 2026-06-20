@@ -60,6 +60,11 @@ sealed class Navigation(val route: String) {
                 data class Manage(val id: String? = null) : Tags("/manage" + if (id != null) "?id=$id" else "")
             }
 
+            sealed class JobPositions(route: String) : Admin("/job-positions$route") {
+                data object Index : JobPositions("")
+                data class Manage(val id: String? = null) : JobPositions("/manage" + if (id != null) "?id=$id" else "")
+            }
+
             data object Testimonials : Admin("/testimonials")
             data object Services : Admin("/services")
             data object Projects : Admin("/projects")
