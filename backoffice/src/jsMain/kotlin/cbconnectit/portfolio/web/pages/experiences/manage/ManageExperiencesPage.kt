@@ -14,8 +14,10 @@ import cbconnectit.portfolio.web.navigation.authenticatedGuard
 import cbconnectit.portfolio.web.utils.rememberViewModel
 import com.materialkobweb.components.Spacer
 import com.materialkobweb.components.widgets.DsBorderRadius
+import com.materialkobweb.components.widgets.DsEditableArea
 import com.materialkobweb.components.widgets.DsEditableField
 import com.materialkobweb.components.widgets.DsMultiSelect
+import com.materialkobweb.components.widgets.DsSelect
 import com.materialkobweb.components.widgets.DsSpinner
 import com.materialkobweb.components.widgets.FilledButton
 import com.materialkobweb.components.widgets.OutlinedButton
@@ -27,6 +29,7 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
+import com.varabyte.kobweb.compose.ui.modifiers.gap
 import com.varabyte.kobweb.compose.ui.modifiers.height
 import com.varabyte.kobweb.compose.ui.modifiers.maxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.padding
@@ -34,6 +37,8 @@ import com.varabyte.kobweb.compose.ui.modifiers.textAlign
 import com.varabyte.kobweb.compose.ui.modifiers.width
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.core.rememberPageContext
+import com.varabyte.kobweb.silk.components.layout.SimpleGrid
+import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
@@ -98,60 +103,6 @@ private fun ManageExperiencesPageContent(
             color = colorScheme.onBackground
         )
 
-        DsEditableField(
-            modifier = Modifier.fillMaxWidth(),
-            id = "experience-short-description-input",
-            label = "Short description",
-            placeholder = "Short summary",
-            value = state.shortDescription,
-            valid = !state.hasAttemptedSave || state.shortDescription.isNotBlank(),
-            onValueChange = { sendIntent(ManageExperiencesContract.Intent.UpdateShortDescription(it)) },
-            required = true,
-            backgroundColor = colorScheme.surfaceContainer,
-            focusBorderColor = colorScheme.primary.toRgb().copyf(alpha = 0.6f)
-        )
-
-        DsEditableField(
-            modifier = Modifier.fillMaxWidth(),
-            id = "experience-description-input",
-            label = "Description",
-            placeholder = "Detailed experience description",
-            value = state.description,
-            valid = !state.hasAttemptedSave || state.description.isNotBlank(),
-            onValueChange = { sendIntent(ManageExperiencesContract.Intent.UpdateDescription(it)) },
-            required = true,
-            backgroundColor = colorScheme.surfaceContainer,
-            focusBorderColor = colorScheme.primary.toRgb().copyf(alpha = 0.6f)
-        )
-
-        DsEditableField(
-            modifier = Modifier.fillMaxWidth(),
-            id = "experience-from-input",
-            label = "From",
-            placeholder = "Start datetime",
-            value = state.from,
-            valid = !state.hasAttemptedSave || state.from.isNotBlank(),
-            onValueChange = { sendIntent(ManageExperiencesContract.Intent.UpdateFrom(it)) },
-            type = InputType.DateTimeLocal,
-            required = true,
-            backgroundColor = colorScheme.surfaceContainer,
-            focusBorderColor = colorScheme.primary.toRgb().copyf(alpha = 0.6f)
-        )
-
-        DsEditableField(
-            modifier = Modifier.fillMaxWidth(),
-            id = "experience-to-input",
-            label = "To",
-            placeholder = "End datetime",
-            value = state.to,
-            valid = !state.hasAttemptedSave || state.to.isNotBlank(),
-            onValueChange = { sendIntent(ManageExperiencesContract.Intent.UpdateTo(it)) },
-            type = InputType.DateTimeLocal,
-            required = true,
-            backgroundColor = colorScheme.surfaceContainer,
-            focusBorderColor = colorScheme.primary.toRgb().copyf(alpha = 0.6f)
-        )
-
         FilledButton(
             borderRadius = DsBorderRadius(8.px),
             onClick = { sendIntent(ManageExperiencesContract.Intent.ToggleFreelance) }
@@ -159,28 +110,33 @@ private fun ManageExperiencesPageContent(
             Text(if (state.asFreelance) "Freelance: Yes" else "Freelance: No")
         }
 
-        DsMultiSelect(
-            modifier = Modifier.fillMaxWidth(),
-            id = "experience-company-select",
-            label = "Company",
-            placeholder = "Select company",
-            items = state.companies.map { it.name },
-            selectedItems = state.companies.filter { it.id == state.companyId }.map { it.name }
-        ) { selectedCompanyName ->
-            val selectedCompany = state.companies.firstOrNull { it.name == selectedCompanyName } ?: return@DsMultiSelect
-            sendIntent(ManageExperiencesContract.Intent.UpdateCompanyId(selectedCompany.id))
-        }
+        SimpleGrid(
+            modifier = Modifier.fillMaxWidth().gap(20.px, 32.px),
+            numColumns = numColumns(1, 2)
+        ) {
+            DsSelect(
+                modifier = Modifier.fillMaxWidth(),
+                id = "experience-company-select",
+                label = "Company",
+                placeholder = "Select company",
+                items = state.companies.map { it.name },
+                preselectedItem = state.companies.firstOrNull { it.id == state.companyId }?.name
+            ) { _, selectedCompanyName ->
+                val selectedCompany = state.companies.firstOrNull { it.name == selectedCompanyName } ?: return@DsSelect
+                sendIntent(ManageExperiencesContract.Intent.UpdateCompanyId(selectedCompany.id))
+            }
 
-        DsMultiSelect(
-            modifier = Modifier.fillMaxWidth(),
-            id = "experience-job-position-select",
-            label = "Job Position",
-            placeholder = "Select job position",
-            items = state.jobPositions.map { it.name },
-            selectedItems = state.jobPositions.filter { it.id == state.jobPositionId }.map { it.name }
-        ) { selectedJobPositionName ->
-            val selectedJobPosition = state.jobPositions.firstOrNull { it.name == selectedJobPositionName } ?: return@DsMultiSelect
-            sendIntent(ManageExperiencesContract.Intent.UpdateJobPositionId(selectedJobPosition.id))
+            DsSelect(
+                modifier = Modifier.fillMaxWidth(),
+                id = "experience-job-position-select",
+                label = "Job Position",
+                placeholder = "Select job position",
+                items = state.jobPositions.map { it.name },
+                preselectedItem = state.jobPositions.firstOrNull { it.id == state.jobPositionId }?.name
+            ) { _, selectedJobPositionName ->
+                val selectedJobPosition = state.jobPositions.firstOrNull { it.name == selectedJobPositionName } ?: return@DsSelect
+                sendIntent(ManageExperiencesContract.Intent.UpdateJobPositionId(selectedJobPosition.id))
+            }
         }
 
         DsMultiSelect(
@@ -194,6 +150,63 @@ private fun ManageExperiencesPageContent(
             val selectedTag = state.tags.firstOrNull { it.name == selectedTagName } ?: return@DsMultiSelect
             sendIntent(ManageExperiencesContract.Intent.ToggleTagId(selectedTag.id))
         }
+
+        SimpleGrid(
+            modifier = Modifier.fillMaxWidth().gap(20.px, 32.px),
+            numColumns = numColumns(1, 2)
+        ) {
+            DsEditableField(
+                modifier = Modifier.fillMaxWidth(),
+                id = "experience-from-input",
+                label = "From",
+                placeholder = "Start date",
+                value = state.from,
+                valid = !state.hasAttemptedSave || state.from.isNotBlank(),
+                onValueChange = { sendIntent(ManageExperiencesContract.Intent.UpdateFrom(it)) },
+                type = InputType.Date,
+                required = true,
+                backgroundColor = colorScheme.surfaceContainer,
+                focusBorderColor = colorScheme.primary.toRgb().copyf(alpha = 0.6f)
+            )
+
+            DsEditableField(
+                modifier = Modifier.fillMaxWidth(),
+                id = "experience-to-input",
+                label = "To",
+                placeholder = "End date",
+                value = state.to,
+                valid = !state.hasAttemptedSave || state.to.isNotBlank(),
+                onValueChange = { sendIntent(ManageExperiencesContract.Intent.UpdateTo(it)) },
+                type = InputType.Date,
+                required = true,
+                backgroundColor = colorScheme.surfaceContainer,
+                focusBorderColor = colorScheme.primary.toRgb().copyf(alpha = 0.6f)
+            )
+        }
+
+        DsEditableField(
+            modifier = Modifier.fillMaxWidth(),
+            id = "experience-short-description-input",
+            label = "Short description",
+            placeholder = "Short summary",
+            value = state.shortDescription,
+            valid = !state.hasAttemptedSave || state.shortDescription.isNotBlank(),
+            onValueChange = { sendIntent(ManageExperiencesContract.Intent.UpdateShortDescription(it)) },
+            required = true,
+            backgroundColor = colorScheme.surfaceContainer,
+            focusBorderColor = colorScheme.primary.toRgb().copyf(alpha = 0.6f)
+        )
+
+        DsEditableArea(
+            modifier = Modifier.fillMaxWidth(),
+            id = "experience-description-area",
+            label = "Description",
+            placeholder = "Detailed experience description",
+            value = state.description,
+            valid = !state.hasAttemptedSave || state.description.isNotBlank(),
+            onValueChange = { sendIntent(ManageExperiencesContract.Intent.UpdateDescription(it)) },
+            required = true,
+        )
 
         Spacer(Modifier.height(8.px))
 

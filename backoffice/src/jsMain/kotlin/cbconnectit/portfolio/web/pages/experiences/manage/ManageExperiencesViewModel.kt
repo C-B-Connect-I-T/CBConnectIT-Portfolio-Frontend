@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.atTime
 
 class ManageExperiencesViewModel(
     private val experienceId: String?,
@@ -34,22 +36,14 @@ class ManageExperiencesViewModel(
     override fun sendIntent(intent: ManageExperiencesContract.Intent) = coroutineScope.launch {
         when (intent) {
             is ManageExperiencesContract.Intent.LoadInitialData -> loadInitialData()
-            is ManageExperiencesContract.Intent.UpdateShortDescription ->
-                updateState { it.copy(shortDescription = intent.shortDescription) }
-            is ManageExperiencesContract.Intent.UpdateDescription ->
-                updateState { it.copy(description = intent.description) }
-            is ManageExperiencesContract.Intent.UpdateFrom ->
-                updateState { it.copy(from = intent.from) }
-            is ManageExperiencesContract.Intent.UpdateTo ->
-                updateState { it.copy(to = intent.to) }
-            is ManageExperiencesContract.Intent.ToggleFreelance ->
-                updateState { it.copy(asFreelance = !it.asFreelance) }
-            is ManageExperiencesContract.Intent.UpdateCompanyId ->
-                updateState { it.copy(companyId = intent.companyId) }
-            is ManageExperiencesContract.Intent.UpdateJobPositionId ->
-                updateState { it.copy(jobPositionId = intent.jobPositionId) }
-            is ManageExperiencesContract.Intent.ToggleTagId ->
-                toggleTag(intent.tagId)
+            is ManageExperiencesContract.Intent.UpdateShortDescription -> updateState { it.copy(shortDescription = intent.shortDescription) }
+            is ManageExperiencesContract.Intent.UpdateDescription -> updateState { it.copy(description = intent.description) }
+            is ManageExperiencesContract.Intent.UpdateFrom -> updateState { it.copy(from = intent.from) }
+            is ManageExperiencesContract.Intent.UpdateTo -> updateState { it.copy(to = intent.to) }
+            is ManageExperiencesContract.Intent.ToggleFreelance -> updateState { it.copy(asFreelance = !it.asFreelance) }
+            is ManageExperiencesContract.Intent.UpdateCompanyId -> updateState { it.copy(companyId = intent.companyId) }
+            is ManageExperiencesContract.Intent.UpdateJobPositionId -> updateState { it.copy(jobPositionId = intent.jobPositionId) }
+            is ManageExperiencesContract.Intent.ToggleTagId -> toggleTag(intent.tagId)
             is ManageExperiencesContract.Intent.SaveExperience -> saveExperience()
             is ManageExperiencesContract.Intent.ShowDeleteDialog -> updateState { it.copy(showDeleteDialog = true) }
             is ManageExperiencesContract.Intent.HideDeleteDialog -> updateState { it.copy(showDeleteDialog = false) }
@@ -112,8 +106,8 @@ class ManageExperiencesViewModel(
                         experience = experience,
                         shortDescription = experience.shortDescription,
                         description = experience.description,
-                        from = toDateTimeLocalInput(experience.from),
-                        to = toDateTimeLocalInput(experience.to),
+                        from = toDateInput(experience.from),
+                        to = toDateInput(experience.to),
                         asFreelance = experience.asFreelance,
                         companyId = experience.company.id,
                         jobPositionId = experience.jobPosition.id,
@@ -144,16 +138,20 @@ class ManageExperiencesViewModel(
         updateState { it.copy(hasAttemptedSave = true) }
 
         if (!currentState.areRequiredFieldsValid) {
-            ToastManager.warning("Vul alle verplichte velden in voor de experience")
+            ToastManager.warning("Vul alle verplichte velden in voor de ervaring")
             return
         }
 
-        val normalizedFrom = normalizeDateTimeForApi(currentState.from)
-        val normalizedTo = normalizeDateTimeForApi(currentState.to)
-        if (normalizedFrom > normalizedTo) {
+        val fromDate = currentState.from.trim().let(LocalDate::parse)
+        val toDate = currentState.to.trim().let(LocalDate::parse)
+
+        if (fromDate > toDate) {
             ToastManager.warning("De startdatum moet voor of gelijk zijn aan de einddatum")
             return
         }
+
+        val normalizedFrom = fromDate.atTime(0, 0, 0).toString()
+        val normalizedTo = toDate.atTime(0,0,0).toString()
 
         updateState { it.copy(isSaving = true) }
         if (experienceId != null && isExperienceUnchanged(currentState, normalizedFrom, normalizedTo)) {
@@ -194,9 +192,9 @@ class ManageExperiencesViewModel(
         saveResult.fold(
             onSuccess = {
                 val successMessage = if (experienceId != null) {
-                    "Experience succesvol bijgewerkt"
+                    "Ervaring succesvol bijgewerkt"
                 } else {
-                    "Experience succesvol aangemaakt"
+                    "Ervaring succesvol aangemaakt"
                 }
                 ToastManager.success(successMessage)
                 emitEffect(ManageExperiencesContract.Effect.NavigateBackToExperiences)
@@ -217,13 +215,13 @@ class ManageExperiencesViewModel(
         val initialTagIds = currentExperience.tags.map { it.id }
 
         return currentExperience.shortDescription == currentState.shortDescription.trim() &&
-            currentExperience.description == currentState.description.trim() &&
-            currentExperience.from == normalizedFrom &&
-            currentExperience.to == normalizedTo &&
-            currentExperience.asFreelance == currentState.asFreelance &&
-            currentExperience.company.id == currentState.companyId &&
-            currentExperience.jobPosition.id == currentState.jobPositionId &&
-            initialTagIds == currentState.selectedTagIds
+                currentExperience.description == currentState.description.trim() &&
+                extractDatePart(currentExperience.from) == extractDatePart(normalizedFrom) &&
+                extractDatePart(currentExperience.to) == extractDatePart(normalizedTo) &&
+                currentExperience.asFreelance == currentState.asFreelance &&
+                currentExperience.company.id == currentState.companyId &&
+                currentExperience.jobPosition.id == currentState.jobPositionId &&
+                initialTagIds == currentState.selectedTagIds
     }
 
     private suspend fun deleteExperience() {
@@ -232,7 +230,7 @@ class ManageExperiencesViewModel(
         updateState { it.copy(isDeleting = true) }
         experienceRepo.deleteExperience(experienceId).fold(
             onSuccess = {
-                ToastManager.success("Experience succesvol verwijderd")
+                ToastManager.success("Ervaring succesvol verwijderd")
                 updateState { it.copy(showDeleteDialog = false) }
                 emitEffect(ManageExperiencesContract.Effect.NavigateBackToExperiences)
             },
@@ -243,16 +241,13 @@ class ManageExperiencesViewModel(
         updateState { it.copy(isDeleting = false) }
     }
 
-    private fun toDateTimeLocalInput(value: String): String {
+    private fun toDateInput(value: String): String {
         if (value.isBlank()) return ""
-        return value.take(16)
+        return extractDatePart(value)
     }
 
-    private fun normalizeDateTimeForApi(value: String): String {
-        val trimmed = value.trim()
-        if (trimmed.isBlank()) return ""
-        return if (trimmed.length == 16) "$trimmed:00" else trimmed
-    }
+    private fun extractDatePart(value: String): String =
+        value.substringBefore("T").trim()
 
     override fun emitEffect(effect: ManageExperiencesContract.Effect) = coroutineScope.launch {
         _effect.emit(effect)
