@@ -73,8 +73,8 @@ fun AdminPageContent(
             DashboardCard(
                 modifier = Modifier.fillMaxWidth(50.percent),
                 title = "Testimonials",
-                subtitle = "Beheer testimonials en publicatie status.",
-                path = Navigation.Screen.Admin.Testimonials.route
+                subtitle = "Voeg testimonials toe, werk bij of verwijder ze.",
+                path = Navigation.Screen.Admin.Testimonials.Index.route
             )
             DashboardCard(
                 modifier = Modifier.fillMaxWidth(50.percent),
