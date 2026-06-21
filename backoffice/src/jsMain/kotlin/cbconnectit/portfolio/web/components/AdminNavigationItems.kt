@@ -50,10 +50,10 @@ fun AdminNavigationItems(
 
     NavigationItem(
         modifier = Modifier.margin(bottom = 16.px),
-        selected = currentPath.contains(Navigation.Screen.Admin.Testimonials.route),
+        selected = currentPath.contains(Navigation.Screen.Admin.Testimonials.Index.route),
         title = "Testimonials",
         icon = "rate_review",
-        href = Navigation.Screen.Admin.Testimonials.route
+        href = Navigation.Screen.Admin.Testimonials.Index.route
     )
 
     NavigationItem(
