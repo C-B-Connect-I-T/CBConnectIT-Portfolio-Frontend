@@ -6,6 +6,7 @@
     <ID>CyclomaticComplexMethod:ManageExperiencesViewModel.kt$ManageExperiencesViewModel$override fun sendIntent(intent: ManageExperiencesContract.Intent)</ID>
     <ID>ForbiddenComment:ManageTagsPage.kt$// TODO: when trying to delete a tag that is linked to projects, let the backend return that it is not possible (with a number associated of the linked projects)</ID>
     <ID>LongMethod:ManageExperiencesPage.kt$@Composable private fun ManageExperiencesPageContent( state: ManageExperiencesContract.State, isEdit: Boolean, sendIntent: (ManageExperiencesContract.Intent) -&gt; Unit )</ID>
+    <ID>MagicNumber:TestimonialsPage.kt$3</ID>
     <ID>MaxLineLength:ManageTagsPage.kt$// 1. Backend enforces it (source of truth): reject DELETE /tags/{id} if linked projects exist. ┃</ID>
     <ID>MaxLineLength:ManageTagsPage.kt$// 1. Prevents accidental data integrity loss. ┃</ID>
     <ID>MaxLineLength:ManageTagsPage.kt$// 2. Forces explicit user intent (detach/reassign first). ┃</ID>
@@ -16,6 +17,8 @@
     <ID>MaxLineLength:ManageTagsPage.kt$// Why this is usually best: ┃</ID>
     <ID>MaxLineLength:ManageTagsPage.kt$// ┃</ID>
     <ID>ReturnCount:ManageExperiencesViewModel.kt$ManageExperiencesViewModel$private suspend fun saveExperience()</ID>
+    <ID>ReturnCount:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel$private suspend fun saveTestimonial()</ID>
     <ID>TooManyFunctions:ManageExperiencesViewModel.kt$ManageExperiencesViewModel : ViewModelManageExperiencesContract</ID>
+    <ID>TooManyFunctions:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel : ViewModelManageTestimonialsContract</ID>
   </CurrentIssues>
 </SmellBaseline>
