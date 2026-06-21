@@ -50,12 +50,12 @@ fun TestimonialCard(
         ) {
             Row {
                 Image(
-                    testimonial.imageUrl,
+                    testimonial.avatarImage?.url ?: "",
                     modifier = Modifier
                         .weight(1)
                         .size(56.px)
                         .borderRadius(50.percent),
-                    alt = "Avatar of ${testimonial.fullName}"
+                    alt = testimonial.avatarImage?.altText.orEmpty().ifBlank { "Avatar of ${testimonial.fullName}" }
                 )
 
                 Spacer(Modifier.width(12.px))

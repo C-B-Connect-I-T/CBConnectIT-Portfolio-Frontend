@@ -2,6 +2,7 @@ package cbconnectit.portfolio.web.data.repos
 
 import cbconnectit.portfolio.web.data.NetworkingConfig
 import cbconnectit.portfolio.web.data.deleteRequest
+import cbconnectit.portfolio.web.data.extensions.buildFormData
 import cbconnectit.portfolio.web.data.extensions.toRepoResult
 import cbconnectit.portfolio.web.data.getRequest
 import cbconnectit.portfolio.web.data.models.NetworkResponse
@@ -14,6 +15,7 @@ import cbconnectit.portfolio.web.data.models.dto.responses.ErrorResponse
 import cbconnectit.portfolio.web.data.models.dto.responses.TestimonialDto
 import cbconnectit.portfolio.web.data.postRequest
 import cbconnectit.portfolio.web.data.putRequest
+import org.w3c.files.File
 
 object TestimonialRepo {
     private val testimonialUrl = "${NetworkingConfig.baseUrl}/api/v1/testimonials"
@@ -40,8 +42,13 @@ object TestimonialRepo {
         )
     }
 
-    suspend fun insertTestimonial(testimonial: InsertTestimonial): RepoResult<Testimonial> {
-        val response: NetworkResponse<TestimonialDto, ErrorResponse> = postRequest(resource = testimonialUrl, body = testimonial)
+    suspend fun insertTestimonial(testimonial: InsertTestimonial, avatarImage: File?): RepoResult<Testimonial> {
+        val formData = buildFormData(
+            data = testimonial,
+            extraFields = mapOf("image" to avatarImage).filterValues { it != null }
+        )
+
+        val response: NetworkResponse<TestimonialDto, ErrorResponse> = postRequest(resource = testimonialUrl, body = formData)
 
         return response.toRepoResult(
             successMapper = { testimonialDto -> testimonialDto.toTestimonial() },
@@ -60,6 +67,41 @@ object TestimonialRepo {
             networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
             unknownErrorMessage = "Onbekende fout bij het bijwerken van testimonial"
         )
+    }
+
+    suspend fun updateTestimonialAvatar(id: String, file: File, altText: String): Testimonial {
+        val formData = buildFormData(
+            extraFields = mapOf("image" to file),
+            data = mapOf("altText" to altText)
+        )
+
+        val response: NetworkResponse<TestimonialDto, ErrorResponse> = putRequest(resource = "$testimonialUrl/$id/image", body = formData)
+
+        return when (response) {
+            is NetworkResponse.Success -> response.body.toTestimonial()
+            is NetworkResponse.ServerError -> {
+                val errorMessage = response.body?.errorDescription ?: response.body?.error ?: "Server fout bij het uploaden van afbeelding"
+                throw Exception(errorMessage)
+            }
+
+            is NetworkResponse.NetworkError -> throw Exception("Netwerkfout: controleer je internetverbinding")
+            is NetworkResponse.UnknownError -> throw Exception("Onbekende fout bij het uploaden van afbeelding")
+        }
+    }
+
+    suspend fun deleteTestimonialAvatar(id: String): Testimonial {
+        val response: NetworkResponse<TestimonialDto, ErrorResponse> = deleteRequest(resource = "$testimonialUrl/$id/image")
+
+        return when (response) {
+            is NetworkResponse.Success -> response.body.toTestimonial()
+            is NetworkResponse.ServerError -> {
+                val errorMessage = response.body?.errorDescription ?: response.body?.error ?: "Server fout bij het verwijderen van afbeelding"
+                throw Exception(errorMessage)
+            }
+
+            is NetworkResponse.NetworkError -> throw Exception("Netwerkfout: controleer je internetverbinding")
+            is NetworkResponse.UnknownError -> throw Exception("Onbekende fout bij het verwijderen van afbeelding")
+        }
     }
 
     suspend fun deleteTestimonial(id: String): RepoResult<Unit> {

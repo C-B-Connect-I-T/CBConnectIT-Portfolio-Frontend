@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.w3c.dom.url.URL
 
 class ManageTestimonialsViewModel(
     private val testimonialId: String?,
@@ -33,10 +34,22 @@ class ManageTestimonialsViewModel(
         when (intent) {
             is ManageTestimonialsContract.Intent.LoadInitialData -> loadInitialData()
             is ManageTestimonialsContract.Intent.UpdateFullName -> updateState { it.copy(fullName = intent.fullName) }
-            is ManageTestimonialsContract.Intent.UpdateImageUrl -> updateState { it.copy(imageUrl = intent.imageUrl) }
             is ManageTestimonialsContract.Intent.UpdateReview -> updateState { it.copy(review = intent.review) }
             is ManageTestimonialsContract.Intent.UpdateCompanyId -> updateState { it.copy(companyId = intent.companyId) }
             is ManageTestimonialsContract.Intent.UpdateJobPositionId -> updateState { it.copy(jobPositionId = intent.jobPositionId) }
+            is ManageTestimonialsContract.Intent.UpdateAvatarAltText -> updateState { it.copy(avatarAltText = intent.avatarAltText) }
+            is ManageTestimonialsContract.Intent.UpdateLogoFile -> updateState {
+                // Revoke previous URL if it exists
+                state.value.avatarImageUrl?.let(URL::revokeObjectURL)
+
+                it.copy(
+                    avatarImageFile = intent.file,
+                    avatarImageUrl = intent.file.let(URL::createObjectURL)
+                )
+            }
+
+            is ManageTestimonialsContract.Intent.UploadImage -> uploadImage(intent.file)
+            is ManageTestimonialsContract.Intent.RemoveImage -> removeImage()
             is ManageTestimonialsContract.Intent.SaveTestimonial -> saveTestimonial()
             is ManageTestimonialsContract.Intent.ShowDeleteDialog -> updateState { it.copy(showDeleteDialog = true) }
             is ManageTestimonialsContract.Intent.HideDeleteDialog -> updateState { it.copy(showDeleteDialog = false) }
@@ -48,6 +61,7 @@ class ManageTestimonialsViewModel(
     private suspend fun loadInitialData() {
         updateState { it.copy(isLoading = true) }
 
+        // TODO: check if all of them are concurrent or serial...
         loadCompanies()
         loadJobPositions()
         loadTestimonialIfNeeded()
@@ -86,14 +100,15 @@ class ManageTestimonialsViewModel(
                     it.copy(
                         testimonial = testimonial,
                         fullName = testimonial.fullName,
-                        imageUrl = testimonial.imageUrl,
                         review = testimonial.review,
                         companyId = testimonial.company?.id.orEmpty(),
-                        jobPositionId = testimonial.jobPosition.id
+                        jobPositionId = testimonial.jobPosition.id,
+                        avatarAltText = testimonial.avatarImage?.altText ?: ""
                     )
                 }
             },
             onError = { error ->
+                // TODO: check if we want to Navigate Back to the previous page, or stay on this one?
                 ToastManager.error(error.message)
             }
         )
@@ -108,14 +123,10 @@ class ManageTestimonialsViewModel(
             return
         }
 
-        val normalizedImageUrl = currentState.imageUrl.trim()
-        if (!isHttpUrl(normalizedImageUrl)) {
-            ToastManager.warning("Afbeelding URL moet starten met http:// of https://")
-            return
-        }
-
         updateState { it.copy(isSaving = true) }
-        if (testimonialId != null && isTestimonialUnchanged(currentState, normalizedImageUrl)) {
+
+        // Shortcircuit by closing this form when nothing has changed and user presses 'save'
+        if (testimonialId != null && isTestimonialUnchanged(currentState)) {
             updateState { it.copy(isSaving = false) }
             emitEffect(ManageTestimonialsContract.Effect.NavigateBackToTestimonials)
             return
@@ -125,22 +136,23 @@ class ManageTestimonialsViewModel(
             testimonialRepo.updateTestimonial(
                 testimonialId,
                 UpdateTestimonial(
-                    imageUrl = normalizedImageUrl,
                     review = currentState.review.trim(),
                     fullName = currentState.fullName.trim(),
                     companyId = currentState.companyId.trim(),
-                    jobPositionId = currentState.jobPositionId.trim()
+                    jobPositionId = currentState.jobPositionId.trim(),
+                    avatarAltText = currentState.avatarAltText.trim(),
                 )
             )
         } else {
             testimonialRepo.insertTestimonial(
                 InsertTestimonial(
-                    imageUrl = normalizedImageUrl,
                     review = currentState.review.trim(),
                     fullName = currentState.fullName.trim(),
                     companyId = currentState.companyId.trim(),
-                    jobPositionId = currentState.jobPositionId.trim()
-                )
+                    jobPositionId = currentState.jobPositionId.trim(),
+                    avatarAltText = currentState.avatarAltText.trim(),
+                ),
+                avatarImage = currentState.avatarImageFile
             )
         }
 
@@ -161,20 +173,14 @@ class ManageTestimonialsViewModel(
         updateState { it.copy(isSaving = false) }
     }
 
-    private fun isTestimonialUnchanged(
-        currentState: ManageTestimonialsContract.State,
-        normalizedImageUrl: String
-    ): Boolean {
+    // TODO: integrate this in the State itself like we did in Klantenstop
+    private fun isTestimonialUnchanged(currentState: ManageTestimonialsContract.State): Boolean {
         val currentTestimonial = currentState.testimonial ?: return false
         return currentTestimonial.fullName == currentState.fullName.trim() &&
-            currentTestimonial.imageUrl == normalizedImageUrl &&
-            currentTestimonial.review == currentState.review.trim() &&
-            currentTestimonial.company?.id.orEmpty() == currentState.companyId.trim() &&
-            currentTestimonial.jobPosition.id == currentState.jobPositionId.trim()
+                currentTestimonial.review == currentState.review.trim() &&
+                currentTestimonial.company?.id.orEmpty() == currentState.companyId.trim() &&
+                currentTestimonial.jobPosition.id == currentState.jobPositionId.trim()
     }
-
-    private fun isHttpUrl(value: String): Boolean =
-        value.startsWith("http://", ignoreCase = true) || value.startsWith("https://", ignoreCase = true)
 
     private suspend fun deleteTestimonial() {
         if (testimonialId == null) return
@@ -191,6 +197,33 @@ class ManageTestimonialsViewModel(
             }
         )
         updateState { it.copy(isDeleting = false) }
+    }
+
+    private suspend fun uploadImage(file: org.w3c.files.File) {
+        val id = testimonialId ?: return
+        updateState { it.copy(isImageLoading = true) }
+        try {
+            val updated = testimonialRepo.updateTestimonialAvatar(id, file, state.value.avatarAltText)
+            updateState { it.copy(testimonial = updated, isImageLoading = false) }
+        } catch (e: Exception) {
+            updateState { it.copy(isImageLoading = false) }
+            ToastManager.error(e.message ?: "Fout bij het uploaden van afbeelding")
+        }
+    }
+
+    private suspend fun removeImage() {
+        val id = testimonialId ?: return
+        updateState { it.copy(isImageLoading = true) }
+        try {
+            val updated = testimonialRepo.deleteTestimonialAvatar(id)
+
+            state.value.avatarImageUrl?.let(URL::revokeObjectURL)
+
+            updateState { it.copy(testimonial = updated, isImageLoading = false) }
+        } catch (e: Exception) {
+            updateState { it.copy(isImageLoading = false) }
+            ToastManager.error(e.message ?: "Fout bij het verwijderen van afbeelding")
+        }
     }
 
     override fun emitEffect(effect: ManageTestimonialsContract.Effect) = coroutineScope.launch {

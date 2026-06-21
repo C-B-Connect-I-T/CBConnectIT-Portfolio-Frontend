@@ -4,6 +4,7 @@ import cbconnectit.portfolio.web.data.models.domain.Company
 import cbconnectit.portfolio.web.data.models.domain.JobPosition
 import cbconnectit.portfolio.web.data.models.domain.Testimonial
 import cbconnectit.portfolio.web.utils.MVI
+import org.w3c.files.File
 
 interface ManageTestimonialsContract :
     MVI<ManageTestimonialsContract.State, ManageTestimonialsContract.Intent, ManageTestimonialsContract.Effect> {
@@ -11,7 +12,6 @@ interface ManageTestimonialsContract :
     data class State(
         val testimonial: Testimonial? = null,
         val fullName: String = "",
-        val imageUrl: String = "",
         val review: String = "",
         val companyId: String = "",
         val jobPositionId: String = "",
@@ -21,27 +21,33 @@ interface ManageTestimonialsContract :
         val isSaving: Boolean = false,
         val isDeleting: Boolean = false,
         val showDeleteDialog: Boolean = false,
-        val hasAttemptedSave: Boolean = false
+        val hasAttemptedSave: Boolean = false,
+        val isImageLoading: Boolean = false,
+        val avatarAltText: String = "",
+        val avatarImageFile: File? = null,
+        val avatarImageUrl: String? = null
     ) {
-        val isImageUrlValid: Boolean
-            get() = imageUrl.trim().startsWith("http://", ignoreCase = true) ||
-                imageUrl.trim().startsWith("https://", ignoreCase = true)
-
         val areRequiredFieldsValid: Boolean
             get() = fullName.isNotBlank() &&
-                review.isNotBlank() &&
-                companyId.isNotBlank() &&
-                jobPositionId.isNotBlank() &&
-                imageUrl.isNotBlank()
+                    review.isNotBlank() &&
+                    companyId.isNotBlank() &&
+                    jobPositionId.isNotBlank()
     }
 
     sealed class Intent {
         data object LoadInitialData : Intent()
         data class UpdateFullName(val fullName: String) : Intent()
-        data class UpdateImageUrl(val imageUrl: String) : Intent()
         data class UpdateReview(val review: String) : Intent()
         data class UpdateCompanyId(val companyId: String) : Intent()
         data class UpdateJobPositionId(val jobPositionId: String) : Intent()
+        data class UpdateAvatarAltText(val avatarAltText: String) : Intent()
+
+        // Create mode: stage a local file to be sent with SaveCategory
+        data class UpdateLogoFile(val file: File) : Intent()
+
+        // Edit mode: upload immediately via dedicated endpoint
+        data class UploadImage(val file: File) : Intent()
+        data object RemoveImage : Intent()
         data object SaveTestimonial : Intent()
         data object ShowDeleteDialog : Intent()
         data object HideDeleteDialog : Intent()

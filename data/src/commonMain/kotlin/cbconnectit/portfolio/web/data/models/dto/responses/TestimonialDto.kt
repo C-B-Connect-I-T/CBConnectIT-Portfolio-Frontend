@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TestimonialDto(
     val id: String = "",
-    @SerialName("image_url")
-    val imageUrl: String = "",
+    @SerialName("avatar_image")
+    val avatarImage: MediaFileDto? = null,
     @SerialName("full_name")
     val fullName: String = "",
     val company: CompanyDto? = null,
