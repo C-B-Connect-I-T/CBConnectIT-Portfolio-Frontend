@@ -69,7 +69,7 @@ object TestimonialRepo {
         )
     }
 
-    suspend fun updateTestimonialAvatar(id: String, file: File, altText: String): Testimonial {
+    suspend fun updateTestimonialAvatar(id: String, file: File, altText: String): RepoResult<Testimonial> {
         val formData = buildFormData(
             extraFields = mapOf("image" to file),
             data = mapOf("altText" to altText)
@@ -77,31 +77,23 @@ object TestimonialRepo {
 
         val response: NetworkResponse<TestimonialDto, ErrorResponse> = putRequest(resource = "$testimonialUrl/$id/image", body = formData)
 
-        return when (response) {
-            is NetworkResponse.Success -> response.body.toTestimonial()
-            is NetworkResponse.ServerError -> {
-                val errorMessage = response.body?.errorDescription ?: response.body?.error ?: "Server fout bij het uploaden van afbeelding"
-                throw Exception(errorMessage)
-            }
-
-            is NetworkResponse.NetworkError -> throw Exception("Netwerkfout: controleer je internetverbinding")
-            is NetworkResponse.UnknownError -> throw Exception("Onbekende fout bij het uploaden van afbeelding")
-        }
+        return response.toRepoResult(
+            successMapper = { testimonialDto -> testimonialDto.toTestimonial() },
+            defaultServerErrorMessage = "Server fout bij het uploaden van afbeelding",
+            networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
+            unknownErrorMessage = "Onbekende fout bij het uploaden van afbeelding"
+        )
     }
 
-    suspend fun deleteTestimonialAvatar(id: String): Testimonial {
+    suspend fun deleteTestimonialAvatar(id: String): RepoResult<Testimonial> {
         val response: NetworkResponse<TestimonialDto, ErrorResponse> = deleteRequest(resource = "$testimonialUrl/$id/image")
 
-        return when (response) {
-            is NetworkResponse.Success -> response.body.toTestimonial()
-            is NetworkResponse.ServerError -> {
-                val errorMessage = response.body?.errorDescription ?: response.body?.error ?: "Server fout bij het verwijderen van afbeelding"
-                throw Exception(errorMessage)
-            }
-
-            is NetworkResponse.NetworkError -> throw Exception("Netwerkfout: controleer je internetverbinding")
-            is NetworkResponse.UnknownError -> throw Exception("Onbekende fout bij het verwijderen van afbeelding")
-        }
+        return response.toRepoResult(
+            successMapper = { testimonialDto -> testimonialDto.toTestimonial() },
+            defaultServerErrorMessage = "Server fout bij het verwijderen van afbeelding",
+            networkErrorMessage = "Netwerkfout: controleer je internetverbinding",
+            unknownErrorMessage = "Onbekende fout bij het verwijderen van afbeelding"
+        )
     }
 
     suspend fun deleteTestimonial(id: String): RepoResult<Unit> {

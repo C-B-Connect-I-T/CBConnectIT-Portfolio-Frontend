@@ -10,6 +10,7 @@
     <ID>ForbiddenComment:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel$// TODO: check if all of them are concurrent or serial...</ID>
     <ID>ForbiddenComment:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel$// TODO: check if we want to Navigate Back to the previous page, or stay on this one?</ID>
     <ID>ForbiddenComment:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel$// TODO: integrate this in the State itself like we did in Klantenstop</ID>
+    <ID>ForbiddenComment:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel$// TODO: this is a weird flow... The user is not aware that this is required when just updating the image... Maybe have the image updated only when pressing on 'save'?</ID>
     <ID>LongMethod:ManageExperiencesPage.kt$@Composable private fun ManageExperiencesPageContent( state: ManageExperiencesContract.State, isEdit: Boolean, sendIntent: (ManageExperiencesContract.Intent) -&gt; Unit )</ID>
     <ID>LongMethod:ManageTestimonialsPage.kt$@Composable private fun ManageTestimonialsPageContent( state: ManageTestimonialsContract.State, isEdit: Boolean, sendIntent: (ManageTestimonialsContract.Intent) -&gt; Unit )</ID>
     <ID>MagicNumber:TestimonialsPage.kt$3</ID>
@@ -23,7 +24,6 @@
     <ID>MaxLineLength:ManageTagsPage.kt$// Why this is usually best: ┃</ID>
     <ID>MaxLineLength:ManageTagsPage.kt$// ┃</ID>
     <ID>ReturnCount:ManageExperiencesViewModel.kt$ManageExperiencesViewModel$private suspend fun saveExperience()</ID>
-    <ID>TooGenericExceptionCaught:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel$e: Exception</ID>
     <ID>TooManyFunctions:ManageExperiencesViewModel.kt$ManageExperiencesViewModel : ViewModelManageExperiencesContract</ID>
     <ID>TooManyFunctions:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel : ViewModelManageTestimonialsContract</ID>
   </CurrentIssues>

@@ -38,7 +38,7 @@ class ManageTestimonialsViewModel(
             is ManageTestimonialsContract.Intent.UpdateCompanyId -> updateState { it.copy(companyId = intent.companyId) }
             is ManageTestimonialsContract.Intent.UpdateJobPositionId -> updateState { it.copy(jobPositionId = intent.jobPositionId) }
             is ManageTestimonialsContract.Intent.UpdateAvatarAltText -> updateState { it.copy(avatarAltText = intent.avatarAltText) }
-            is ManageTestimonialsContract.Intent.UpdateLogoFile -> updateState {
+            is ManageTestimonialsContract.Intent.UpdateAvatarFile -> updateState {
                 // Revoke previous URL if it exists
                 state.value.avatarImageUrl?.let(URL::revokeObjectURL)
 
@@ -48,8 +48,8 @@ class ManageTestimonialsViewModel(
                 )
             }
 
-            is ManageTestimonialsContract.Intent.UploadImage -> uploadImage(intent.file)
-            is ManageTestimonialsContract.Intent.RemoveImage -> removeImage()
+            is ManageTestimonialsContract.Intent.UploadAvatar -> uploadImage(intent.file)
+            is ManageTestimonialsContract.Intent.RemoveAvatar -> removeImage()
             is ManageTestimonialsContract.Intent.SaveTestimonial -> saveTestimonial()
             is ManageTestimonialsContract.Intent.ShowDeleteDialog -> updateState { it.copy(showDeleteDialog = true) }
             is ManageTestimonialsContract.Intent.HideDeleteDialog -> updateState { it.copy(showDeleteDialog = false) }
@@ -179,7 +179,8 @@ class ManageTestimonialsViewModel(
         return currentTestimonial.fullName == currentState.fullName.trim() &&
                 currentTestimonial.review == currentState.review.trim() &&
                 currentTestimonial.company?.id.orEmpty() == currentState.companyId.trim() &&
-                currentTestimonial.jobPosition.id == currentState.jobPositionId.trim()
+                currentTestimonial.jobPosition.id == currentState.jobPositionId.trim() &&
+                currentTestimonial.avatarImage?.altText == currentState.avatarAltText.trim()
     }
 
     private suspend fun deleteTestimonial() {
@@ -202,28 +203,38 @@ class ManageTestimonialsViewModel(
     private suspend fun uploadImage(file: org.w3c.files.File) {
         val id = testimonialId ?: return
         updateState { it.copy(isImageLoading = true) }
-        try {
-            val updated = testimonialRepo.updateTestimonialAvatar(id, file, state.value.avatarAltText)
-            updateState { it.copy(testimonial = updated, isImageLoading = false) }
-        } catch (e: Exception) {
-            updateState { it.copy(isImageLoading = false) }
-            ToastManager.error(e.message ?: "Fout bij het uploaden van afbeelding")
-        }
+
+        // TODO: this is a weird flow... The user is not aware that this is required when just updating the image... Maybe have the image updated only when pressing on 'save'?
+        testimonialRepo.updateTestimonialAvatar(id, file, state.value.avatarAltText).fold(
+            onSuccess = { updated ->
+                // Revoke previous URL if it exists
+                state.value.avatarImageUrl?.let(URL::revokeObjectURL)
+
+                updateState { it.copy(testimonial = updated, isImageLoading = false) }
+            },
+            onError = { error ->
+                updateState { it.copy(isImageLoading = false) }
+                ToastManager.error(error.message)
+            }
+        )
     }
 
     private suspend fun removeImage() {
         val id = testimonialId ?: return
         updateState { it.copy(isImageLoading = true) }
-        try {
-            val updated = testimonialRepo.deleteTestimonialAvatar(id)
 
-            state.value.avatarImageUrl?.let(URL::revokeObjectURL)
+        testimonialRepo.deleteTestimonialAvatar(id).fold(
+            onSuccess = { updated ->
+                // Revoke previous URL if it exists
+                state.value.avatarImageUrl?.let(URL::revokeObjectURL)
 
-            updateState { it.copy(testimonial = updated, isImageLoading = false) }
-        } catch (e: Exception) {
-            updateState { it.copy(isImageLoading = false) }
-            ToastManager.error(e.message ?: "Fout bij het verwijderen van afbeelding")
-        }
+                updateState { it.copy(testimonial = updated, isImageLoading = false) }
+            },
+            onError = { error ->
+                updateState { it.copy(isImageLoading = false) }
+                ToastManager.error(error.message)
+            }
+        )
     }
 
     override fun emitEffect(effect: ManageTestimonialsContract.Effect) = coroutineScope.launch {

@@ -113,13 +113,13 @@ private fun ManageTestimonialsPageContent(
             isLoading = state.isImageLoading,
             onFileSelected = { file ->
                 if (isEdit) {
-                    sendIntent(ManageTestimonialsContract.Intent.UploadImage(file))
+                    sendIntent(ManageTestimonialsContract.Intent.UploadAvatar(file))
                 } else {
-                    sendIntent(ManageTestimonialsContract.Intent.UpdateLogoFile(file))
+                    sendIntent(ManageTestimonialsContract.Intent.UpdateAvatarFile(file))
                 }
             },
             onDeleteClicked = if (isEdit && state.testimonial?.avatarImage != null) {
-                { sendIntent(ManageTestimonialsContract.Intent.RemoveImage) }
+                { sendIntent(ManageTestimonialsContract.Intent.RemoveAvatar) }
             } else null
         )
 
@@ -138,7 +138,7 @@ private fun ManageTestimonialsPageContent(
 
         DsEditableField(
             modifier = Modifier.fillMaxWidth(),
-            id = "testimonial-image-url-input",
+            id = "testimonial-avatar-alt-text-input",
             label = "Avatar alt text",
             placeholder = "Enter avatar's alt text",
             value = state.avatarAltText,

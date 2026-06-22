@@ -31,7 +31,8 @@ interface ManageTestimonialsContract :
             get() = fullName.isNotBlank() &&
                     review.isNotBlank() &&
                     companyId.isNotBlank() &&
-                    jobPositionId.isNotBlank()
+                    jobPositionId.isNotBlank() &&
+                    avatarAltText.isNotBlank()
     }
 
     sealed class Intent {
@@ -42,12 +43,12 @@ interface ManageTestimonialsContract :
         data class UpdateJobPositionId(val jobPositionId: String) : Intent()
         data class UpdateAvatarAltText(val avatarAltText: String) : Intent()
 
-        // Create mode: stage a local file to be sent with SaveCategory
-        data class UpdateLogoFile(val file: File) : Intent()
+        // Create mode: stage a local file to be sent with SaveTestimonial
+        data class UpdateAvatarFile(val file: File) : Intent()
 
         // Edit mode: upload immediately via dedicated endpoint
-        data class UploadImage(val file: File) : Intent()
-        data object RemoveImage : Intent()
+        data class UploadAvatar(val file: File) : Intent()
+        data object RemoveAvatar : Intent()
         data object SaveTestimonial : Intent()
         data object ShowDeleteDialog : Intent()
         data object HideDeleteDialog : Intent()

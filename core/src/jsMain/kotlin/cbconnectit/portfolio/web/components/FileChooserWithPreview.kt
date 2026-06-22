@@ -160,8 +160,9 @@ fun FileChooserWithPreview(
         Label(
             attrs = Modifier
                 .margin(bottom = 0.5.cssRem)
-                .toAttrs(),
-            forId = id
+                .cursor(Cursor.Pointer)
+                .onClick { fileChooser() }
+                .toAttrs()
         ) {
             Text(value = label)
         }
