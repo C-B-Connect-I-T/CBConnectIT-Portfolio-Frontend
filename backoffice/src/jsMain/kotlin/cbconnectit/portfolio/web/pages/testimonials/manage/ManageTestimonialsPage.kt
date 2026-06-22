@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import cbconnectit.portfolio.web.components.DestructiveFilledButton
 import cbconnectit.portfolio.web.components.DestructiveOutlinedButton
 import cbconnectit.portfolio.web.components.Dialog
+import cbconnectit.portfolio.web.components.ImageChooser
 import cbconnectit.portfolio.web.components.TitleLarge
 import cbconnectit.portfolio.web.components.layout.AdminPageLayout
 import cbconnectit.portfolio.web.navigation.Navigation
@@ -32,6 +33,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.gap
 import com.varabyte.kobweb.compose.ui.modifiers.height
 import com.varabyte.kobweb.compose.ui.modifiers.maxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.padding
+import com.varabyte.kobweb.compose.ui.modifiers.size
 import com.varabyte.kobweb.compose.ui.modifiers.textAlign
 import com.varabyte.kobweb.compose.ui.modifiers.width
 import com.varabyte.kobweb.core.Page
@@ -101,6 +103,26 @@ private fun ManageTestimonialsPageContent(
             color = colorScheme.onBackground
         )
 
+        // Logo upload
+        ImageChooser(
+            modifier = Modifier.size(200.px),
+            id = "avatar-image",
+            label = "Avatar Image",
+            imageUrl = state.avatarImageUrl ?: state.testimonial?.avatarImage?.url,
+            centerText = "Klik om een afbeelding te uploaden",
+            isLoading = state.isImageLoading,
+            onFileSelected = { file ->
+                if (isEdit) {
+                    sendIntent(ManageTestimonialsContract.Intent.UploadAvatar(file))
+                } else {
+                    sendIntent(ManageTestimonialsContract.Intent.UpdateAvatarFile(file))
+                }
+            },
+            onDeleteClicked = if (isEdit && state.testimonial?.avatarImage != null) {
+                { sendIntent(ManageTestimonialsContract.Intent.RemoveAvatar) }
+            } else null
+        )
+
         DsEditableField(
             modifier = Modifier.fillMaxWidth(),
             id = "testimonial-full-name-input",
@@ -116,12 +138,12 @@ private fun ManageTestimonialsPageContent(
 
         DsEditableField(
             modifier = Modifier.fillMaxWidth(),
-            id = "testimonial-image-url-input",
-            label = "Image URL",
-            placeholder = "https://example.com/photo.jpg",
-            value = state.imageUrl,
-            valid = !state.hasAttemptedSave || state.isImageUrlValid,
-            onValueChange = { sendIntent(ManageTestimonialsContract.Intent.UpdateImageUrl(it)) },
+            id = "testimonial-avatar-alt-text-input",
+            label = "Avatar alt text",
+            placeholder = "Enter avatar's alt text",
+            value = state.avatarAltText,
+            valid = !state.hasAttemptedSave || state.avatarAltText.isNotBlank(),
+            onValueChange = { sendIntent(ManageTestimonialsContract.Intent.UpdateAvatarAltText(it)) },
             required = true,
             backgroundColor = colorScheme.surfaceContainer,
             focusBorderColor = colorScheme.primary.toRgb().copyf(alpha = 0.6f)

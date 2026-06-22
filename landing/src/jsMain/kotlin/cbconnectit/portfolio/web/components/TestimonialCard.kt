@@ -6,11 +6,13 @@ import cbconnectit.portfolio.web.data.models.domain.Testimonial
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.content
 import cbconnectit.portfolio.web.utils.Identifiers.TestimonialSectionClasses.item
 import com.materialkobweb.components.Spacer
+import com.materialkobweb.components.widgets.DsMaterialSymbols
 import com.materialkobweb.toColorScheme
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.border
 import com.varabyte.kobweb.compose.ui.modifiers.borderRadius
@@ -49,14 +51,30 @@ fun TestimonialCard(
                 .padding(20.px)
         ) {
             Row {
-                Image(
-                    testimonial.imageUrl,
-                    modifier = Modifier
-                        .weight(1)
-                        .size(56.px)
-                        .borderRadius(50.percent),
-                    alt = "Avatar of ${testimonial.fullName}"
-                )
+                val avatarModifier = Modifier
+                    .weight(1)
+                    .size(56.px)
+                    .borderRadius(50.percent)
+
+                val avatarUrl = testimonial.avatarImage?.url
+                if (avatarUrl.isNullOrBlank()) {
+                    Box(
+                        modifier = avatarModifier,
+                        contentAlignment = Alignment.Center
+                    ) {
+                        DsMaterialSymbols(
+                            modifier = Modifier.fontSize(56.px),
+                            icon = "account_circle",
+                            color = colorMode.toColorScheme.primary
+                        )
+                    }
+                } else {
+                    Image(
+                        avatarUrl,
+                        modifier = avatarModifier,
+                        alt = testimonial.avatarImage?.altText.orEmpty().ifBlank { "Avatar of ${testimonial.fullName}" }
+                    )
+                }
 
                 Spacer(Modifier.width(12.px))
 
