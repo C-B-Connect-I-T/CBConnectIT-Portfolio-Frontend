@@ -72,7 +72,7 @@ object TestimonialRepo {
     suspend fun updateTestimonialAvatar(id: String, file: File, altText: String): RepoResult<Testimonial> {
         val formData = buildFormData(
             extraFields = mapOf("image" to file),
-            data = mapOf("altText" to altText)
+            data = mapOf("alt_text" to altText)
         )
 
         val response: NetworkResponse<TestimonialDto, ErrorResponse> = putRequest(resource = "$testimonialUrl/$id/image", body = formData)
