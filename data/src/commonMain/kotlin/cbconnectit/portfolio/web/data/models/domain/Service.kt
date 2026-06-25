@@ -4,8 +4,8 @@ import cbconnectit.portfolio.web.data.models.dto.responses.ServiceDto
 
 data class Service(
     val id: String,
-    val imageUrl: String,
-    val bannerImageUrl: String? = null,
+    val image: MediaFile?,
+    val bannerImage: MediaFile?,
     val title: String,
     val shortDescription: String? = null,
     val description: String,
@@ -19,8 +19,8 @@ data class Service(
 
 fun ServiceDto.toService(): Service = Service(
     id,
-    imageUrl,
-    bannerImageUrl,
+    image?.toMediaFile(),
+    bannerImage?.toMediaFile(),
     title,
     shortDescription,
     description,

@@ -229,7 +229,7 @@ private fun ServicesPageList(service: Service, leftAligned: Boolean) {
                 .gap(if (breakpoint <= Breakpoint.MD) 40.px else 100.px)
         ) {
             Image(
-                src = service.imageUrl,
+                src = service.image?.url ?: "",
                 modifier = Modifier
                     .width(350.px)
                     .maxWidth(350.px)

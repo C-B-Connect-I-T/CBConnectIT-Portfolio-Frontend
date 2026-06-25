@@ -1,9 +1,10 @@
 package cbconnectit.portfolio.web.pages.projects
 
+import cbconnectit.portfolio.web.data.models.fold
 import cbconnectit.portfolio.web.data.repos.ProjectRepo
 import cbconnectit.portfolio.web.data.repos.TagRepo
-import cbconnectit.portfolio.web.data.models.fold
 import cbconnectit.portfolio.web.utils.MVI
+import com.materialkobweb.components.toast.ToastManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -47,11 +48,17 @@ class ProjectsViewModel(
 
         val projects = projectsDeferred.await().fold(
             onSuccess = { it },
-            onError = { emptyList() }
+            onError = {
+                ToastManager.error(it.message)
+                emptyList()
+            }
         )
         val tags = tagsDeferred.await().fold(
             onSuccess = { it },
-            onError = { emptyList() }
+            onError = {
+                ToastManager.error(it.message)
+                emptyList()
+            }
         )
 
         updateState {
