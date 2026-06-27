@@ -4,6 +4,8 @@
   <CurrentIssues>
     <ID>CyclomaticComplexMethod:ManageExperiencesPage.kt$@Composable private fun ManageExperiencesPageContent( state: ManageExperiencesContract.State, isEdit: Boolean, sendIntent: (ManageExperiencesContract.Intent) -&gt; Unit )</ID>
     <ID>CyclomaticComplexMethod:ManageExperiencesViewModel.kt$ManageExperiencesViewModel$override fun sendIntent(intent: ManageExperiencesContract.Intent)</ID>
+    <ID>CyclomaticComplexMethod:ManageProjectsPage.kt$@Composable private fun ManageProjectsPageContent( state: ManageProjectsContract.State, isEdit: Boolean, sendIntent: (ManageProjectsContract.Intent) -&gt; Unit )</ID>
+    <ID>CyclomaticComplexMethod:ManageProjectsViewModel.kt$ManageProjectsViewModel$override fun sendIntent(intent: ManageProjectsContract.Intent)</ID>
     <ID>CyclomaticComplexMethod:ManageServicesPage.kt$@Composable private fun ManageServicesPageContent( state: ManageServicesContract.State, isEdit: Boolean, sendIntent: (ManageServicesContract.Intent) -&gt; Unit )</ID>
     <ID>CyclomaticComplexMethod:ManageServicesViewModel.kt$ManageServicesViewModel$override fun sendIntent(intent: ManageServicesContract.Intent)</ID>
     <ID>CyclomaticComplexMethod:ManageTestimonialsPage.kt$@Composable private fun ManageTestimonialsPageContent( state: ManageTestimonialsContract.State, isEdit: Boolean, sendIntent: (ManageTestimonialsContract.Intent) -&gt; Unit )</ID>
@@ -14,6 +16,7 @@
     <ID>ForbiddenComment:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel$// TODO: integrate this in the State itself like we did in Klantenstop</ID>
     <ID>ForbiddenComment:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel$// TODO: this is a weird flow... The user is not aware that this is required when just updating the image... Maybe have the image updated only when pressing on 'save'?</ID>
     <ID>LongMethod:ManageExperiencesPage.kt$@Composable private fun ManageExperiencesPageContent( state: ManageExperiencesContract.State, isEdit: Boolean, sendIntent: (ManageExperiencesContract.Intent) -&gt; Unit )</ID>
+    <ID>LongMethod:ManageProjectsPage.kt$@Composable private fun ManageProjectsPageContent( state: ManageProjectsContract.State, isEdit: Boolean, sendIntent: (ManageProjectsContract.Intent) -&gt; Unit )</ID>
     <ID>LongMethod:ManageServicesPage.kt$@Composable private fun ManageServicesPageContent( state: ManageServicesContract.State, isEdit: Boolean, sendIntent: (ManageServicesContract.Intent) -&gt; Unit )</ID>
     <ID>LongMethod:ManageTestimonialsPage.kt$@Composable private fun ManageTestimonialsPageContent( state: ManageTestimonialsContract.State, isEdit: Boolean, sendIntent: (ManageTestimonialsContract.Intent) -&gt; Unit )</ID>
     <ID>MagicNumber:ManageServicesPage.kt$0.8f</ID>
@@ -28,8 +31,10 @@
     <ID>MaxLineLength:ManageTagsPage.kt$// Why this is usually best: ┃</ID>
     <ID>MaxLineLength:ManageTagsPage.kt$// ┃</ID>
     <ID>ReturnCount:ManageExperiencesViewModel.kt$ManageExperiencesViewModel$private suspend fun saveExperience()</ID>
+    <ID>ReturnCount:ManageProjectsViewModel.kt$ManageProjectsViewModel$private suspend fun saveProject()</ID>
     <ID>ReturnCount:ManageServicesViewModel.kt$ManageServicesViewModel$private suspend fun saveService()</ID>
     <ID>TooManyFunctions:ManageExperiencesViewModel.kt$ManageExperiencesViewModel : ViewModelManageExperiencesContract</ID>
+    <ID>TooManyFunctions:ManageProjectsViewModel.kt$ManageProjectsViewModel : ViewModelManageProjectsContract</ID>
     <ID>TooManyFunctions:ManageServicesViewModel.kt$ManageServicesViewModel : ViewModelManageServicesContract</ID>
     <ID>TooManyFunctions:ManageTestimonialsViewModel.kt$ManageTestimonialsViewModel : ViewModelManageTestimonialsContract</ID>
   </CurrentIssues>
