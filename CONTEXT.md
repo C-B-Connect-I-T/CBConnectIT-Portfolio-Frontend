@@ -20,6 +20,22 @@ _Avoid_: Quote, review card, endorsement block
 A portfolio offering that combines core copy, a required image, an optional banner image, and optional hierarchy/tag metadata.
 _Avoid_: Capability, package, offering card
 
+**Project**:
+A portfolio case study that combines core copy, a required image, a required banner image, and optional tag/link associations.
+_Avoid_: Case, work item, portfolio entry
+
+**Project Link**:
+A URL association attached to a Project, represented as a plain URL entry in admin input.
+_Avoid_: Social handle, CTA button, rich link object
+
+**Project Tag Set**:
+The set of tags associated with a Project; it is non-empty in admin-managed data.
+_Avoid_: Optional categories, untagged project state
+
+**Project Media Pair**:
+The required pair of media assets for a Project: one image and one banner image. Updates may replace either or both, but cannot leave the Project missing one.
+_Avoid_: Removable banner, single-media project, optional second image
+
 **Parent Service / Sub-service**:
 A hierarchical relation where a Sub-service references exactly one Parent Service, and a Parent Service can group multiple Sub-services.
 _Avoid_: Category, child category, service group

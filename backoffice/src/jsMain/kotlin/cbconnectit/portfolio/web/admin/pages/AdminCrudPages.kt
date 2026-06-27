@@ -26,16 +26,6 @@ import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.Text
 
-@Page("/admin/projects")
-@Composable
-fun AdminProjectsPage() = authenticatedGuard {
-    AdminCrudSkeletonPage(
-        title = "Projects",
-        createActionLabel = "Nieuw project",
-        emptyStateText = "Nog geen projecten toegevoegd."
-    )
-}
-
 @Page("/admin/settings")
 @Composable
 fun AdminSettingsPage() = authenticatedGuard {

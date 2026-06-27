@@ -78,7 +78,10 @@ sealed class Navigation(val route: String) {
                 data object Index : Services("")
                 data class Manage(val id: String? = null) : Services("/manage" + if (id != null) "?id=$id" else "")
             }
-            data object Projects : Admin("/projects")
+            sealed class Projects(route: String) : Admin("/projects$route") {
+                data object Index : Projects("")
+                data class Manage(val id: String? = null) : Projects("/manage" + if (id != null) "?id=$id" else "")
+            }
             data object Settings : Admin("/settings")
             data class Login(val returnTo: String? = null) :
                 Admin("/login" + if (returnTo != null) "?returnTo=${encodeReturnUrl(returnTo)}" else "")

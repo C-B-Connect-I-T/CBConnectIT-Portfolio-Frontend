@@ -66,10 +66,10 @@ fun AdminNavigationItems(
 
     NavigationItem(
         modifier = Modifier.margin(bottom = 16.px),
-        selected = currentPath.contains(Navigation.Screen.Admin.Projects.route),
+        selected = currentPath.contains(Navigation.Screen.Admin.Projects.Index.route),
         title = "Projects",
         icon = "folder_open",
-        href = Navigation.Screen.Admin.Projects.route
+        href = Navigation.Screen.Admin.Projects.Index.route
     )
 
     NavigationItem(

@@ -92,7 +92,7 @@ fun AdminPageContent(
                 modifier = Modifier.fillMaxWidth(50.percent),
                 title = "Projects",
                 subtitle = "Onderhoud portfolio projecten en metadata.",
-                path = Navigation.Screen.Admin.Projects.route
+                path = Navigation.Screen.Admin.Projects.Index.route
             )
             DashboardCard(
                 modifier = Modifier.fillMaxWidth(50.percent),
