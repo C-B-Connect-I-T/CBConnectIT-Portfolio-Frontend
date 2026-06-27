@@ -182,7 +182,7 @@ class ManageServicesViewModel(
 
         val updatePayload = UpdateService(
             title = currentState.title.trim(),
-            shortDescription = currentState.shortDescription.trim(),
+            shortDescription = normalizeNullable(currentState.shortDescription),
             description = currentState.description.trim(),
             imageAltText = currentState.imageAltText.trim(),
             bannerImageAltText = if (currentState.hasBannerImageInFinalState) {
@@ -220,7 +220,7 @@ class ManageServicesViewModel(
             serviceRepo.insertService(
                 service = InsertService(
                     title = currentState.title.trim(),
-                    shortDescription = currentState.shortDescription.trim(),
+                    shortDescription = normalizeNullable(currentState.shortDescription),
                     description = currentState.description.trim(),
                     imageAltText = currentState.imageAltText.trim(),
                     bannerImageAltText = if (currentState.hasBannerImageInFinalState) {
