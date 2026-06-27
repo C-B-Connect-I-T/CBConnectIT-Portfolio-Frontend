@@ -4,8 +4,8 @@ import cbconnectit.portfolio.web.data.models.dto.responses.ProjectDto
 
 data class Project(
     val id: String,
-    val bannerImageUrl: String,
-    val imageUrl: String,
+    val bannerImage: MediaFile?,
+    val image: MediaFile?,
     val title: String,
     val shortDescription: String,
     val description: String,
@@ -17,8 +17,8 @@ data class Project(
 
 fun ProjectDto.toProject() = Project(
     id,
-    bannerImageUrl,
-    imageUrl,
+    bannerImage?.toMediaFile(),
+    image?.toMediaFile(),
     title,
     shortDescription,
     description,
