@@ -34,7 +34,7 @@ object ServiceRepo {
         )
     }
 
-    suspend fun getServiceById(id: String): RepoResult<Service?> {
+    suspend fun getServiceById(id: String): RepoResult<Service> {
         val url = "$serviceUrl/$id"
         val response: NetworkResponse<ServiceDto, ErrorResponse> = getRequest(url)
 

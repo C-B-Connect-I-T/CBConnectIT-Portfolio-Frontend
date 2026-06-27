@@ -8,7 +8,7 @@ data class UpdateService(
     val title: String,
     val description: String,
     @SerialName("short_description")
-    val shortDescription: String,
+    val shortDescription: String? = null,
     @SerialName("image_alt_text")
     val imageAltText: String,
     @SerialName("banner_image_alt_text")
@@ -26,6 +26,6 @@ data class UpdateService(
 ) {
     val isValid get() = title.isNotBlank() &&
             description.isNotBlank() &&
-            shortDescription.isNotBlank() &&
+            (shortDescription?.isNotBlank() != false) &&
             imageAltText.isNotBlank()
 }

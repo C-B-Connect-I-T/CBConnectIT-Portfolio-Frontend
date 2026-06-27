@@ -88,12 +88,6 @@ class ManageServicesViewModel(
 
         serviceRepo.getServiceById(editId).fold(
             onSuccess = { loadedService ->
-                if (loadedService == null) {
-                    ToastManager.error("Service not found.")
-                    emitEffect(ManageServicesContract.Effect.NavigateBackToServices)
-                    return@fold
-                }
-
                 val inferredParentServiceId = inferParentServiceId(
                     serviceId = loadedService.id,
                     allServices = state.value.allServices
