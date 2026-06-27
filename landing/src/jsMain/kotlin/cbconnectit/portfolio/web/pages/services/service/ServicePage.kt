@@ -138,7 +138,7 @@ fun ServiceBanner(service: Service?) {
             .fillMaxWidth()
             .background(
                 Background.of(
-                    image = BackgroundImage.of(url(service?.bannerImage?.url ?: "")),
+                    image = BackgroundImage.of(url(service?.bannerImage?.url ?: Res.Image.imagePlaceholder)),
                     size = BackgroundSize.Cover,
                     position = BackgroundPosition.of(CSSPosition(50.percent, 50.percent))
                 ),
@@ -207,7 +207,7 @@ fun SubServices(subService: Service, leftAligned: Boolean) {
                 .gap(if (breakpoint <= Breakpoint.MD) 40.px else 100.px)
         ) {
             Image(
-                src = subService.image?.url ?: "",
+                src = subService.image?.url ?: Res.Image.imagePlaceholder,
                 modifier = Modifier
                     .width(275.px)
                     .maxWidth(250.px)

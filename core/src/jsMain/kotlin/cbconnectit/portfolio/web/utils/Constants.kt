@@ -106,6 +106,8 @@ object Res {
         const val servicesWeb = "/images/img_services_web.svg"
         const val servicesBackend = "/images/img_services_backend.svg"
         const val servicesTutoring = "/images/img_services_tutoring.svg"
+
+        const val imagePlaceholder = "/images/image_placeholder.jpg"
     }
 
     object Icon {
