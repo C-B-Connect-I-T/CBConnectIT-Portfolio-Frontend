@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ServiceDto(
     val id: String,
-    val image: MediaFileDto?,
+    val image: MediaFileDto? = null,
     @SerialName("banner_image")
-    val bannerImage: MediaFileDto?,
+    val bannerImage: MediaFileDto? = null,
     val title: String,
     @SerialName("short_description")
     val shortDescription: String? = null,

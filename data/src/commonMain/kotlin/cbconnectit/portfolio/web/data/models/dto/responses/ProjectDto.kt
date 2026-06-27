@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 data class ProjectDto(
     val id: String,
     @SerialName("banner_image")
-    val bannerImage: MediaFileDto?,
-    val image: MediaFileDto?,
+    val bannerImage: MediaFileDto? = null,
+    val image: MediaFileDto? = null,
     val title: String,
     @SerialName("short_description")
     val shortDescription: String,

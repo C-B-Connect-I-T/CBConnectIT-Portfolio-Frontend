@@ -104,7 +104,7 @@ fun PortfolioSection(
                 .borderRadius(20.px)
                 .background(
                     Background.of(
-                        image = selectedWork?.bannerImage?.url?.let {BackgroundImage.of(url(it))},
+                        image = BackgroundImage.of(url(selectedWork?.bannerImage?.url ?: Res.Image.imagePlaceholder)),
                         position = BackgroundPosition.of(CSSPosition(50.percent, 50.percent)),
                         size = BackgroundSize.Cover
                     ),

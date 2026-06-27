@@ -240,7 +240,7 @@ private fun ProjectImageWithLinks(modifier: Modifier = Modifier, project: Projec
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(modifier = Modifier.width(250.px), src = project.image?.url ?: "", alt = "")
+        Image(modifier = Modifier.width(250.px), src = project.image?.url ?: Res.Image.imagePlaceholder, alt = "")
 
         Spacer(Modifier.height(36.px))
 
