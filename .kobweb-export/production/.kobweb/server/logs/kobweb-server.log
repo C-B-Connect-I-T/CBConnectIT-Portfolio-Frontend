@@ -1,6 +1,6 @@
-2026-02-14 15:36:58.045 [main] DEBUG io.ktor.server.Application - Java Home: /usr/lib/jvm
-2026-02-14 15:36:58.058 [main] DEBUG io.ktor.server.Application - Class Loader: jdk.internal.loader.ClassLoaders$AppClassLoader@639fee48: [file:/home/runner/work/CBConnectIT-Portfolio-Frontend/CBConnectIT-Portfolio-Frontend/site/.kobweb/server/server.jar!/okio]
-2026-02-14 15:36:58.095 [main] DEBUG io.ktor.server.Application - Failed to load module 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke' by classpath reference, falling back to currently loaded value
+2026-06-29 20:15:24.664 [main] DEBUG io.ktor.server.Application - Java Home: /usr/lib/jvm
+2026-06-29 20:15:24.672 [main] DEBUG io.ktor.server.Application - Class Loader: jdk.internal.loader.ClassLoaders$AppClassLoader@639fee48: [file:/home/runner/work/CBConnectIT-Portfolio-Frontend/CBConnectIT-Portfolio-Frontend/site/.kobweb/server/server.jar!/okio]
+2026-06-29 20:15:24.714 [main] DEBUG io.ktor.server.Application - Failed to load module 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke' by classpath reference, falling back to currently loaded value
 io.ktor.server.engine.internal.ReloadingException: Module function cannot be found for the fully qualified name 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke'
 	at io.ktor.server.engine.internal.CallableUtilsKt.executeModuleFunction(CallableUtils.kt:68)
 	at io.ktor.server.engine.EmbeddedServer$launchModuleByName$2.invokeSuspend(EmbeddedServerJvm.kt:443)
@@ -46,14 +46,31 @@ io.ktor.server.engine.internal.ReloadingException: Module function cannot be fou
 	at kotlin.coroutines.ContinuationKt.startCoroutine(Continuation.kt:115)
 	at kotlin.coroutines.jvm.internal.RunSuspendKt.runSuspend(RunSuspend.kt:19)
 	at com.varabyte.kobweb.server.ApplicationKt.main(Application.kt)
-2026-02-14 15:36:58.097 [main] INFO  io.ktor.server.Application - Initializing server engine for Kobweb project "Portfolio Web Compose"
-2026-02-14 15:36:58.100 [main] WARN  io.ktor.server.Application - API jar specified but does not exist! Please fix conf.yaml, updating the path (or removing the value if you aren't declaring API endpoints). Invalid path: "build/libs/bolla.jar"
-2026-02-14 15:36:58.181 [main] INFO  io.ktor.server.Application - CORS: No hosts registered.
-2026-02-14 15:36:58.211 [main] INFO  io.ktor.server.Application - Application started in 0.4 seconds.
-2026-02-14 15:36:58.338 [main] INFO  io.ktor.server.Application - Responding at http://0.0.0.0:8081
-2026-02-14 15:37:49.768 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/projects"
-2026-02-14 15:37:51.529 [eventLoopGroupProxy-4-2] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/services/service"
-2026-02-14 15:37:53.069 [eventLoopGroupProxy-4-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/services"
-2026-02-14 15:37:54.615 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/"
-2026-02-14 15:37:57.532 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Kobweb server shutting down...
-2026-02-14 15:37:58.543 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Server finished shutting down.
+2026-06-29 20:15:24.716 [main] INFO  io.ktor.server.Application - Initializing server engine for Kobweb project "Portfolio"
+2026-06-29 20:15:24.719 [main] WARN  io.ktor.server.Application - API jar specified but does not exist! Please fix conf.yaml, updating the path (or removing the value if you aren't declaring API endpoints). Invalid path: "build/libs/cb-connect-it_portfolio.jar"
+2026-06-29 20:15:24.797 [main] INFO  io.ktor.server.Application - CORS: No hosts registered.
+2026-06-29 20:15:24.827 [main] INFO  io.ktor.server.Application - Application started in 0.393 seconds.
+2026-06-29 20:15:24.948 [main] INFO  io.ktor.server.Application - Responding at http://0.0.0.0:8081
+2026-06-29 20:16:40.121 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/"
+2026-06-29 20:16:42.235 [DefaultDispatcher-worker-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/services/service"
+2026-06-29 20:16:43.941 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/services"
+2026-06-29 20:16:45.706 [eventLoopGroupProxy-4-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/projects"
+2026-06-29 20:16:47.457 [eventLoopGroupProxy-4-4] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/companies/manage"
+2026-06-29 20:16:48.888 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/companies"
+2026-06-29 20:16:50.305 [eventLoopGroupProxy-4-2] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/tags/manage"
+2026-06-29 20:16:51.715 [eventLoopGroupProxy-4-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/tags"
+2026-06-29 20:16:53.111 [eventLoopGroupProxy-4-4] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/job-positions"
+2026-06-29 20:16:54.517 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/job-positions/manage"
+2026-06-29 20:16:55.938 [DefaultDispatcher-worker-6] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/settings"
+2026-06-29 20:16:57.350 [DefaultDispatcher-worker-5] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/testimonials"
+2026-06-29 20:16:58.777 [eventLoopGroupProxy-4-4] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/testimonials/manage"
+2026-06-29 20:17:00.193 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/services/manage"
+2026-06-29 20:17:01.636 [eventLoopGroupProxy-4-2] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/services"
+2026-06-29 20:17:03.055 [eventLoopGroupProxy-4-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/projects"
+2026-06-29 20:17:04.456 [eventLoopGroupProxy-4-4] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/projects/manage"
+2026-06-29 20:17:05.846 [eventLoopGroupProxy-4-1] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/login"
+2026-06-29 20:17:07.258 [DefaultDispatcher-worker-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin"
+2026-06-29 20:17:08.640 [eventLoopGroupProxy-4-3] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/experiences"
+2026-06-29 20:17:10.027 [eventLoopGroupProxy-4-4] DEBUG io.ktor.server.Application - Served fallback index.html file in response to "/admin/experiences/manage"
+2026-06-29 20:17:12.812 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Kobweb server shutting down...
+2026-06-29 20:17:13.824 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Server finished shutting down.
