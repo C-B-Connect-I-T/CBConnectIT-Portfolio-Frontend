@@ -34,7 +34,7 @@ jobs:
 
   export-production:
     name: Export Production Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: validate-confirmation
 
     steps:
