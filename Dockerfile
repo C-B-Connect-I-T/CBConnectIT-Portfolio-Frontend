@@ -65,4 +65,4 @@ ENV JAVA_TOOL_OPTIONS="-Xmx512m -Xms256m -XX:MaxMetaspaceSize=128m"
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
   CMD curl -f http://localhost:8081/ || exit 1
 
-ENTRYPOINT ["/bin/sh", ".kobweb/server/start.sh"]
+ENTRYPOINT ["/bin/sh", "-c", "set -eu; RUNTIME_DIR=/tmp/kobweb-runtime; rm -rf \"$RUNTIME_DIR\"; mkdir -p \"$RUNTIME_DIR\"; cp -a .kobweb \"$RUNTIME_DIR/.kobweb\"; cd \"$RUNTIME_DIR\"; exec /opt/java/openjdk/bin/java -Dkobweb.server.environment=PROD -Dkobweb.site.layout=FULLSTACK -Dio.ktor.development=false -jar .kobweb/server/server.jar"]
