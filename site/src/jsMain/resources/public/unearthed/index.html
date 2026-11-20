@@ -1,0 +1,85 @@
+<!doctype html>
+<!--
+  Unearthed: the game's page and support contact (#265). Draft by Claude. Served at /unearthed/;
+  Play Console's "Website" field can link here. The images come from
+  devtools/store_shots/ (build/store_shots/out/): copy play_icon_512.png to icon.png and
+  feature_graphic.png next to this file.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unearthed: Dig &amp; Discover</title>
+<meta name="description" content="Treasures of the Earth. Dig up fossils and gems, one careful layer at a time.">
+<link rel="icon" href="icon.png">
+<style>
+  :root {
+    --page: #f7f0e5; --surface: #ffffff; --ink: #1e2a33; --ink-soft: #5a6670;
+    --accent: #f2a541; --on-accent: #1a1206; --line: #e2d5c2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --page: #0d1318; --surface: #151d24; --ink: #ece6da; --ink-soft: #a3adb5; --line: #2a3843; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
+  .hero { width: 100%; height: auto; border-radius: 20px; display: block; }
+  .title { display: flex; align-items: center; gap: 16px; margin: 28px 0 8px; }
+  .title img { width: 72px; height: 72px; border-radius: 16px; }
+  h1 { font-size: 2rem; line-height: 1.15; margin: 0; }
+  .tagline { color: var(--ink-soft); margin: 2px 0 0; }
+  h2 { font-size: 1.25rem; margin: 36px 0 8px; }
+  .button {
+    display: inline-block; margin: 16px 0 8px; padding: 14px 24px; border-radius: 999px;
+    background: var(--accent); color: var(--on-accent); font-weight: 700; text-decoration: none;
+  }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 4px 20px; }
+  a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  footer { color: var(--ink-soft); font-size: 0.9rem; margin-top: 48px; }
+</style>
+</head>
+<body>
+<main>
+<img class="hero" src="feature_graphic.png" width="1024" height="500"
+     alt="The Unearthed camp: display cases with finds, a yurt, a campfire and the guide.">
+
+<div class="title">
+  <img src="icon.png" width="72" height="72" alt="">
+  <div>
+    <h1>Unearthed</h1>
+    <p class="tagline">Dig &amp; Discover · Treasures of the Earth</p>
+  </div>
+</div>
+
+<p>Somewhere under the rock is a T. rex skull, a sapphire, or a fossil fish nobody has seen for a
+hundred million years. Pick the right tool, dig carefully, and lift it out in one piece. Six dig
+sites with their own rock and weather, skeletons to rebuild bone by bone, a field journal to follow
+and a camp to make your own.</p>
+
+<a class="button" href="https://play.google.com/store/apps/details?id=com.cbconnectit.unearthed">Get it on Google Play</a>
+
+<h2>Help and contact</h2>
+<div class="card">
+  <p><strong>Lost progress on a new phone?</strong> Sign in to Google Play Games on the new phone
+  before you start the game: your progress comes back from your Play Games saved games. Android's own
+  backup restores it too, when it is turned on.</p>
+  <p><strong>Ads or analytics choice:</strong> change it in the game, under Settings → Privacy →
+  Your choice.</p>
+  <p><strong>Something else, or found a bug?</strong> Email
+  <a href="mailto:christiano.bolla@cb-connect-it.com">christiano.bolla@cb-connect-it.com</a>. Tell us your phone model and, if you
+  can, what you were doing when it happened.</p>
+</div>
+
+<h2>Privacy</h2>
+<p>No accounts, no personal information asked. Read the <a href="privacy.html">privacy policy</a>.</p>
+
+<footer>
+  Unearthed is made by C.B. Connect I.T. Google Play and the Google Play logo are trademarks of
+  Google LLC.
+</footer>
+</main>
+</body>
+</html>
