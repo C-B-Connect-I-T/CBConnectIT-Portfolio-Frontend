@@ -1,6 +1,6 @@
-2026-11-20 15:05:27.851 [main] DEBUG io.ktor.server.Application - Java Home: /usr/lib/jvm
-2026-11-20 15:05:27.871 [main] DEBUG io.ktor.server.Application - Class Loader: jdk.internal.loader.ClassLoaders$AppClassLoader@639fee48: [file:/home/runner/work/CBConnectIT-Portfolio-Frontend/CBConnectIT-Portfolio-Frontend/site/.kobweb/server/server.jar!/okio]
-2026-11-20 15:05:27.913 [main] DEBUG io.ktor.server.Application - Failed to load module 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke' by classpath reference, falling back to currently loaded value
+2026-11-20 16:07:33.193 [main] DEBUG io.ktor.server.Application - Java Home: /usr/lib/jvm
+2026-11-20 16:07:33.225 [main] DEBUG io.ktor.server.Application - Class Loader: jdk.internal.loader.ClassLoaders$AppClassLoader@639fee48: [file:/home/runner/work/CBConnectIT-Portfolio-Frontend/CBConnectIT-Portfolio-Frontend/site/.kobweb/server/server.jar!/okio]
+2026-11-20 16:07:33.261 [main] DEBUG io.ktor.server.Application - Failed to load module 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke' by classpath reference, falling back to currently loaded value
 io.ktor.server.engine.internal.ReloadingException: Module function cannot be found for the fully qualified name 'com.varabyte.kobweb.server.ApplicationKt$main$engine$1.invoke'
 	at io.ktor.server.engine.internal.CallableUtilsKt.executeModuleFunction(CallableUtils.kt:68)
 	at io.ktor.server.engine.EmbeddedServer$launchModuleByName$2.invokeSuspend(EmbeddedServerJvm.kt:443)
@@ -46,10 +46,8 @@ io.ktor.server.engine.internal.ReloadingException: Module function cannot be fou
 	at kotlin.coroutines.ContinuationKt.startCoroutine(Continuation.kt:115)
 	at kotlin.coroutines.jvm.internal.RunSuspendKt.runSuspend(RunSuspend.kt:19)
 	at com.varabyte.kobweb.server.ApplicationKt.main(Application.kt)
-2026-11-20 15:05:27.916 [main] INFO  io.ktor.server.Application - Initializing server engine for Kobweb project "Portfolio"
-2026-11-20 15:05:27.919 [main] WARN  io.ktor.server.Application - API jar specified but does not exist! Please fix conf.yaml, updating the path (or removing the value if you aren't declaring API endpoints). Invalid path: "build/libs/cb-connect-it_portfolio.jar"
-2026-11-20 15:05:28.008 [main] INFO  io.ktor.server.Application - CORS: No hosts registered.
-2026-11-20 15:05:28.041 [main] INFO  io.ktor.server.Application - Application started in 0.454 seconds.
-2026-11-20 15:05:28.170 [main] INFO  io.ktor.server.Application - Responding at http://0.0.0.0:8081
-2026-11-20 15:06:39.117 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Kobweb server shutting down...
-2026-11-20 15:06:41.134 [kotlinx.coroutines.DefaultExecutor] INFO  io.ktor.server.Application - Server finished shutting down.
+2026-11-20 16:07:33.263 [main] INFO  io.ktor.server.Application - Initializing server engine for Kobweb project "Portfolio"
+2026-11-20 16:07:33.266 [main] WARN  io.ktor.server.Application - API jar specified but does not exist! Please fix conf.yaml, updating the path (or removing the value if you aren't declaring API endpoints). Invalid path: "build/libs/cb-connect-it_portfolio.jar"
+2026-11-20 16:07:33.354 [main] INFO  io.ktor.server.Application - CORS: No hosts registered.
+2026-11-20 16:07:33.387 [main] INFO  io.ktor.server.Application - Application started in 0.442 seconds.
+2026-11-20 16:07:33.520 [main] INFO  io.ktor.server.Application - Responding at http://0.0.0.0:8081
