@@ -72,7 +72,7 @@ jobs:
 
       - name: Download Kobweb CLI
         run: |
-          KOBWEB_VERSION=0.9.18
+          KOBWEB_VERSION=0.9.23
           wget https://github.com/varabyte/kobweb-cli/releases/download/v${KOBWEB_VERSION}/kobweb-${KOBWEB_VERSION}.zip
           unzip kobweb-${KOBWEB_VERSION}.zip
           echo "${PWD}/kobweb-${KOBWEB_VERSION}/bin" >> $GITHUB_PATH
@@ -87,6 +87,7 @@ jobs:
         working-directory: ./site
         env:
           BASE_URL: https://cb-connect-it.com
+          ENVIRONMENT: production
         run: |
           echo "⚠️  Exporting PRODUCTION build from ref: ${{ inputs.ref }}"
           echo "BASE_URL: ${BASE_URL}"
